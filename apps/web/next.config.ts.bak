@@ -1,0 +1,43 @@
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  typescript: {
+    tsconfigPath: './tsconfig.json',
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    typedRoutes: false,
+    serverComponentsExternalPackages: ['pg', 'bcrypt'],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.amazon.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placeholder.com',
+      },
+    ],
+  },
+};
+
+export default nextConfig;

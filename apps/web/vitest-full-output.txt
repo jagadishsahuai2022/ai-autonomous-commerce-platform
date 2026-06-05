@@ -1,0 +1,839 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mD:/PersonalProject/GIT/delegatecart/apps/web[39m
+
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22maccepts a valid complete item
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22maccepts item with optional fields as null
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects empty product name
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects product name with special characters
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects brand name with special characters
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects negative budget
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects zero quantity
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects null input
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects number input
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects string input
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22mrejects negative delivery days
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22maccepts brand with spaces
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List Validation[2m > [22maccepts zero budget (free items)
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects washing machine category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects phone category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects laptop category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects TV category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects AC category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects refrigerator category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mdetects audio category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mreturns generic for unrecognized products
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCategory Detection[2m > [22mis case-insensitive
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBudget Answer Parsing[2m > [22mparses custom budget amount
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBudget Answer Parsing[2m > [22mparses custom budget for small amount like 100
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBudget Answer Parsing[2m > [22mreturns null for invalid custom budget
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBudget Answer Parsing[2m > [22mreturns null for non-custom budget
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBrand Answer Parsing[2m > [22mextracts custom brand name
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBrand Answer Parsing[2m > [22mreturns null for empty custom brand
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mBrand Answer Parsing[2m > [22mpasses through non-custom brand answers
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile Auto-Checkout Settings[2m > [22mreturns defaults when no settings stored
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile Auto-Checkout Settings[2m > [22mreads enabled=true
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile Auto-Checkout Settings[2m > [22mtreats non-true as disabled
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile Auto-Checkout Settings[2m > [22mdefaults threshold for invalid values
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile WhatsApp Number[2m > [22mreturns null when no number stored
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile WhatsApp Number[2m > [22mreturns stored number
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProfile WhatsApp Number[2m > [22mreturns null for empty string
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mpasses for valid item
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mrejects empty product name
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mrejects non-numeric budget text
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mrejects empty quantity
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mrejects zero quantity
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22mrejects non-numeric delivery days
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mShopping List UI Validation[2m > [22maccepts all optional fields empty
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mfilters AC products correctly (not phones)
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mfilters washing machine products correctly
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mfilters phone products correctly
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mfilters TV products (category=Electronic)
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mreturns all products for unknown category
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mProduct Category Filtering (getEmbeddedProducts logic)[2m > [22mnever mixes AC and washing machine (substring bug fix)
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCart Toggle Logic[2m > [22madds product to empty cart
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCart Toggle Logic[2m > [22mremoves product from cart if already present
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCart Toggle Logic[2m > [22mdoes not duplicate on double add
+ [32m✓[39m test/unit/shopping-list.test.ts[2m > [22mCart Toggle Logic[2m > [22mcan toggle multiple products independently
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCart()[2m > [22mreturns empty array when cart is empty
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCart()[2m > [22mreturns empty array when cart key missing
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCart()[2m > [22mreturns parsed cart array from localStorage
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCart()[2m > [22mreturns empty array on malformed JSON
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22madds a new item to empty cart
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22mincrements quantity for existing item
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22madds multiple distinct products
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22mpersists to localStorage
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22mauto-generates id if not provided
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22maddToCart()[2m > [22mhandles RankedProduct price as number
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mremoveFromCart()[2m > [22mremoves item by productId
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mremoveFromCart()[2m > [22mreturns empty cart when removing only item
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mremoveFromCart()[2m > [22mno-ops if productId does not exist
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mclearCart()[2m > [22mempties the cart
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartCount()[2m > [22mreturns 0 for empty cart
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartCount()[2m > [22mcounts total quantity across items
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartTotal()[2m > [22mreturns 0 for empty cart
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartTotal()[2m > [22mcalculates total price * quantity
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartTotal()[2m > [22msums multiple products
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart localStorage helpers[2m > [22mgetCartTotal()[2m > [22mhandles large prices (Indian rupees)
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mRankedProduct → CartItem conversion[2m > [22mmaps product.id → productId correctly
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mRankedProduct → CartItem conversion[2m > [22mpreserves product name exactly
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mRankedProduct → CartItem conversion[2m > [22mpreserves product price as number
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mRankedProduct → CartItem conversion[2m > [22mstarts with quantity 1
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart edge cases[2m > [22mhandles adding item with price = 0
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart edge cases[2m > [22mhandles product names with special characters
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart edge cases[2m > [22mhandles products with unicode names (₹, Indian rupees)
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart edge cases[2m > [22mdoes not lose existing items when adding new one
+ [32m✓[39m test/unit/cart.test.ts[2m > [22mCart edge cases[2m > [22mcart count equals sum of all quantities
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22minsertSmartIntentRecord builds correct INSERT query
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mgetSmartIntentRecords returns paginated records with total
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mgetSmartIntentRecords applies search filter with ILIKE
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mupdateSupervisedResponse targets correct record
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mupdateAIEnrichedResponse sets enhancedByAI to true
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mdeleteSmartIntentRecord executes DELETE
+ [31m×[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mfindLearnedResponse uses word-containment when exact match is empty
+[31m   → expected 'SELECT * FROM "SmartIntentEngineRespo…' to contain 'LIKE'[39m
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mfindLearnedResponse returns null when no match
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mfindLearnedResponse prioritizes aiEnrichedResponse over supervisedResponse
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — DB Functions[2m > [22mgetUnenrichedRecords filters WHERE enhancedByAI = false
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — Admin API Validation[2m > [22madmin auth rejects non-admin emails
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — Admin API Validation[2m > [22menrichment batch size is bounded
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mgenerateMetrics returns valid metrics for a product
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mgenerateMetrics is deterministic for same productId
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mgenerateMetrics caches result
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mgetMetrics generates on demand
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mgetBatchMetrics returns map of metrics
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mupdateMetricsFromEvent increases conversion on click
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mupdateMetricsFromEvent decreases inventory on purchase
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mupdateMetricsFromEvent updates salesVelocity on add_to_cart
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mcategory-based margin ranges work - fashion has higher margins
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Metrics[2m > [22mclearMetrics resets store
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mcomputeBusinessScore returns valid breakdown
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mhigh conversion rate produces higher conversion score
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mlow stock gives scarcity boost (15 pts)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22moverstock gives clearance boost (10 pts)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mnormal stock gives moderate boost (5 pts)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mblendScores gives 70% user + 30% business
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mUSER_WEIGHT is 0.7 and BUSINESS_WEIGHT is 0.3
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mhigh margin irrelevant product should NOT rank top (user score dominates)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mBusiness Scoring[2m > [22mhigh conversion product ranks higher than low conversion (equal user score)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22mcomputeDynamicPrice returns result with guardrails
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22moverstock triggers discount
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22mlow stock triggers price increase
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22mprice never exceeds ±20% guardrail
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22msession cache ensures price consistency
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mPricing Engine[2m > [22mcart price consistency — same product same price across calls
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mDiscount Engine[2m > [22moverstock product gets clearance discount
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mDiscount Engine[2m > [22mlow conversion gets incentive discount
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mDiscount Engine[2m > [22mhigh velocity reduces discount
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mDiscount Engine[2m > [22mdiscount is never negative
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mDiscount Engine[2m > [22mdiscount capped at 30%
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mSession-Aware Intent Discount[2m > [22mno discount for low intent
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mSession-Aware Intent Discount[2m > [22m2% discount for 3+ views
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mSession-Aware Intent Discount[2m > [22m5% discount for high intent (3+ views + 2+ cart events)
+ [32m✓[39m lib/smart-intent/__tests__/business-engine.test.ts[2m > [22mSession-Aware Intent Discount[2m > [22mintent discount capped at 5%
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22minsertSmartIntentRecord: creates active record with "created" comment when no duplicate
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22minsertSmartIntentRecord: auto-deactivates with duplicate_deactivated comment when duplicate found
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22mupdateSupervisedResponse: appends supervisor_edited comment with adminEmail
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22mupdateAIEnrichedResponse: appends ai_enriched comment
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22mtoggleSmartIntentActive: appends "Record activated" comment when activating
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Audit Comments & Duplicate Detection[2m > [22mtoggleSmartIntentActive: appends "Record deactivated" comment when deactivating
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Batch Enrich Query Filters[2m > [22mgetUnenrichedRecords: SQL must filter enhancedByAI=false, isActive=true, exclude anonymous
+ [31m×[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Batch Enrich Query Filters[2m > [22mgetUnenrichedRecordsForModel: SQL includes 30-day window AND all strict filters
+[31m   → expected 'SELECT * FROM "SmartIntentEngineRespo…' to contain 'LOWER("queryBy") != \'anonymous\''[39m
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mObservability — Demo Data Seeding[2m > [22mseeds demo transactions when localStorage is empty
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mObservability — Demo Data Seeding[2m > [22mdoes not re-seed if already seeded
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mObservability — Demo Data Seeding[2m > [22mseeded data contains stuck transactions
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mObservability — Demo Data Seeding[2m > [22mseeded data contains audit log entries
+ [31m×[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mLLM_MODELS array[2m > [22mcontains 3 models with required fields
+[31m   → expected [ { id: 'gemini-flash', …(6) }, …(5) ] to have a length of 3 but got 6[39m
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mLLM_MODELS array[2m > [22mincludes claude-opus, gpt-4-turbo, gpt-3.5-turbo
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mLLM_MODELS array[2m > [22mclaude-opus uses Anthropic provider
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mLLM_MODELS array[2m > [22mopenai models use OpenAI provider
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — API key missing[2m > [22mreturns connected=false and apiKeyConfigured=false when ANTHROPIC_API_KEY unset
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — API key missing[2m > [22mreturns connected=false and apiKeyConfigured=false when OPENAI_API_KEY unset
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — API key missing[2m > [22mreturns error for unknown modelId
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — Claude endpoint[2m > [22mcalls /v1/messages (NOT /v1/messages/batches)
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — Claude endpoint[2m > [22mreturns connected=true on HTTP 200
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — Claude endpoint[2m > [22mreturns connected=false with auth error on HTTP 401
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — Claude endpoint[2m > [22mreturns connected=false with rate-limit message on HTTP 429
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — Claude endpoint[2m > [22mreturns connected=false on network error
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — OpenAI[2m > [22mreturns connected=true for gpt-4-turbo on 200
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — OpenAI[2m > [22mreturns connected=true for gpt-3.5-turbo on 200
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mcheckModelConnectivity — OpenAI[2m > [22mreturns connected=false on 401 auth error
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22menrichWithRealLLM — forceRealLLM behavior[2m > [22mreturns null when forceRealLLM=true and no API key
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22menrichWithRealLLM — forceRealLLM behavior[2m > [22mreturns rule-based result when forceRealLLM=false and no API key
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22menrichWithRealLLM — forceRealLLM behavior[2m > [22mreturns rule-based for invalid/too-short query
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22menrichWithRealLLM — Claude endpoint correctness[2m > [22mcalls /v1/messages not /v1/messages/batches
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22menrichWithRealLLM — Claude endpoint correctness[2m > [22mreturns llm-claude source on successful Claude response
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — noun signals[2m > [22mdetects category as noun signal
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — noun signals[2m > [22mdetects brand as noun signal
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — noun signals[2m > [22mdetects both category+brand noun signals
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — amount signals[2m > [22mdetects budget amount signal
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — amount signals[2m > [22mdetects rupee amount signal
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — amount signals[2m > [22mhas empty amount_signals when no budget mentioned
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — confidence boost[2m > [22mgives higher confidence when both noun and amount detected vs noun only
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — confidence boost[2m > [22mstrong noun boost: both category AND brand gives higher confidence
+ [32m✓[39m test/unit/round27-llm-connectivity.test.ts[2m > [22mEntity extractor — confidence boost[2m > [22mconfidence is capped at 100
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Batch Enrich Query Filters[2m > [22mgetUnenrichedRecords: respects batchSize limit
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Comment Structure Validation[2m > [22mcomment entries have required fields: text, timestamp, userId, action
+ [32m✓[39m test/unit/smart-intent-comments.test.ts[2m > [22mRound 26 — Comment Structure Validation[2m > [22mcomment appending uses JSONB || operator (not SELECT+UPDATE)
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mUnifiedLoader — Exports[2m > [22mexports StaticLoader and default UnifiedLoader
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mUser Data Isolation — Buy Requests[2m > [22mbuy-requests hook accepts dynamic userId
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — isActive Toggle[2m > [22mtoggleSmartIntentActive builds correct UPDATE query
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — isActive Toggle[2m > [22mtoggleSmartIntentActive can set isActive to true
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — isActive Toggle[2m > [22mfindLearnedResponse only returns active records (exact match)
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — isActive Toggle[2m > [22mfindLearnedResponse only returns active records (word containment)
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — isActive Toggle[2m > [22mSmartIntentRecord interface includes isActive field
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — RBAC Access[2m > [22mlearning-support email is authorized
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — RBAC Access[2m > [22mnon-elevated email is rejected
+ [32m✓[39m test/unit/smart-intent-learning.test.ts[2m > [22mSmart Intent Learning — RBAC Access[2m > [22misActive field has boolean type validation
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mreturns an array sorted by finalScore DESC, productId ASC
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mties broken by productId ASC (pagination stable)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mapplies strict out-of-budget penalty
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mkeyword match contributes to userScore
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mbusiness score accounts for low stock urgency
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mbusiness score penalizes high return rate
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mfinalScore = 70% userScore + 30% businessScore
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22msession category boost increases score
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22moverstock clears via pricing boost in business score
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mhandles empty product list
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAutonomous Ranking Engine[2m > [22mhandles nullish optional fields gracefully
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22mhigh demand → price increase ≤ +20%
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22mlow conversion → price decrease ≤ -20%
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22moverstock → discount applied
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22mlow stock → price slightly increased
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22mprice adjustment strictly bounded ±20%
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22msession cache returns same decision
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mDynamic Pricing Engine[2m > [22mfinal price ≤ dynamic price when discount > 0
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAuto-Tuning Engine[2m > [22mlow CTR → increases keywordWeight
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAuto-Tuning Engine[2m > [22mlow conversion → increases feature and price weights
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAuto-Tuning Engine[2m > [22mrevenue decline → increases businessWeight
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAuto-Tuning Engine[2m > [22mweights stay in [5, 50] bounds
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mAuto-Tuning Engine[2m > [22mreturns adjustments array describing changes
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mrecords search and accumulates stats
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mtracks zero-result searches
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mrecordClick updates click count
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mnormalizes query (lowercase, trim, collapse spaces)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22msame hash for equivalent queries
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mgetTopQueries returns sorted by searchCount
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mQuery Learning[2m > [22mgetFailedQueries returns low success rate entries
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mprocessSignals computes correct CTR
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mprocessSignals computes correct conversionRate
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mhandles zero impressions safely (no divide-by-zero)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mrecordEvent accumulates in window
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mrecordEvent purchase adds revenue
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mquerySuccessRate computed correctly
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mSignal Processor[2m > [22mcartAbandonRate = (cartAdds - purchases) / cartAdds
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mrankProducts handles 1,000-item batch without performance regression
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mrankProducts handles 5,000-item batch in under 1 second
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mcomputeBusinessScore distributes scores across full price range
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22m100K product IDs generate unique hash codes (no collision in 10K sample)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mprocessSignals handles realistic 100K catalog volume metrics
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mcategory distribution covers all 6 expected categories
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mprice range covers realistic Indian e-commerce tiers (₹39–₹2,53,999)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mproduct IDs from 1 to 100000 are all valid (no zero or negative)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mpagination across 100K: page boundaries return stable slices
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22m100K Product Catalog Scale[2m > [22mrankProducts last page (products 99981-100000) scores correctly
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mnormalizePrice handles ₹ symbol and commas
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mnormalizePrice rejects invalid values
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mnormalizeCategory maps common external names
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mextractSpecifications pulls RAM from free text
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mextractSpecifications extracts camera & refresh rate
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mextractSpecifications returns empty object for empty string
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mnormalizePrice handles high prices (premium products)
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — normalizer[2m > [22mnormalizeCategory defaults to Electronics for unknown categories
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22mseededRandom produces deterministic values
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22mdifferent seeds produce different values
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22mmargin is within 10–60% range for all categories
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22minventoryCount is always ≥ 1
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22mconversionRate stays within 1%–10%
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — business metrics[2m > [22m100K product metrics are deterministic and unique per product ID
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — ingestion options validation[2m > [22mbatch size of 1000 can hold up to 100K products in 100 batches
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — ingestion options validation[2m > [22mmaxWorkers = 5 means 20 rounds of parallel insert for 100 batches
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — ingestion options validation[2m > [22mCSV dedup key is lowercase name + brand
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — ingestion options validation[2m > [22mimage strategy: use_source returns source URL when available
+ [32m✓[39m lib/smart-intent/__tests__/autonomous-system.test.ts[2m > [22mData Ingestion Pipeline — ingestion options validation[2m > [22mimage strategy: force_unsplash ignores source URL
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFeature Flag & Logger[2m > [22m[2mshould log and retrieve recent logs[22m[39m
+[SmartIntent v2] query="test query" category=phone confidence=50 products=5 time=42ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFull Pipeline — Mandatory Test Cases[2m > [22m[2mTest Case 1: "best phone under 20000"[22m[39m
+[SmartIntent v2] query="best phone under 20000" category=phone confidence=65 products=20 time=7ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFull Pipeline — Mandatory Test Cases[2m > [22m[2mTest Case 2: "gaming laptop for coding"[22m[39m
+[SmartIntent v2] query="gaming laptop for coding" category=laptop confidence=50 products=20 time=2ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFull Pipeline — Mandatory Test Cases[2m > [22m[2mTest Case 3: "cheap earbuds"[22m[39m
+[SmartIntent v2] query="cheap earbuds" category=headphones confidence=65 products=20 time=64ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFull Pipeline — Mandatory Test Cases[2m > [22m[2mTest Case 4: "iphone alternative"[22m[39m
+[SmartIntent v2] query="iphone alternative" category=phone confidence=55 products=20 time=2ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mFull Pipeline — Mandatory Test Cases[2m > [22m[2mTest Case 5: "good camera phone"[22m[39m
+[SmartIntent v2] query="good camera phone" category=phone confidence=55 products=20 time=1ms
+
+[90mstdout[2m | lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22m[2mAccuracy Summary[2m > [22m[2mshould achieve ≥ 70% accuracy across all test queries[22m[39m
+[SmartIntent v2] query="best phone under 20000" category=phone confidence=65 products=20 time=1ms
+[SmartIntent v2] query="gaming laptop for coding" category=laptop confidence=50 products=20 time=2ms
+[SmartIntent v2] query="cheap earbuds" category=headphones confidence=65 products=20 time=30ms
+[SmartIntent v2] query="iphone alternative" category=phone confidence=55 products=20 time=2ms
+[SmartIntent v2] query="good camera phone" category=phone confidence=55 products=20 time=4ms
+[SmartIntent v2] query="samsung tv under 50000" category=television confidence=90 products=20 time=1ms
+[SmartIntent v2] query="noise cancelling headphones for travel" category=headphones confidence=80 products=20 time=2ms
+[SmartIntent v2] query="washing machine for home" category=appliances confidence=50 products=20 time=2ms
+[SmartIntent v2] query="macbook alternative under 80000" category=laptop confidence=65 products=20 time=2ms
+[SmartIntent v2] query="budget phone with 5g" category=phone confidence=70 products=20 time=92ms
+
+[Accuracy] 33/34 checks passed (97.1%)
+
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould tokenize and remove stopwords
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould normalize abbreviations
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould normalize price shorthand (k and lakh)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould handle rupee symbols and Rs prefix
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould deduplicate tokens
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mTokenizer[2m > [22mshould handle empty input
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect phone category
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect laptop category
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect headphones category from earbuds
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect brand from brand keyword
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect budget "under X"
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect use case gaming
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould detect features like 5g and camera
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould return confidence > 0 for valid queries
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mEntity Extractor[2m > [22mshould return confidence 0 for meaningless input
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mQuestion Generator[2m > [22mshould generate budget question when budget is missing
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mQuestion Generator[2m > [22mshould NOT generate budget question when budget is provided
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mQuestion Generator[2m > [22mshould generate max 3 questions
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mQuestion Generator[2m > [22mshould generate use_case question with category-specific options
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mQuestion Generator[2m > [22mshould skip questions for fields already detected
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould generate 1000+ products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould have products in all 5 categories
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould generate deterministic results (same seed)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould have valid attributes for phone products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould return valid brand list for categories
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSynthetic Catalog[2m > [22mshould return accurate catalog stats
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSearch Engine[2m > [22mshould find phones when category is phone
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSearch Engine[2m > [22mshould rank brand matches higher
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSearch Engine[2m > [22mshould return products within budget range
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mSearch Engine[2m > [22mshould respect feature filters
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mRanking Engine[2m > [22mshould rank gaming laptops higher for gaming intent
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mRanking Engine[2m > [22mshould penalize out-of-budget products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mRanking Engine[2m > [22mshould include score breakdown for each product
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mResponse Generator[2m > [22mshould return high confidence response for clear intent
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mResponse Generator[2m > [22mshould return medium confidence for partial intent
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mResponse Generator[2m > [22mshould return low confidence when no products match
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mResponse Generator[2m > [22mshould include follow-up prompt
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFeature Flag & Logger[2m > [22mshould default to enabled (v2)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFeature Flag & Logger[2m > [22mshould respect v1 override
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFeature Flag & Logger[2m > [22mshould respect v2 override
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFeature Flag & Logger[2m > [22mshould log and retrieve recent logs
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould detect category=phone
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould detect budget max=20000
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould use engine v2
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould return products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould return mostly phones within budget
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould have confidence ≥ 50
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould generate a meaningful response
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 1: "best phone under 20000"[2m > [22mshould process in under 500ms
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 2: "gaming laptop for coding"[2m > [22mshould detect category=laptop
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 2: "gaming laptop for coding"[2m > [22mshould detect use_case as gaming or coding
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 2: "gaming laptop for coding"[2m > [22mshould return laptop products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 2: "gaming laptop for coding"[2m > [22mshould prioritize gaming/coding capable laptops
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 2: "gaming laptop for coding"[2m > [22mshould generate budget question (budget not specified)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 3: "cheap earbuds"[2m > [22mshould detect category=headphones
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 3: "cheap earbuds"[2m > [22mshould detect budget intent (cheap = low budget)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 3: "cheap earbuds"[2m > [22mshould return headphone products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 3: "cheap earbuds"[2m > [22mshould return affordable products in top results
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 3: "cheap earbuds"[2m > [22mshould have confidence ≥ 30
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 4: "iphone alternative"[2m > [22mshould detect category=phone
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 4: "iphone alternative"[2m > [22mshould detect Apple/iPhone brand reference
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 4: "iphone alternative"[2m > [22mshould return phone products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 4: "iphone alternative"[2m > [22mshould return flagship-tier phones (alternatives to iPhone)
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 4: "iphone alternative"[2m > [22mshould have confidence ≥ 30
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould detect category=phone
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould detect camera as a feature
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould return phone products
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould prioritize phones with good camera specs
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould have confidence ≥ 30
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mFull Pipeline — Mandatory Test Cases[2m > [22mTest Case 5: "good camera phone"[2m > [22mshould generate a response mentioning camera
+ [32m✓[39m lib/smart-intent/__tests__/intent-engine.test.ts[2m > [22mAccuracy Summary[2m > [22mshould achieve ≥ 70% accuracy across all test queries
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mmaps "Washing Machine" to washing_machine category (returns washing machine products)[33m 1124[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mmaps "Laptop" to laptop category[33m 555[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mdoes NOT map "Washing Machine" to AC category (word-boundary fix for "ac" in "machine")
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mcorrectly maps "AC" (exact word) to ac category[33m 420[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mcorrectly maps "Air Conditioner" to ac category[33m 381[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mmaps "TV" (short keyword, whole word) to tv category[33m 654[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Category Detection[2m > [22mmaps "Pen" to stationery category[33m 458[2mms[22m[39m
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify network errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify validation errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify authentication errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify authorization errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify not found errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify server errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Classification[2m > [22mshould classify rate limit errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mUser-Friendly Messages[2m > [22mshould provide user-friendly message for validation error
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mUser-Friendly Messages[2m > [22mshould provide user-friendly message for network error
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mUser-Friendly Messages[2m > [22mshould provide user-friendly message for auth error
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mUser-Friendly Messages[2m > [22mshould hide sensitive server error details
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Context[2m > [22mshould capture error context with location
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Context[2m > [22mshould capture user action context
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Context[2m > [22mshould capture form field errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Recovery[2m > [22mshould suggest retry for network errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Recovery[2m > [22mshould suggest login for auth errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Recovery[2m > [22mshould suggest reload for server errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Recovery[2m > [22mshould suggest contact support for persistent errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Logging[2m > [22mshould log error with full context
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Logging[2m > [22mshould log errors to analytics
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Logging[2m > [22mshould not log sensitive data
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Normalization[2m > [22mshould normalize API errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Normalization[2m > [22mshould normalize network errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Normalization[2m > [22mshould normalize form validation errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError State Management[2m > [22mshould clear error state
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError State Management[2m > [22mshould stack multiple errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError State Management[2m > [22mshould get latest error
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mRetry Logic[2m > [22mshould calculate exponential backoff
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mRetry Logic[2m > [22mshould cap maximum retry delay
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mRetry Logic[2m > [22mshould add jitter to retry delay
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Boundaries[2m > [22mshould catch unhandled errors
+ [32m✓[39m test/lib/error-handling.test.ts[2m > [22mFrontend Error Handling Library[2m > [22mError Boundaries[2m > [22mshould prevent error cascade
+ [31m×[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Core Flow[2m > [22mplaces an order and returns orderId with ORD- prefix (authenticated)[33m 2780[2mms[22m[39m
+[31m   → expected false to be true // Object.is equality[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Fuzzy Matching[2m > [22mhandles typo "Wshing Machine" → washing_machine category[33m 442[2mms[22m[39m
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns true for properly formed questions
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns false for stub questions [{id, category}]
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns false when question text is empty string
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns false when options is empty array
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns false when question field is missing
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mreturns false when options is not an array
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22misValidQuestionSet[2m > [22mhandles mix of valid and invalid questions
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22mfilterValidEnrichedQuestions[2m > [22mkeeps questions with text and options
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22mfilterValidEnrichedQuestions[2m > [22mremoves questions with empty options
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22mfilterValidEnrichedQuestions[2m > [22mremoves questions with empty text
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mQuestion Validation Logic[2m > [22mfilterValidEnrichedQuestions[2m > [22mreturns empty array if all invalid
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mshould export all functions
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22misAdminUser returns false when not logged in
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mauthenticateAdmin rejects invalid email
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mauthenticateAdmin rejects invalid password
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mauthenticateAdmin accepts valid credentials
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mauthenticateAdmin accepts alternate admin email
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22misAdminUser returns true after successful auth
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mgetAdminSession returns session after auth
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mclearAdminSession removes session
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22msession expires after 8 hours
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth[2m > [22mauthenticateAdmin is case-insensitive for email
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mexports getUserRole function
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mexports hasPageAccess function
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mexports isElevatedUser function
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mgetUserRole returns admin for admin emails
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mgetUserRole returns learning-support for supervised learning email
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mgetUserRole returns observability-support for observability email
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mgetUserRole returns customer for unknown emails
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mauthenticateAdmin accepts learning-support user
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mauthenticateAdmin accepts observability-support user
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mauthenticateAdmin stores role in session
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22madmin session has isAdmin=true for admin role
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mlearning-support session has isAdmin=false
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mhasPageAccess grants admin access to all pages
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mhasPageAccess grants learning-support access to /admin/learning only
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mhasPageAccess grants observability-support access to learning + observability
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22mhasPageAccess denies customer access to admin pages
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22misElevatedUser returns true for elevated users
+ [32m✓[39m test/unit/admin-auth.test.ts[2m > [22mAdmin Auth — RBAC[2m > [22misElevatedUser returns false for customers
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mSmart Intent — Question Generator Appliances coverage[2m > [22mgenerates questions for appliance category with budget detected
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mSmart Intent — Question Generator Appliances coverage[2m > [22mgenerates budget question when no budget detected
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mNoun/Amount extraction for learning match[2m > [22mextracts nouns from "washing machine under 40000"
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mNoun/Amount extraction for learning match[2m > [22mextracts amounts from "washing machine under 40000"
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mNoun/Amount extraction for learning match[2m > [22mhandles "lg washing machine under 50000"
+ [32m✓[39m test/unit/question-validation.test.ts[2m > [22mNoun/Amount extraction for learning match[2m > [22mhandles "best smartphone for photography" (no amounts)
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mgenerates unique names for all products within catalog range[33m 305[2mms[22m[39m
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mgenerates stable IDs (same index â†’ same ID)
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mproduct at index 0 has correct SKU
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mproduct at index 9999 has correct SKU
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22meach category spans correct index range
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mratings are within valid 3.5â€“5.0 range
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mprices are positive
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mgenerates name without "Edition N" suffix (no fake editions)
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” no-repeat 10K catalog[2m > [22mvariant part of name does not contain "undefined"
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” pagination alignment[2m > [22mproducts are evenly distributed across categories
+ [32m✓[39m test/unit/mock-product-generator.test.ts[2m > [22mgenerateMockProduct â€” pagination alignment[2m > [22mfirst page (20 items) all have unique names
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Fuzzy Matching[2m > [22mhandles typo "Refrigeratir" → refrigerator category[33m 463[2mms[22m[39m
+ [31m×[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Core Flow[2m > [22msuccess message contains order ID and wallet mention[33m 975[2mms[22m[39m
+[31m   → expected 'Shopping list submitted! AI agent fou…' to contain 'ORD-'[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Fuzzy Matching[2m > [22mhandles typo "Headfone" → audio category[33m 514[2mms[22m[39m
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle network errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle 401 unauthorized errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle 403 forbidden errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle 404 not found errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle 429 rate limit errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould handle 500 server errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mhandleApiError[2m > [22mshould provide user-friendly messages
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mnormalizeError[2m > [22mshould normalize axios-like errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mnormalizeError[2m > [22mshould normalize Fetch API errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mnormalizeError[2m > [22mshould normalize unknown errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mError Type Checks[2m > [22mshould identify network errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mError Type Checks[2m > [22mshould identify auth errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mError Type Checks[2m > [22mshould identify non-auth errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Handling Library[2m > [22mErrorCode Enums[2m > [22mshould have all required error codes
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museProducts with error handling[2m > [22mshould handle validation errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museProducts with error handling[2m > [22mshould handle network errors in product fetching
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museProducts with error handling[2m > [22mshould retry failed requests
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museCart with error handling[2m > [22mshould handle add to cart errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museCart with error handling[2m > [22mshould handle out of stock errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museCart with error handling[2m > [22mshould rollback optimistic updates on error
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museAuth with error handling[2m > [22mshould handle login errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museAuth with error handling[2m > [22mshould handle token expiration
+ [32m✓[39m test/error-handling.test.ts[2m > [22mHook Error Handling[2m > [22museAuth with error handling[2m > [22mshould clear auth on unauthorized
+ [32m✓[39m test/error-handling.test.ts[2m > [22mAPI Error Responses[2m > [22mshould follow standard error response format
+ [32m✓[39m test/error-handling.test.ts[2m > [22mAPI Error Responses[2m > [22mshould include context in error responses
+ [32m✓[39m test/error-handling.test.ts[2m > [22mAPI Error Responses[2m > [22mshould mask sensitive information
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Recovery Strategies[2m > [22mshould retry transient errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Recovery Strategies[2m > [22mshould use circuit breaker for degraded services
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Recovery Strategies[2m > [22mshould fallback to cached data
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Recovery Strategies[2m > [22mshould queue offline requests
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Logging[2m > [22mshould log errors with context
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Logging[2m > [22mshould identify critical errors
+ [32m✓[39m test/error-handling.test.ts[2m > [22mError Logging[2m > [22mshould sanitize PII from logs
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Auto-Checkout[2m > [22msucceeds when product matches are relevant and within budget[33m 386[2mms[22m[39m
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Amount[2m > [22mrejects empty amount
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Amount[2m > [22mrejects zero amount
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Amount[2m > [22mrejects negative amount
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Amount[2m > [22mrejects amount over 100000
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Amount[2m > [22maccepts valid amount
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — UPI[2m > [22mrejects UPI ID without @
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — UPI[2m > [22mrejects too-short UPI ID
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — UPI[2m > [22mrejects empty UPI ID
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — UPI[2m > [22maccepts valid UPI ID
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — UPI[2m > [22maccepts UPI ID with long format
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22maccepts fully valid card details
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects card number shorter than 15 digits
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects card number longer than 19 digits
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22maccepts 15-digit card (Amex)
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects empty cardholder name
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects single-char cardholder name
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects invalid expiry format
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects month > 12
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects month 0
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects expired card
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22maccepts future expiry
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects CVV shorter than 3 digits
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mrejects CVV longer than 4 digits
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22maccepts 4-digit CVV (Amex)
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Credit/Debit Card[2m > [22mworks for debit_card payment method too
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Net Banking[2m > [22mrejects when no bank selected
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Net Banking[2m > [22maccepts when bank is selected
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Mock Bypass[2m > [22mskips all validation when mockBypass is true
+ [32m✓[39m test/unit/payment-validation.test.ts[2m > [22mPayment Validation — Mock Bypass[2m > [22mvalidates normally when mockBypass is false
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Core Flow[2m > [22mresult returned has correct item structure (matches + summary)[33m 782[2mms[22m[39m
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould initialise with idle state
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Auto-Checkout[2m > [22msucceeds with correct products for "Pen" (low-value item)[33m 577[2mms[22m[39m
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould run all three agents and produce a decision
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould render product name[33m 464[2mms[22m[39m
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould render formatted price
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show discount badge when originalPrice is set
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show COD badge when codAvailable is true
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show EMI badge when hasEMI is true
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show trust score badge
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show price trend down indicator
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show delivery ETA
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show AI+ badge on all products
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show AI+ badge regardless of aiRecommended flag
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould call onAddToCart when add-to-cart is clicked
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould toggle wishlist state on heart click in hover overlay
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould render out-of-stock product without crashing
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould handle missing optional fields gracefully
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould show strikethrough original price
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mshould render star ratings based on product.rating
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mR5 should render Buy Now element with title="Buy Now" after hover
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mR5 Buy Now element should NOT carry a Zap/lightning aria-label — uses CreditCard now
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mR5 should call onBuyNow when Buy Now element is clicked
+ [32m✓[39m test/unit/product-card.test.tsx[2m > [22mAmazonProductCard[2m > [22mR5 AI+ badge (Zap icon) is still present on product tile
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould rank products with keyword match higher
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Auto-Checkout[2m > [22mreturns failure response (not crash) for unknown product[33m 425[2mms[22m[39m
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould increase preference weight after approval feedback
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould decrease preference weight after rejection feedback
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould handle empty product list gracefully
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould handle empty query gracefully
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Core Flow[2m > [22mplaces multi-item order successfully[33m 1106[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Auto-Checkout[2m > [22mincludes failureCode when auto-checkout fails[33m 439[2mms[22m[39m
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould reset state correctly
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould track behaviour events correctly
+ [32m✓[39m test/unit/useAutopilot.test.ts[2m > [22museAutopilot hook[2m > [22mshould not run when already running (debounce)
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Auto-Checkout[2m > [22mreturns results with ₹ in savings format[33m 409[2mms[22m[39m
+ [31m×[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Order Persistence[2m > [22mcreates an order that appears in GET /api/orders[33m 703[2mms[22m[39m
+[31m   → expected false to be true // Object.is equality[39m
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Order Persistence[2m > [22mcreated order has correct items in the order detail
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22mrejects empty items array[33m 491[2mms[22m[39m
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mparses valid mock-1 to index 0
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mparses mock-100 to index 99
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mparses mock-21000 to index 20999
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for mock-0
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for mock-21001 (out of range)
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for non-mock format
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for empty string
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for mock- without number
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for mock-abc
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mparseMockId[2m > [22mreturns null for negative mock--1
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Determinism[2m > [22mgenerates same product for same index
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Determinism[2m > [22mgenerates different products for different indices
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mreturns correct id format
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mreturns id mock-100 for index 99
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mhas positive price
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mhas rating between 3.5 and 5.0
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mhas valid category
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mmaps index 0 to Apple brand
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Structure[2m > [22mmaps index 1 to Samsung brand
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Stock Status[2m > [22mindex 0 is in stock (0 % 20 === 0 is out of stock)
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Stock Status[2m > [22mindex 1 is in stock
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Stock Status[2m > [22mindex 20 is out of stock
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Stock Status[2m > [22mindex 19 is in stock
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Category Rotation[2m > [22mindex 0-999 maps to first category (Smartphones)
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Category Rotation[2m > [22mindex 1000-1999 maps to second category (Laptops)
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Category Rotation[2m > [22mbrand repeats every 10 products within a category
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Price Variation[2m > [22mprice variant is within 85-115% of base price
+ [32m✓[39m test/unit/product-api.test.ts[2m > [22mgenerateBasicMockProduct — Price Variation[2m > [22mdifferent indices produce different prices within range
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22maccepts a fully valid form
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects missing name
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects missing line1
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects missing city
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects missing state
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects missing pincode
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects 5-digit pincode
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects 7-digit pincode
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects non-numeric pincode
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22maccepts valid 10-digit phone
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22maccepts phone with spaces and strips them
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22mrejects short phone number
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22maccepts empty phone (optional field)
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Form — Validation[2m > [22maccepts undefined phone (optional field)
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22msets new address as default shipping when requested
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22msets new address as default billing when requested
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22msets new address as both default shipping and billing
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22mdoes not change existing defaults when neither checkbox is checked
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22mreplaces old shipping default with new address id
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22mreplaces old billing default with new address id
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — After Add[2m > [22mnew address id becomes both defaults when both checked, overriding old ones
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — Delete Logic[2m > [22mclears billing default when that address is deleted
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — Delete Logic[2m > [22mclears shipping default when that address is deleted
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — Delete Logic[2m > [22mclears both when same-address is billing and shipping default
+ [32m✓[39m test/unit/profile-address.test.ts[2m > [22mAddress Defaults — Delete Logic[2m > [22mleaves defaults unchanged when a non-default address is deleted
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould import without errors
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould have correct initial state
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould set search query
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould set sort by option
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould set filter state
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould set scroll position
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould set sphere category
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould reset all state
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould persist to sessionStorage on state change
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould hydrate from sessionStorage
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould hydrate idempotently (double-hydrate safe)
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould restore filter state with categories for hydration gate
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould handle empty sessionStorage gracefully during hydrate
+ [32m✓[39m test/unit/product-page-store.test.ts[2m > [22mProduct Page Store[2m > [22mshould handle malformed sessionStorage data
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mresolves a product and caches the result
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mreturns cached result without calling fetcher again
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mreturns null when fetcher returns null
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mhandles missing image gracefully
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mhandles fetcher throwing error gracefully
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Resolution Cache[2m > [22mcaches different products independently
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22muses productSlug when available
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22muses productId when productSlug is missing
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22mfalls back to search URL when both slug and id are missing
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22mencodes special characters in search fallback
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22mhandles empty productName in search fallback
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22mprefers productSlug over productId
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Product Link URL Construction[2m > [22mresolved slug from cache creates correct URL
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Display Image Resolution Priority[2m > [22muses direct imageUrl from DB when available
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Display Image Resolution Priority[2m > [22mfalls back to resolved API image when DB image is missing
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Display Image Resolution Priority[2m > [22mreturns empty string when both are missing
+ [32m✓[39m test/unit/order-detail-resolution.test.ts[2m > [22mOrder Detail — Display Image Resolution Priority[2m > [22mtreats empty string DB image as missing, uses resolved
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould calculate exponential backoff delay correctly
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould cap backoff at MAX_RETRY_DELAY (10000ms)
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould not retry on 4xx errors
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould retry on 5xx errors up to max retries
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould succeed on retry after initial failure
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould handle network errors with retry
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mshould return text data when content-type is not JSON
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22msafeGet should use GET method
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22msafePost should send JSON body
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mfetchWithRetry should throw on final failure
+ [32m✓[39m test/unit/safe-api.test.ts[2m > [22mSafe API - Exponential Backoff[2m > [22mfetchWithRetry should return Response on success
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mcomputeDiscoveryScore[2m > [22mreturns 0 for all-zero factors
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mcomputeDiscoveryScore[2m > [22mreturns 1 for all-one factors
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mcomputeDiscoveryScore[2m > [22mweights CTR highest (0.30)
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mcomputeDiscoveryScore[2m > [22mweights conversion second (0.25)
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mcomputeDiscoveryScore[2m > [22mcomputes weighted sum correctly
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mreturns empty array for empty categories
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mgenerates items for all categories
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mincludes category-type items
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mincludes trending items
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mincludes deal items
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mitems are sorted by score descending
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22meach item has required fields
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mcategory items have correct queryParams
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mdeal items have price-related queryParams
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgenerateDiscoveryItems[2m > [22mscores are between 0 and 1
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeIcon[2m > [22mreturns valid icon for trending
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeIcon[2m > [22mreturns valid icon for deal
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeIcon[2m > [22mreturns default for category
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns trending label with emoji
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns deal label with emoji
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns personalized label
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns limited stock label
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns new arrival label
+ [32m✓[39m test/sphere/discoveryEngine.test.ts[2m > [22mgetDiscoveryTypeLabel[2m > [22mreturns category label as default
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mDebounce utility[2m > [22mdelays function execution
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mDebounce utility[2m > [22monly calls once for rapid sequential calls
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mDebounce utility[2m > [22mresets the timer on each call
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mDebounce utility[2m > [22mpasses arguments to the debounced function
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mDebounce utility[2m > [22mhandles multiple independent debounced functions
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mstarts as not visible
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mcan be shown explicitly
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mhides on scroll when delta exceeds threshold
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mdoes not hide on small scroll delta
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mcalls onChange(false) when scroll exceeds threshold
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mupdates lastScrollY after hiding
+ [32m✓[39m test/unit/debounce-scroll.test.ts[2m > [22mScroll-Aware Filter Visibility[2m > [22mcleans up timer on cleanup()
+ [31m×[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mLLM_MODELS constant[2m > [22mexports correct list of available models
+[31m   → expected [ { id: 'gemini-flash', …(6) }, …(5) ] to have a length of 3 but got 6[39m
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mLLM_MODELS constant[2m > [22mincludes Claude Opus model
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mLLM_MODELS constant[2m > [22mincludes GPT-4 Turbo model
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mLLM_MODELS constant[2m > [22mincludes GPT-3.5 Turbo budget model
+ [31m×[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mvalidates input and rejects empty query
+[31m   → expected undefined to be +0 // Object.is equality[39m
+ [31m×[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mrejects query shorter than 3 characters
+[31m   → expected undefined to be +0 // Object.is equality[39m
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mreturns result for valid query (will use fallback if API keys missing)
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mcompresses intent response to reduce token usage[33m 904[2mms[22m[39m
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mmarks fallback enrichment appropriately
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22msupports auto model selection with fallback chain[33m 1150[2mms[22m[39m
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22menrichWithRealLLM()[2m > [22mcreates valid enrichment output structure[33m 307[2mms[22m[39m
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mModel cost estimation[2m > [22mcalculates Claude Opus cost correctly
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mModel cost estimation[2m > [22mcalculates GPT-4 Turbo cost correctly
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mModel cost estimation[2m > [22mGPT-3.5 Turbo is significantly cheaper
+ [32m✓[39m test/unit/llm-enrichment.test.ts[2m > [22mLLM Enrichment[2m > [22mActive record filtering[2m > [22mrespects isActive flag during batch enrichment
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackSphereExpand[2m > [22mincrements expand count
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackSphereDock[2m > [22mrecords engagement time
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemClick[2m > [22mincrements item click count
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemClick[2m > [22mrecords clicked item details
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemClick[2m > [22mfires analytics API POST
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemClick[2m > [22mkeeps only last 50 clicks
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemHover[2m > [22mincrements hover count
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackBackdropDismiss[2m > [22mincrements backdrop dismiss count and docks
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mtrackItemImpressions[2m > [22madds impression count
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mgetSphereClickThroughRate[2m > [22mreturns 0 when no impressions
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mgetSphereClickThroughRate[2m > [22mcomputes CTR correctly
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mgetAverageEngagementTime[2m > [22mreturns 0 when no expands
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mgetRepeatUsageCount[2m > [22mreturns expand count
+ [32m✓[39m test/sphere/sphereAnalytics.test.ts[2m > [22mresetSphereMetrics[2m > [22mresets all metrics to zero
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mwashing machine — brand + budget already detected[2m > [22mgenerates exactly 2 questions (use_case + feature) when budget & brand are known
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mwashing machine — brand + budget already detected[2m > [22mdoes NOT generate a budget question when budget is already known
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mwashing machine — brand + budget already detected[2m > [22mdoes NOT generate a brand question when brand is already known
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mwashing machine — brand + budget already detected[2m > [22mgenerates use_case and/or feature questions
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mwashing machine — brand + budget already detected[2m > [22meach question has required fields
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mphone — nothing detected[2m > [22mgenerates up to 3 questions
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mphone — nothing detected[2m > [22mgenerates a budget question first when budget is unknown
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mlaptop — budget known, no brand/use_case[2m > [22mdoes not generate budget question
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mlaptop — budget known, no brand/use_case[2m > [22mgenerates brand and use_case questions for laptop
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mquestion IDs are sequential[2m > [22massigns sequential ids q1, q2, q3
+ [32m✓[39m lib/smart-intent/__tests__/question-generator.test.ts[2m > [22mgenerateQuestions[2m > [22mMAX_QUESTIONS cap[2m > [22mnever exceeds 3 questions
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfibonacciSphere[2m > [22mreturns exactly count positions
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfibonacciSphere[2m > [22meach point is approximately at the given radius
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfibonacciSphere[2m > [22mpoints are reasonably spread (min distance > 0)
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfibonacciSphere[2m > [22mhandles count=1 without error
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfibonacciSphere[2m > [22mhandles count=0 without error
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22moutwardQuaternion[2m > [22mreturns a unit quaternion
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22moutwardQuaternion[2m > [22mplane facing +X rotates (0,0,1) to (1,0,0)
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22moutwardQuaternion[2m > [22mplane facing +Y rotates (0,0,1) to (0,1,0)
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfillSphereNodes[2m > [22mreturns exact target count
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfillSphereNodes[2m > [22mduplicates round-robin when categories < targetCount
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfillSphereNodes[2m > [22mreturns empty for no categories
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mfillSphereNodes[2m > [22moriginal index cycles correctly
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mgetCategoryIcon[2m > [22mreturns known icon for Electronics
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mgetCategoryIcon[2m > [22mreturns default icon for unknown category
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mgetCategoryIcon[2m > [22mreturns discovery type icon for trending
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mgetCategoryIcon[2m > [22mreturns discovery type icon for deal
+ [32m✓[39m test/sphere/sphereUtils.test.ts[2m > [22mgetCategoryIcon[2m > [22mreturns discovery type icon for limited_stock
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22minitialises with correct default state
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22msetSelectedCategory updates selectedCategory
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22msetSelectedCategory accepts null to clear selection
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mdock() sets isSphereDocked=true and isSphereExpanded=false
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mexpand() reverses dock()
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22msetAllCategories stores all and sets first batch as visible
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22msetAllCategories with ≤20 categories shows them all
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mnextBatch advances batchIndex when total > 20
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mnextBatch wraps around to beginning
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mnextBatch is a no-op when totalCategories <= 20
+ [32m✓[39m test/sphere/useSphereStore.test.ts[2m > [22museSphereStore[2m > [22mreset() restores initial state
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould import without errors
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould have correct initial state
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould add a message
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould set active tab
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould set last query
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould clear all state
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould set approval state
+ [32m✓[39m test/unit/chat-store.test.ts[2m > [22mChat Store[2m > [22mshould set timeline steps
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22mrejects items with special characters in productName[33m 9011[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22mrejects negative budget
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22monly enriches ACTIVE + UNENRICHED records
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22msupports model selection via request body
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22mvalidates model selection against available models
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22mreturns cost estimation in response
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22mtracks enrichment sources in response
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22mhandles LLM errors gracefully with fallback
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mPOST /api/admin/learning - enrich-batch action[2m > [22mrespects forceRealLLM parameter
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mGET /api/admin/learning?action=models[2m > [22mreturns list of available LLM models
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mGET /api/admin/learning?action=models[2m > [22mincludes default model in response
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mGET /api/admin/learning?action=models[2m > [22mprovides model descriptions for UI display
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mActive record detection[2m > [22mdoes NOT enrich inactive records during batch
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mActive record detection[2m > [22mallows toggling isActive before enrichment
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mActive record detection[2m > [22monly counts 30-day recent records
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mCost optimization[2m > [22mcompresses intent response to minimize tokens
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mCost optimization[2m > [22msuggests cheaper model for large batches
+ [32m✓[39m test/integration/learning-batch-enrichment.test.ts[2m > [22mLearning API - Batch Enrichment Integration[2m > [22mCost optimization[2m > [22mestimates total cost before batch processing
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22mrejects quantity < 1
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22mrejects more than 50 items
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Validation[2m > [22maccepts valid multi-item list[33m 306[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Brand & Budget Filtering[2m > [22mreturns matches when preferred brand is specified
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Wallet Balance[2m > [22mwallet balance decreases after successful auto-checkout[33m 10549[2mms[22m[39m
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Brand & Budget Filtering[2m > [22mpenalizes over-budget products in matchScore
+ [32m✓[39m test/unit/auto-checkout.test.ts[2m > [22mShopping List API — Brand & Budget Filtering[2m > [22mfilters EMI-only when emiOnly is true
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAuthenticated Auto-Checkout — Wallet Balance[2m > [22mautoCheckout returns walletBalanceAfter as number on success
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mAnonymous Auto-Checkout[2m > [22mplaces a simulated order without auth (ORD-AUTO- prefix)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List Search — Structure & Cache[2m > [22meach match has required fields: name, brand, price, rating, matchScore
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mrenders with testid sphere-fallback
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mrenders all category chips
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mcalls onCategorySelect with category name on chip click
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mmarks selected category chip as aria-pressed=true
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mshows clear button when a category is selected
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mdoes not show clear button when no category selected
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mclicking clear triggers onCategorySelect with empty string
+ [32m✓[39m test/sphere/CategorySphereFallback.test.tsx[2m > [22mCategorySphereFallback[2m > [22mrenders count abbreviations (40k, 8k, etc.)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List Search — Structure & Cache[2m > [22mforceFresh=true always re-runs search (fromCache=false)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List Search — Structure & Cache[2m > [22msummary has totalItems, totalMatches, estimatedSavings
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List Search — Structure & Cache[2m > [22mreturns listId for every successful response
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mrecords impression and returns 0 boost initially
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mclick after impressions generates CTR-based boost
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22madd_to_cart increases boost
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mpurchase gives highest boost
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mbatch lookup works
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mrecordImpressions batch works
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mgetTrendingProducts returns sorted by boost
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22munknown product returns 0 boost
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mboost is capped at 50
+ [32m✓[39m lib/smart-intent/__tests__/product-learning.test.ts[2m > [22mProductLearning[2m > [22mstats reflect correct counts
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List Search — Structure & Cache[2m > [22mcached response contains cacheInfo field (second identical request)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List — AI Scoring[2m > [22mbest match has higher matchScore than worst match
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List — AI Scoring[2m > [22mpreferred brand appears first (or in top 2) when brand preference is set
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects product name with special characters (XSS prevention)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects SQL injection in product name
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects empty product name
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects > 50 items
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects zero quantity
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22mrejects negative budget
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22maccepts null budget (no budget filter)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22maccepts product names with hyphens and dots (model numbers like WH-1000XM5)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Edge Case Validation[2m > [22maccepts multi-item request (3 different categories)
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Response Contract[2m > [22mGET /api/shopping-list returns lists array
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Response Contract[2m > [22mPOST returns 200 for valid request
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Response Contract[2m > [22mautoCheckout field is null when autoCheckout=false
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Response Contract[2m > [22mwhatsappSent is boolean in response
+ [32m✓[39m test/unit/auto-checkout-wallet.test.ts[2m > [22mShopping List API — Response Contract[2m > [22memailSent is false (not yet configured)

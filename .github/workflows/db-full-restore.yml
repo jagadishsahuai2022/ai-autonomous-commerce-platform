@@ -1,0 +1,253 @@
+name: DB — Full Restore from Repo Dump
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Restores the complete database (schema + all data) on the Hostinger VPS
+# using the `data/db-migration-dump.sql` file committed in this repository.
+#
+# When to use:
+#   • Fresh VPS provisioning — first-time database population
+#   • After a VPS wipe / re-provision
+#   • Disaster recovery — restore from last committed dump
+#   • QA/Staging reset — mirror production data on a test server
+#
+# What this workflow does:
+#   1. Checks out the repo (includes data/db-migration-dump.sql)
+#   2. Uploads the dump to VPS via SCP
+#   3. (Optional) Takes a safety backup of the current VPS DB
+#   4. Restores the dump inside dc-latest-postgres container
+#   5. Verifies row counts for key tables
+#   6. Cleans up the temp file from VPS
+#
+# Required GitHub Secrets:
+#   SERVER_IP   — VPS IP address (e.g. 195.35.12.100)
+#   SERVER_USER — SSH user (usually root)
+#   SSH_KEY     — Private SSH key content (PEM format)
+#   SSH_PORT    — SSH port (default 22; set if VPS uses a custom port)
+#
+# Notes:
+#   • This is a FULL RESTORE — it drops and recreates all tables.
+#   • All existing data on the VPS will be REPLACED.
+#   • Run db-export-local.sh locally and commit data/db-migration-dump.sql
+#     before triggering this workflow to ensure the dump is current.
+# ──────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_backup:
+        description: 'Skip VPS safety backup before restore?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      confirm:
+        description: 'Type "yes" to confirm — this OVERWRITES the VPS database'
+        required: true
+        default: ''
+
+jobs:
+  full-restore:
+    name: Full DB Restore → VPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+
+    env:
+      CONTAINER: dc-latest-postgres
+      DB_USER: admin
+      DB_NAME: delegatecart
+      REMOTE_DUMP: /tmp/delegatecart-full-restore.sql
+      DUMP_FILE: data/db-migration-dump.sql
+
+    steps:
+      # ── Guard: require explicit confirmation ────────────────────────────────
+      - name: Validate confirmation
+        run: |
+          if [[ "${{ inputs.confirm }}" != "yes" ]]; then
+            echo "❌ Confirmation required — type 'yes' in the confirm input"
+            exit 1
+          fi
+          echo "✅ Confirmed. Proceeding with full database restore."
+
+      # ── Checkout repo (includes data/db-migration-dump.sql) ────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false   # dump is plain SQL, not LFS
+
+      - name: Verify dump file exists
+        run: |
+          if [[ ! -f "${{ env.DUMP_FILE }}" ]]; then
+            echo "❌ Dump file not found: ${{ env.DUMP_FILE }}"
+            echo "   Run: bash scripts/db-export-local.sh"
+            echo "   Then commit and push data/db-migration-dump.sql"
+            exit 1
+          fi
+          DUMP_SIZE=$(du -sh "${{ env.DUMP_FILE }}" | cut -f1)
+          DUMP_LINES=$(wc -l < "${{ env.DUMP_FILE }}")
+          echo "✅ Dump file: ${{ env.DUMP_FILE }}"
+          echo "   Size : $DUMP_SIZE"
+          echo "   Lines: $DUMP_LINES"
+
+      # ── Set up SSH key ──────────────────────────────────────────────────────
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      # ── Upload dump to VPS ──────────────────────────────────────────────────
+      - name: Upload dump to VPS via SCP
+        run: |
+          echo "📤 Uploading ${{ env.DUMP_FILE }} → VPS:${{ env.REMOTE_DUMP }}"
+          scp \
+            -i ~/.ssh/deploy_key \
+            -P "${{ secrets.SSH_PORT || 22 }}" \
+            -o StrictHostKeyChecking=accept-new \
+            "${{ env.DUMP_FILE }}" \
+            "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ env.REMOTE_DUMP }}"
+          echo "✅ Upload complete"
+
+      # ── Verify VPS container is running ────────────────────────────────────
+      - name: Verify VPS container status
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            if ! docker ps --format '{{.Names}}' | grep -q "^${{ env.CONTAINER }}$"; then
+              echo "❌ Container '${{ env.CONTAINER }}' is not running on VPS."
+              echo "   Start it: docker compose -f docker-compose.latest.yml up -d postgres"
+              exit 1
+            fi
+            echo "✅ Container ${{ env.CONTAINER }} is running"
+
+            # Wait for postgres to be ready
+            for i in $(seq 1 10); do
+              docker exec ${{ env.CONTAINER }} pg_isready -U ${{ env.DB_USER }} -q && break
+              echo "   Postgres not ready yet, waiting 3s... ($i/10)"
+              sleep 3
+            done
+            echo "✅ Postgres is ready"
+
+      # ── (Optional) Safety backup of current VPS DB ─────────────────────────
+      - name: Backup current VPS database
+        if: inputs.skip_backup == 'false'
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+            BACKUP_FILE="/tmp/vps-backup-before-restore-$(date +%Y%m%d_%H%M%S).sql"
+            echo "📦 Creating safety backup → $BACKUP_FILE ..."
+            docker exec -t ${{ env.CONTAINER }} pg_dump \
+              -U ${{ env.DB_USER }} \
+              --clean --if-exists \
+              --no-owner --no-acl \
+              ${{ env.DB_NAME }} > "$BACKUP_FILE"
+            BACKUP_SIZE=$(du -sh "$BACKUP_FILE" | cut -f1)
+            echo "✅ VPS backup saved: $BACKUP_FILE ($BACKUP_SIZE)"
+            echo "   Remove manually when no longer needed: rm $BACKUP_FILE"
+
+      # ── Restore the dump ────────────────────────────────────────────────────
+      - name: Restore full database dump
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 25m
+          script: |
+            set -euo pipefail
+            DUMP_SIZE=$(du -sh "${{ env.REMOTE_DUMP }}" | cut -f1)
+            echo "⏳ Restoring ${{ env.DB_NAME }} from dump ($DUMP_SIZE)..."
+            echo "   (This may take several minutes for large datasets)"
+
+            # ── Drop & recreate the database for a clean slate ─────────────────
+            # Rather than patching DROP statements in the dump, we drop the whole
+            # database first. This avoids all FK-dependency errors caused by tables
+            # that exist on VPS but are not in the local dump (AiPreference, etc.).
+            # With an empty database all the IF EXISTS drop statements are no-ops.
+            echo "🔌 Terminating active connections to ${{ env.DB_NAME }}..."
+            docker exec ${{ env.CONTAINER }} psql -U ${{ env.DB_USER }} -d postgres -c \
+              "SELECT pg_terminate_backend(pid)
+               FROM pg_stat_activity
+               WHERE datname = '${{ env.DB_NAME }}' AND pid <> pg_backend_pid();"
+
+            echo "🗑️  Dropping database ${{ env.DB_NAME }}..."
+            docker exec ${{ env.CONTAINER }} psql -U ${{ env.DB_USER }} -d postgres -c \
+              "DROP DATABASE IF EXISTS \"${{ env.DB_NAME }}\";"
+
+            echo "✨ Creating fresh database ${{ env.DB_NAME }}..."
+            docker exec ${{ env.CONTAINER }} psql -U ${{ env.DB_USER }} -d postgres -c \
+              "CREATE DATABASE \"${{ env.DB_NAME }}\" OWNER ${{ env.DB_USER }};"
+
+            # Run psql restore into the newly-created empty database
+            docker exec -i ${{ env.CONTAINER }} \
+              psql -U ${{ env.DB_USER }} -d ${{ env.DB_NAME }} \
+              --set ON_ERROR_STOP=on \
+              < "${{ env.REMOTE_DUMP }}"
+
+            echo ""
+            echo "✅ Restore complete at $(date -u)"
+
+      # ── Verify key table counts ─────────────────────────────────────────────
+      - name: Verify restored data
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            echo "🔍 Verifying restored data..."
+            docker exec ${{ env.CONTAINER }} psql -U ${{ env.DB_USER }} -d ${{ env.DB_NAME }} -c "
+              SELECT
+                'Product'              AS table_name, COUNT(*) AS rows FROM \"Product\"
+              UNION ALL SELECT
+                'ProductTagMap',                       COUNT(*) FROM \"ProductTagMap\"
+              UNION ALL SELECT
+                'ProductCategoryMap',                  COUNT(*) FROM \"ProductCategoryMap\"
+              UNION ALL SELECT
+                'ProductSubCategoryMap',               COUNT(*) FROM \"ProductSubCategoryMap\"
+              UNION ALL SELECT
+                'ProductTag',                          COUNT(*) FROM \"ProductTag\"
+              UNION ALL SELECT
+                'ProductCategory',                     COUNT(*) FROM \"ProductCategory\"
+              UNION ALL SELECT
+                'ProductSubCategory',                  COUNT(*) FROM \"ProductSubCategory\"
+              UNION ALL SELECT
+                'ScoringDimension',                    COUNT(*) FROM \"ScoringDimension\"
+              UNION ALL SELECT
+                'User',                                COUNT(*) FROM \"User\"
+              ORDER BY rows DESC;
+            "
+
+      # ── Cleanup temp files on VPS ───────────────────────────────────────────
+      - name: Cleanup temp dump on VPS
+        if: always()
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            rm -f "${{ env.REMOTE_DUMP }}" && echo "✅ Temp dump removed from VPS" || true
+
+      # ── Cleanup SSH key ─────────────────────────────────────────────────────
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

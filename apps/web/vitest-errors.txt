@@ -1,0 +1,55 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+[90mstderr[2m | test/unit/round27-llm-connectivity.test.ts[2m > [22m[2menrichWithRealLLM — forceRealLLM behavior[2m > [22m[2mreturns null when forceRealLLM=true and no API key[22m[39m
+[LLM] Claude API key not configured
+
+[90mstderr[2m | test/unit/round27-llm-connectivity.test.ts[2m > [22m[2menrichWithRealLLM — forceRealLLM behavior[2m > [22m[2mreturns rule-based result when forceRealLLM=false and no API key[22m[39m
+[LLM] Claude API key not configured
+
+[90mstderr[2m | test/unit/product-card.test.tsx[2m > [22m[2mAmazonProductCard[2m > [22m[2mshould render product name[22m[39m
+Warning: React does not recognize the `whileHover` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whilehover` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:4:27
+    at a
+    at default (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:12:15)
+    at AmazonProductCard (D:\PersonalProject\GIT\delegatecart\apps\web\components\product\AmazonProductCard.tsx:76:3)
+
+[90mstderr[2m | test/unit/product-card.test.tsx[2m > [22m[2mAmazonProductCard[2m > [22m[2mshould toggle wishlist state on heart click in hover overlay[22m[39m
+Warning: React does not recognize the `whileTap` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whiletap` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:4:27
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:4:27
+    at AnimatePresence (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:6:23)
+    at div
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:4:27
+    at a
+    at default (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test.tsx:12:15)
+    at AmazonProductCard (D:\PersonalProject\GIT\delegatecart\apps\web\components\product\AmazonProductCard.tsx:76:3)
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2mreturns result for valid query (will use fallback if API keys missing)[22m[39m
+[LLM] Claude API key not configured
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2mcompresses intent response to reduce token usage[22m[39m
+[LLM] OpenAI API error: [33m401[39m Incorrect API key provided: test-ope***-key. You can find your API key at https://platform.openai.com/account/api-keys.
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2mmarks fallback enrichment appropriately[22m[39m
+[LLM] Claude API key not configured
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2msupports auto model selection with fallback chain[22m[39m
+[LLM] Google Gemini API key not configured
+[LLM] Groq API key not configured
+[LLM] OpenRouter API key not configured
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2msupports auto model selection with fallback chain[22m[39m
+[LLM] Claude API error: [33m401[39m invalid x-api-key
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2msupports auto model selection with fallback chain[22m[39m
+[LLM] OpenAI API error: [33m401[39m Incorrect API key provided: test-ope***-key. You can find your API key at https://platform.openai.com/account/api-keys.
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2msupports auto model selection with fallback chain[22m[39m
+[LLM] OpenAI API error: [33m401[39m Incorrect API key provided: test-ope***-key. You can find your API key at https://platform.openai.com/account/api-keys.
+
+[90mstderr[2m | test/unit/llm-enrichment.test.ts[2m > [22m[2mLLM Enrichment[2m > [22m[2menrichWithRealLLM()[2m > [22m[2mcreates valid enrichment output structure[22m[39m
+[LLM] OpenAI API error: [33m401[39m Incorrect API key provided: test-ope***-key. You can find your API key at https://platform.openai.com/account/api-keys.
+

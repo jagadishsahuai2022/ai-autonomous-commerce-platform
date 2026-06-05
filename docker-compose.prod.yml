@@ -1,0 +1,95 @@
+# docker-compose.prod.yml
+# Production overrides for Hostinger VPS deployment
+#
+# Usage (always pair with the base file):
+#   docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d --build
+#
+# What this file does:
+#   - Binds app ports to 127.0.0.1 only (Nginx reverse proxy handles public traffic)
+#   - Unexposes infrastructure ports (postgres, redis, kafka) from the host
+#   - Sets NEXTAUTH_URL and public API URLs to your domain
+#   - Adds restart policies so containers recover after reboots
+#   - Adds memory limits (safe for KVM 2 / 8 GB; comfortable for KVM 4 / 16 GB)
+
+volumes:
+  dc-prod-pgdata:
+    driver: local
+  dc-prod-redisdata:
+    driver: local
+
+services:
+
+  # ── PostgreSQL — not exposed to host; internal Docker network only ────────────
+  postgres:
+    restart: unless-stopped
+    ports: []
+    volumes:
+      - dc-prod-pgdata:/var/lib/postgresql/data
+
+  # ── Redis — not exposed to host ──────────────────────────────────────────────
+  redis:
+    restart: unless-stopped
+    ports: []
+    volumes:
+      - dc-prod-redisdata:/data
+
+  # ── ZooKeeper — not exposed to host ──────────────────────────────────────────
+  zookeeper:
+    restart: unless-stopped
+    ports: []
+
+  # ── Kafka — only internal Docker listener; PLAINTEXT_HOST removed ─────────────
+  kafka:
+    restart: unless-stopped
+    ports: []
+    environment:
+      # Override: only internal listener, no external PLAINTEXT_HOST
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+
+  # ── NestJS API — localhost-only; Nginx proxies /api/* → :3001 ────────────────
+  api:
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3001"
+    environment:
+      # Allow requests originating from the production domain (server-to-server
+      # calls from Next.js go through Docker internal network so origin is null;
+      # real browser requests never reach NestJS directly with the new Nginx config).
+      CORS_ORIGIN: https://${DOMAIN:-yourdomain.com}
+
+  # ── Next.js Web — localhost-only; Nginx proxies / → :3000 ────────────────────
+  web:
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      # NEXT_PUBLIC_API_URL uses a relative path — works on any domain without
+      # needing to bake the domain into the Docker image at build time.
+      # The browser calls /api/v1/* → same-origin → Nginx → web container →
+      # Next.js rewrite → NestJS internally via API_INTERNAL_URL.
+      NEXT_PUBLIC_API_URL: /api/v1
+      NEXT_PUBLIC_AI_SERVICE_URL: /ai
+      # NEXT_PUBLIC_WS_URL: leave unset → useWebSocket falls back to window.location.origin
+      # so socket.io connects to the same domain and Nginx proxies /socket.io/ to NestJS.
+      NEXTAUTH_URL: https://${DOMAIN:-yourdomain.com}
+
+  # ── AI Service — localhost-only; Nginx proxies /ai/* → :8001 ─────────────────
+  ai-service:
+    restart: unless-stopped
+    ports: []
+
+  # ── Intent Parser — internal only (called by API/web over Docker network) ─────
+  intent-parser:
+    restart: unless-stopped
+    ports: []
+
+  # ── Product Aggregator — internal only ───────────────────────────────────────
+  product-aggregator:
+    restart: unless-stopped
+    ports: []
+
+  # ── Product Ranking Engine — internal only ────────────────────────────────────
+  product-ranking-engine:
+    restart: unless-stopped
+    ports: []

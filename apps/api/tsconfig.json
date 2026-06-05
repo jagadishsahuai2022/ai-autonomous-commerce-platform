@@ -1,0 +1,37 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "target": "ES2021",
+    "declaration": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": ["ES2021"],
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "strictFunctionTypes": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "types": ["node", "jest"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node"
+    }
+  },
+  "include": ["src/**/*", "test/**/*", "prisma/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

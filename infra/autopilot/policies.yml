@@ -1,0 +1,92 @@
+# Autonomous operations policies.
+# Each policy maps an alert → a set of actions, with safety guardrails.
+#
+# action types:
+#   restart        — docker restart <container>
+#   scale          — docker service scale (Swarm) or update replica count
+#   rollback       — docker service rollback (Swarm) / re-pull previous image tag
+#   log_incident   — record incident without taking action (observe-only)
+#
+# All actions are subject to global guardrails (see guardrails section).
+
+policies:
+
+  - name: restart-on-service-down
+    description: "Auto-restart a container that stops responding to /health"
+    trigger: ServiceDown
+    conditions:
+      - field: labels.severity
+        equals: critical
+    actions:
+      - type: restart
+        target_from_label: job   # derive container name from alert label
+    cooldown_minutes: 10
+    max_actions_per_hour: 3
+    verify_after_seconds: 30     # run health check 30 s after restart
+    enabled: true
+
+  - name: rollback-on-high-error-rate
+    description: "Roll back the API to the previous image if error rate exceeds 15 %"
+    trigger: HighErrorRate
+    conditions:
+      - field: value
+        greater_than: 0.15
+      - field: labels.job
+        equals: api
+    actions:
+      - type: rollback
+        target: api
+        image_env_var: API_IMAGE    # read previous image tag from env/state
+    cooldown_minutes: 30
+    max_actions_per_hour: 1
+    verify_after_seconds: 60
+    enabled: true
+
+  - name: scale-on-sustained-latency
+    description: "Scale API replicas when p95 latency stays above 2 s"
+    trigger: HighLatencyP95
+    conditions:
+      - field: labels.job
+        equals: api
+    actions:
+      - type: log_incident          # cautious: log only; manual scale preferred
+        message: "p95 latency threshold breached — consider manual scale-out"
+    cooldown_minutes: 15
+    max_actions_per_hour: 4
+    enabled: true
+
+  - name: log-kafka-lag
+    description: "Record a high-lag incident for post-mortem analysis"
+    trigger: KafkaConsumerLagHigh
+    actions:
+      - type: log_incident
+        message: "Kafka consumer lag exceeded 1000 messages"
+    cooldown_minutes: 5
+    max_actions_per_hour: 12
+    enabled: true
+
+  - name: restart-kafka-on-critical-lag
+    description: "Restart kafka consumer if lag becomes critically high"
+    trigger: KafkaConsumerLagCritical
+    actions:
+      - type: restart
+        target: ai-commerce-kafka
+    cooldown_minutes: 20
+    max_actions_per_hour: 2
+    verify_after_seconds: 45
+    enabled: false   # off by default — enable only in production after testing
+
+guardrails:
+  # Absolute cap: never take more than this many automated actions per hour
+  global_max_actions_per_hour: 10
+
+  # Never touch these containers automatically
+  protected_containers:
+    - dc-latest-postgres
+    - dc-latest-redis
+
+  # Kill-switch: set AUTOPILOT_ENABLED=false env var to halt all actions
+  kill_switch_env: AUTOPILOT_ENABLED
+
+  # If the same alert has fired > N times in 1 h, escalate to incident log only
+  escalation_threshold: 3

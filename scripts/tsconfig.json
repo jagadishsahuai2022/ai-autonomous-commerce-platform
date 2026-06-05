@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "types": ["node"],
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "isolatedModules": false,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "..",
+    "paths": {
+      "@prisma/client": ["apps/api/node_modules/@prisma/client"]
+    }
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}

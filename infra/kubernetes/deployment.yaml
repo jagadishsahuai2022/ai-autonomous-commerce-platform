@@ -1,0 +1,389 @@
+---
+# Kubernetes Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: delegatecart
+  labels:
+    name: delegatecart
+
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delegatecart-config
+  namespace: delegatecart
+data:
+  NODE_ENV: 'production'
+  LOG_LEVEL: 'INFO'
+  API_PREFIX: '/api/v1'
+  DEMO_MODE_ENABLED: 'true'
+  RATE_LIMITING_ENABLED: 'true'
+  METRICS_ENABLED: 'true'
+  TRACING_ENABLED: 'true'
+  CACHING_ENABLED: 'true'
+  CACHE_PRODUCTS: 'true'
+  CACHE_SEARCH: 'true'
+  CACHE_RANKINGS: 'true'
+
+---
+# Secret for sensitive data
+apiVersion: v1
+kind: Secret
+metadata:
+  name: delegatecart-secrets
+  namespace: delegatecart
+type: Opaque
+stringData:
+  JWT_SECRET: 'your-secure-jwt-secret-here-change-in-production'
+  DB_PASSWORD: 'your-db-password-here'
+  REDIS_PASSWORD: 'your-redis-password-here'
+  KAFKA_SASL_USERNAME: 'kafka-user'
+  KAFKA_SASL_PASSWORD: 'kafka-password'
+
+---
+# PostgreSQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: delegatecart
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+  type: ClusterIP
+
+---
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: delegatecart
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
+  type: ClusterIP
+
+---
+# NestJS API Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delegatecart-api
+  namespace: delegatecart
+  labels:
+    app: delegatecart-api
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: delegatecart-api
+  template:
+    metadata:
+      labels:
+        app: delegatecart-api
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9090'
+        prometheus.io/path: '/metrics'
+    spec:
+      serviceAccountName: delegatecart
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: api
+          image: delegatecart/api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: delegatecart-config
+            - secretRef:
+                name: delegatecart-secrets
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: REDIS_HOST
+              value: redis
+            - name: KAFKA_BROKERS
+              value: 'kafka:9092'
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: '500m'
+              memory: '512Mi'
+            limits:
+              cpu: '1000m'
+              memory: '1Gi'
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: tmp
+          emptyDir: {}
+
+---
+# API Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: delegatecart-api
+  namespace: delegatecart
+  labels:
+    app: delegatecart-api
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
+    - name: metrics
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+  selector:
+    app: delegatecart-api
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: delegatecart-api-hpa
+  namespace: delegatecart
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: delegatecart-api
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+
+---
+# Pod Disruption Budget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: delegatecart-api-pdb
+  namespace: delegatecart
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: delegatecart-api
+
+---
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: delegatecart
+  namespace: delegatecart
+
+---
+# ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: delegatecart
+rules:
+  - apiGroups: ['']
+    resources: ['configmaps', 'secrets']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['pods']
+    verbs: ['get', 'list']
+
+---
+# ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: delegatecart
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: delegatecart
+subjects:
+  - kind: ServiceAccount
+    name: delegatecart
+    namespace: delegatecart
+
+---
+# Next.js Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delegatecart-web
+  namespace: delegatecart
+  labels:
+    app: delegatecart-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: delegatecart-web
+  template:
+    metadata:
+      labels:
+        app: delegatecart-web
+    spec:
+      containers:
+        - name: web
+          image: delegatecart/web:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              value: 'http://delegatecart-api'
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: '250m'
+              memory: '256Mi'
+            limits:
+              cpu: '500m'
+              memory: '512Mi'
+
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: delegatecart-web
+  namespace: delegatecart
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: delegatecart-web
+
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delegatecart-ingress
+  namespace: delegatecart
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rate-limit: '100'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+spec:
+  tls:
+    - hosts:
+        - delegatecart.example.com
+        - api.delegatecart.example.com
+      secretName: delegatecart-tls
+  rules:
+    - host: delegatecart.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: delegatecart-web
+                port:
+                  number: 80
+    - host: api.delegatecart.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: delegatecart-api
+                port:
+                  number: 80

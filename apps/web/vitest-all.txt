@@ -1,0 +1,346 @@
+﻿node.exe : Debugger listening on 
+ws://127.0.0.1:56646/fab2f1b7-dd7f-4588-98d0-2fb6b95d4804
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\JAGADISH SAHU\AppData\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Debugger listen...d0-2fb6b95d4804 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger listening on ws://127.0.0.1:61472/083853de-6825-4848-8d64-7407d7a097b1
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+[33mThe CJS build of Vite's Node API is deprecated. See 
+https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for 
+more details.[39m
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mD:/PersonalProject/GIT/delegatecart/apps/web[39m
+
+ [32mΓ£ô[39m test/unit/cart.test.ts [2m ([22m[2m29 tests[22m[2m)[22m[90m 134[2mms[22m[39m
+ [32mΓ£ô[39m test/unit/shopping-list.test.ts [2m ([22m[2m53 tests[22m[2m)[22m[90m 106[2mms[22m[39m
+ [32mΓ£ô[39m test/unit/mock-product-generator.test.ts [2m ([22m[2m11 tests[22m[2m)[22m[33m 724[2mms[22m[39m
+ [32mΓ£ô[39m test/unit/product-card.test.tsx [2m ([22m[2m16 tests[22m[2m)[22m[33m 1067[2mms[22m[39m
+[90mstderr[2m | test/unit/product-card.test.tsx[2m > 
+[22m[2mAmazonProductCard[2m > [22m[2mshould render product name[22m[39m
+Warning: React does not recognize the `whileHover` prop on a DOM element. If 
+you intentionally want it to appear in the DOM as a custom attribute, spell it 
+as lowercase `whilehover` instead. If you accidentally passed it from a parent 
+component, remove it from the DOM element.
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test
+.tsx:4:27
+    at a
+    at default (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-
+card.test.tsx:12:15)
+    at AmazonProductCard (D:\PersonalProject\GIT\delegatecart\apps\web\componen
+ts\product\AmazonProductCard.tsx:76:3)
+
+ [32mΓ£ô[39m test/unit/useAutopilot.test.ts [2m ([22m[2m10 tests[22m[2m)[22m[33m 1215[2mms[22m[39m
+ [33mΓ¥»[39m test/unit/carousel.test.tsx [2m ([22m[2m48 tests[22m [2m|[22m [31m48 failed[39m[2m)[22m[33m 960511[2mms[22m[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the carousel container with data-testid[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the viewport element[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the scroll container[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the correct number of product cards[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders 5 cards for 5 products[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows product names in cards[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mdisplays the products count badge in header[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows "Top Recommendations" heading[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows average AI confidence in header[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows Best Match label for first product[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows the top product name in best match banner[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows discount badge when discount_percent > 0[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows best match Highlight cart button[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22meach card has an Add to Cart button[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mrenders score percentages as text (e.g. 95%)[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows brand name in cards[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows delivery time in card[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows key features (up to 3) in card[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows expand/collapse toggle (+/-) button[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mtoggles expanded state when + clicked[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows explanation summary when expanded[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows strengths when expanded[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows weaknesses when expanded[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mAdd to Cart button adds product to localStorage[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mbutton changes to Remove after adding to cart[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mRemove button removes product from localStorage[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mdoes not add duplicate when same product added twice[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mhighlight cart button also adds to cart[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22msyncs cart state when cartUpdated event fires[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mmultiple products can be independently toggled[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Navigation[2m > [22mrenders left and right scroll arrow buttons[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Navigation[2m > [22mclicking right arrow button does not throw[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Compare[2m > [22mdoes not render Compare button when onCompareToggle not provided[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Compare[2m > [22mrenders Compare button when onCompareToggle is provided[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Compare[2m > [22mcalls onCompareToggle when Compare button clicked[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Compare[2m > [22mapplies active styling when showComparison is true[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mouter wrapper has overflow-hidden class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mouter wrapper has w-full class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mouter wrapper has min-w-0 class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mcarousel viewport has overflow-hidden class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mscroll container has overflow-x-auto class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mscroll container has w-full class[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > [22mproduct cards have flex-shrink-0 to prevent compression[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Scroll Position Dots[2m > [22mrenders position dots when products > 2[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Scroll Position Dots[2m > [22mdoes not render dots for single product[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Scoring Legend[2m > [22mrenders all 5 scoring dimensions[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Callbacks[2m > [22mcalls onSelectProduct when card "Add to Cart" button is clicked[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+[31m   [33mΓ¥»[31m test/unit/carousel.test.tsx[2m > [22mProductRecommendationCarousel ΓÇö Callbacks[2m > [22mdoes NOT call onSelectProduct when removing from cart[39m
+[31m     ΓåÆ Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1m[7m Failed Tests 48 
+[27m[22mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the 
+carousel container with data-testid
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the 
+viewport element
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the scroll 
+container
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders the 
+correct number of product cards
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mrenders 5 cards 
+for 5 products
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows product 
+names in cards
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mdisplays the 
+products count badge in header
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows "Top 
+Recommendations" heading
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Rendering[2m > [22mshows average AI 
+confidence in header
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows Best 
+Match label for first product
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows the 
+top product name in best match banner
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows 
+discount badge when discount_percent > 0
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Best Match Banner[2m > [22mshows best 
+match Highlight cart button
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22meach card has 
+an Add to Cart button
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mrenders score 
+percentages as text (e.g. 95%)
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows brand 
+name in cards
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows delivery 
+time in card
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows key 
+features (up to 3) in card
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows 
+expand/collapse toggle (+/-) button
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mtoggles 
+expanded state when + clicked
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows 
+explanation summary when expanded
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows 
+strengths when expanded
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Product Cards[2m > [22mshows 
+weaknesses when expanded
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mAdd to Cart 
+button adds product to localStorage
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mbutton changes 
+to Remove after adding to cart
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mRemove button 
+removes product from localStorage
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mdoes not add 
+duplicate when same product added twice
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mhighlight cart 
+button also adds to cart
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22msyncs cart state 
+when cartUpdated event fires
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Cart Toggle[2m > [22mmultiple 
+products can be independently toggled
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Navigation[2m > [22mrenders left and 
+right scroll arrow buttons
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Navigation[2m > [22mclicking right 
+arrow button does not throw
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Compare[2m > [22mdoes not render 
+Compare button when onCompareToggle not provided
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Compare[2m > [22mrenders Compare 
+button when onCompareToggle is provided
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Compare[2m > [22mcalls 
+onCompareToggle when Compare button clicked
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Compare[2m > [22mapplies active 
+styling when showComparison is true
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mouter wrapper has overflow-hidden class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mouter wrapper has w-full class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mouter wrapper has min-w-0 class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mcarousel viewport has overflow-hidden class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mscroll container has overflow-x-auto class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mscroll container has w-full class
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Layout / Overflow Prevention[2m > 
+[22mproduct cards have flex-shrink-0 to prevent compression
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Scroll Position Dots[2m > [22mrenders 
+position dots when products > 2
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Scroll Position Dots[2m > [22mdoes 
+not render dots for single product
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Scoring Legend[2m > [22mrenders all 5 
+scoring dimensions
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Callbacks[2m > [22mcalls 
+onSelectProduct when card "Add to Cart" button is clicked
+[31m[1m[7m FAIL [27m[22m[39m test/unit/carousel.test.tsx[2m > 
+[22mProductRecommendationCarousel ΓÇö Callbacks[2m > [22mdoes NOT call 
+onSelectProduct when removing from cart
+[31m[1mError[22m: Hook timed out in 20000ms.
+If this is a long-running hook, pass a timeout value as the last argument or 
+configure it globally with "hookTimeout".[39m
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[
+1/48]ΓÄ»[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[31m48 failed[39m[22m[2m | [22m[1m[32m119 passed[39m[22m[90m (167)[39m
+[2m   Start at [22m 22:36:17
+[2m   Duration [22m 970.82s[2m (transform 1.26s, setup 3.51s, collect 4.67s, tests 963.76s, environment 30.94s, prepare 5.42s)[22m
+
+Waiting for the debugger to disconnect...
+Waiting for the debugger to disconnect...

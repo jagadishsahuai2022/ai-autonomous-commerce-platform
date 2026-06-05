@@ -1,0 +1,193 @@
+﻿node : The CJS build of Vite's Node API is deprecated. See 
+https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for 
+more details.
+At line:1 char:74
++ ... t\apps\web; node "d:\PersonalProject\GIT\delegatecart\node_modules\.p ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (The CJS bu...e details. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v1.6.1 D:/PersonalProject/GIT/delegatecart/apps/web
+
+ Γ£ô test/unit/shopping-list.test.ts  (53 tests) 93ms
+ Γ£ô test/unit/cart.test.ts  (29 tests) 63ms
+ Γ£ô test/unit/smart-intent-comments.test.ts  (11 tests) 1112ms
+ Γ£ô lib/smart-intent/__tests__/business-engine.test.ts  (34 tests) 59ms
+ Γ¥» test/unit/round27-llm-connectivity.test.ts  (29 tests | 1 failed) 180ms
+   Γ¥» test/unit/round27-llm-connectivity.test.ts > LLM_MODELS array > contains 3 models with required fields
+     ΓåÆ expected [ { id: 'gemini-flash', ΓÇª(6) }, ΓÇª(5) ] to have a length of 3 but got 6
+stderr | test/unit/round27-llm-connectivity.test.ts > 
+enrichWithRealLLM ΓÇö forceRealLLM behavior > returns 
+null when forceRealLLM=true and no API key
+[LLM] Claude API key not configured
+
+stderr | test/unit/round27-llm-connectivity.test.ts > 
+enrichWithRealLLM ΓÇö forceRealLLM behavior > returns 
+rule-based result when forceRealLLM=false and no API key
+[LLM] Claude API key not configured
+
+ Γ£ô test/unit/smart-intent-learning.test.ts  (26 tests) 1255ms
+ Γ£ô lib/smart-intent/__tests__/autonomous-system.test.ts  (66 tests) 921ms
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Feature Flag & Logger > should log and retrieve recent logs
+[SmartIntent v2] query="test query" category=phone confidence=50 products=5 time=42ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Full Pipeline ΓÇö Mandatory Test Cases > Test Case 1: "best phone under 20000"
+[SmartIntent v2] query="best phone under 20000" category=phone confidence=65 products=20 time=11ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Full Pipeline ΓÇö Mandatory Test Cases > Test Case 2: "gaming laptop for coding"
+[SmartIntent v2] query="gaming laptop for coding" category=laptop confidence=50 products=20 time=3ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Full Pipeline ΓÇö Mandatory Test Cases > Test Case 3: "cheap earbuds"
+[SmartIntent v2] query="cheap earbuds" category=headphones confidence=65 products=20 time=188ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Full Pipeline ΓÇö Mandatory Test Cases > Test Case 4: "iphone alternative"
+[SmartIntent v2] query="iphone alternative" category=phone confidence=55 products=20 time=8ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Full Pipeline ΓÇö Mandatory Test Cases > Test Case 5: "good camera phone"
+[SmartIntent v2] query="good camera phone" category=phone confidence=55 products=20 time=15ms
+
+stdout | lib/smart-intent/__tests__/intent-engine.test.ts > Accuracy Summary > should achieve ΓëÑ 70% accuracy across all test queries
+[SmartIntent v2] query="best phone under 20000" category=phone confidence=65 products=20 time=17ms
+[SmartIntent v2] query="gaming laptop for coding" category=laptop confidence=50 products=20 time=10ms
+[SmartIntent v2] query="cheap earbuds" category=headphones confidence=65 products=20 time=143ms
+[SmartIntent v2] query="iphone alternative" category=phone confidence=55 products=20 time=9ms
+[SmartIntent v2] query="good camera phone" category=phone confidence=55 products=20 time=2ms
+[SmartIntent v2] query="samsung tv under 50000" category=television confidence=90 products=20 time=2ms
+[SmartIntent v2] query="noise cancelling headphones for travel" category=headphones confidence=80 products=20 time=9ms
+[SmartIntent v2] query="washing machine for home" category=appliances confidence=50 products=20 time=1ms
+[SmartIntent v2] query="macbook alternative under 80000" category=laptop confidence=65 products=20 time=5ms
+[SmartIntent v2] query="budget phone with 5g" category=phone confidence=70 products=20 time=443ms
+
+[Accuracy] 33/34 checks passed (97.1%)
+
+ Γ£ô lib/smart-intent/__tests__/intent-engine.test.ts  (71 tests) 1845ms
+ Γ£ô test/unit/auto-checkout.test.ts  (24 tests) 16067ms
+ Γ£ô test/lib/error-handling.test.ts  (32 tests) 164ms
+ Γ£ô test/unit/admin-auth.test.ts  (29 tests) 967ms
+ Γ£ô test/unit/mock-product-generator.test.ts  (11 tests) 2170ms
+ Γ£ô test/unit/payment-validation.test.ts  (29 tests) 148ms
+ Γ¥» test/unit/auto-checkout-wallet.test.ts  (30 tests | 3 failed) 22714ms
+   Γ¥» test/unit/auto-checkout-wallet.test.ts > Authenticated Auto-Checkout ΓÇö Core Flow > places an order and returns orderId with ORD- prefix (authenticated)
+     ΓåÆ expected false to be true // Object.is equality
+   Γ¥» test/unit/auto-checkout-wallet.test.ts > Authenticated Auto-Checkout ΓÇö Core Flow > success message contains order ID and wallet mention
+     ΓåÆ expected 'Shopping list submitted! AI agent fouΓÇª' to contain 'ORD-'
+   Γ¥» test/unit/auto-checkout-wallet.test.ts > Authenticated Auto-Checkout ΓÇö Order Persistence > creates an order that appears in GET /api/orders
+     ΓåÆ expected false to be true // Object.is equality
+ Γ£ô test/error-handling.test.ts  (33 tests) 103ms
+ Γ£ô test/unit/product-api.test.ts  (28 tests) 122ms
+ Γ£ô test/unit/useAutopilot.test.ts  (10 tests) 1726ms
+stderr | test/unit/product-card.test.tsx > 
+AmazonProductCard > should render product name
+Warning: React does not recognize the `whileHover` prop on a DOM element. If 
+you intentionally want it to appear in the DOM as a custom attribute, spell it 
+as lowercase `whilehover` instead. If you accidentally passed it from a parent 
+component, remove it from the DOM element.
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test
+.tsx:4:27
+    at a
+    at default (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-
+card.test.tsx:12:15)
+    at AmazonProductCard (D:\PersonalProject\GIT\delegatecart\apps\web\componen
+ts\product\AmazonProductCard.tsx:76:3)
+
+stderr | test/unit/product-card.test.tsx > 
+AmazonProductCard > should toggle wishlist state on 
+heart click in hover overlay
+Warning: React does not recognize the `whileTap` prop on a DOM element. If you 
+intentionally want it to appear in the DOM as a custom attribute, spell it as 
+lowercase `whiletap` instead. If you accidentally passed it from a parent 
+component, remove it from the DOM element.
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test
+.tsx:4:27
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test
+.tsx:4:27
+    at AnimatePresence (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\
+product-card.test.tsx:6:23)
+    at div
+    at div
+    at D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-card.test
+.tsx:4:27
+    at a
+    at default (D:\PersonalProject\GIT\delegatecart\apps\web\test\unit\product-
+card.test.tsx:12:15)
+    at AmazonProductCard (D:\PersonalProject\GIT\delegatecart\apps\web\componen
+ts\product\AmazonProductCard.tsx:76:3)
+
+ Γ£ô test/unit/product-card.test.tsx  (20 tests) 4593ms
+ Γ£ô test/unit/profile-address.test.ts  (25 tests) 79ms
+ Γ£ô test/unit/product-page-store.test.ts  (14 tests) 725ms
+ Γ£ô test/unit/order-detail-resolution.test.ts  (17 tests) 107ms
+ Γ£ô test/unit/safe-api.test.ts  (11 tests) 569ms
+ Γ£ô test/sphere/discoveryEngine.test.ts  (24 tests) 127ms
+ Γ£ô test/unit/debounce-scroll.test.ts  (12 tests) 162ms
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > returns result 
+for valid query (will use fallback if API keys missing)
+[LLM] Claude API key not configured
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > compresses intent 
+response to reduce token usage
+[LLM] OpenAI API error: 401 Incorrect API key provided: 
+test-ope***-key. You can find your API key at 
+https://platform.openai.com/account/api-keys.
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > marks fallback 
+enrichment appropriately
+[LLM] Claude API key not configured
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > supports auto 
+model selection with fallback chain
+[LLM] Google Gemini API key not configured
+[LLM] Groq API key not configured
+[LLM] OpenRouter API key not configured
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > supports auto 
+model selection with fallback chain
+[LLM] Claude API error: 401 invalid x-api-key
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > supports auto 
+model selection with fallback chain
+[LLM] OpenAI API error: 401 Incorrect API key provided: 
+test-ope***-key. You can find your API key at 
+https://platform.openai.com/account/api-keys.
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > supports auto 
+model selection with fallback chain
+[LLM] OpenAI API error: 401 Incorrect API key provided: 
+test-ope***-key. You can find your API key at 
+https://platform.openai.com/account/api-keys.
+
+stderr | test/unit/llm-enrichment.test.ts > LLM 
+Enrichment > enrichWithRealLLM() > creates valid 
+enrichment output structure
+[LLM] OpenAI API error: 401 Incorrect API key provided: 
+test-ope***-key. You can find your API key at 
+https://platform.openai.com/account/api-keys.
+
+ Γ¥» test/unit/llm-enrichment.test.ts  (15 tests | 3 failed) 3136ms
+   Γ¥» test/unit/llm-enrichment.test.ts > LLM Enrichment > LLM_MODELS constant > exports correct list of available models
+     ΓåÆ expected [ { id: 'gemini-flash', ΓÇª(6) }, ΓÇª(5) ] to have a length of 3 but got 6
+   Γ¥» test/unit/llm-enrichment.test.ts > LLM Enrichment > enrichWithRealLLM() > validates input and rejects empty query
+     ΓåÆ expected undefined to be +0 // Object.is equality
+   Γ¥» test/unit/llm-enrichment.test.ts > LLM Enrichment > enrichWithRealLLM() > rejects query shorter than 3 characters
+     ΓåÆ expected undefined to be +0 // Object.is equality
+ Γ£ô test/sphere/sphereAnalytics.test.ts  (14 tests) 134ms
+ Γ£ô lib/smart-intent/__tests__/question-generator.test.ts  (11 tests) 54ms
+ Γ£ô test/sphere/useSphereStore.test.ts  (11 tests) 85ms
+ Γ£ô test/sphere/sphereUtils.test.ts  (17 tests) 38ms
+ Γ£ô test/unit/chat-store.test.ts  (8 tests) 267ms
+ Γ£ô test/integration/learning-batch-enrichment.test.ts  (16 tests) 26ms
+ Γ£ô lib/smart-intent/__tests__/product-learning.test.ts  (10 tests) 19ms
+ Γ£ô test/sphere/CategorySphereFallback.test.tsx  (8 tests) 351ms
+

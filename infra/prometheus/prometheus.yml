@@ -1,0 +1,47 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: production
+    project: delegatecart
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - /etc/prometheus/alert-rules.yml
+
+scrape_configs:
+  # OTel Collector re-exposes all service metrics
+  - job_name: otel-collector
+    static_configs:
+      - targets: ['otel-collector:8889']
+
+  # OTel Collector internal health metrics
+  - job_name: otel-collector-internal
+    static_configs:
+      - targets: ['otel-collector:8888']
+
+  # Direct NestJS API scrape (prom-client /metrics endpoint)
+  - job_name: api
+    static_configs:
+      - targets: ['api:3001']
+    metrics_path: /metrics
+
+  # Autopilot engine
+  - job_name: autopilot-engine
+    static_configs:
+      - targets: ['autopilot-engine:3002']
+    metrics_path: /metrics
+
+  # Kafka JMX exporter (if deployed)
+  - job_name: kafka
+    static_configs:
+      - targets: ['kafka-exporter:9308']
+
+  # Prometheus self-monitoring
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']

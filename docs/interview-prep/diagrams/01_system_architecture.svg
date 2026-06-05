@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6" />
+      <stop offset="100%" style="stop-color:#2563eb" />
+    </linearGradient>
+    <linearGradient id="apiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981" />
+      <stop offset="100%" style="stop-color:#059669" />
+    </linearGradient>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6" />
+      <stop offset="100%" style="stop-color:#7c3aed" />
+    </linearGradient>
+    <linearGradient id="dataGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b" />
+      <stop offset="100%" style="stop-color:#d97706" />
+    </linearGradient>
+    <linearGradient id="kafkaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444" />
+      <stop offset="100%" style="stop-color:#dc2626" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="bold">DelegateCart — High-Level System Architecture</text>
+  <text x="600" y="68" text-anchor="middle" fill="#94a3b8" font-size="13">AI-Powered Autonomous Commerce Platform | Microservices | Event-Driven</text>
+
+  <!-- CLIENT LAYER -->
+  <rect x="30" y="90" width="1140" height="120" rx="10" fill="url(#clientGrad)" opacity="0.15" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="55" y="115" fill="#93c5fd" font-size="14" font-weight="bold">CLIENT LAYER</text>
+
+  <rect x="55" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="137" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">Next.js 14</text>
+  <text x="137" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">App Router + SSR</text>
+  <text x="137" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">React 18 + Tailwind</text>
+
+  <rect x="240" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="322" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">State Management</text>
+  <text x="322" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">Zustand (Client)</text>
+  <text x="322" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">TanStack Query (Server)</text>
+
+  <rect x="425" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="507" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">Real-Time</text>
+  <text x="507" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">Socket.io Client</text>
+  <text x="507" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">WebSocket Events</text>
+
+  <rect x="610" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="692" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">Auth</text>
+  <text x="692" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">NextAuth + JWT</text>
+  <text x="692" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">RBAC (7 Roles)</text>
+
+  <rect x="795" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="877" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">UI Components</text>
+  <text x="877" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">Radix UI + Framer</text>
+  <text x="877" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">Recharts + Lucide</text>
+
+  <rect x="980" y="125" width="165" height="70" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="1062" y="150" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">AI Chat UI</text>
+  <text x="1062" y="167" text-anchor="middle" fill="#cbd5e1" font-size="10">ChatWindow</text>
+  <text x="1062" y="182" text-anchor="middle" fill="#cbd5e1" font-size="10">Copilot + Assistant</text>
+
+  <!-- Arrow from Client to API -->
+  <line x1="600" y1="210" x2="600" y2="240" stroke="#64748b" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="615" y="230" fill="#94a3b8" font-size="10">REST / WebSocket</text>
+
+  <!-- API LAYER -->
+  <rect x="30" y="245" width="1140" height="150" rx="10" fill="url(#apiGrad)" opacity="0.12" stroke="#10b981" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="55" y="270" fill="#6ee7b7" font-size="14" font-weight="bold">API GATEWAY LAYER — NestJS 10 (Port 3001)</text>
+
+  <!-- Middleware row -->
+  <rect x="55" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="115" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Rate Limiter</text>
+  <text x="115" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Token Bucket</text>
+
+  <rect x="185" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="245" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">JWT Guard</text>
+  <text x="245" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Auth + RBAC</text>
+
+  <rect x="315" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="375" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">CSRF Guard</text>
+  <text x="375" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">XSS Protection</text>
+
+  <rect x="445" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="505" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Idempotency</text>
+  <text x="505" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Redis-backed</text>
+
+  <rect x="575" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="635" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Timeout</text>
+  <text x="635" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">30s Default</text>
+
+  <rect x="705" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="765" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Correlation ID</text>
+  <text x="765" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Trace Context</text>
+
+  <rect x="835" y="280" width="120" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="895" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Circuit Breaker</text>
+  <text x="895" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Resilience</text>
+
+  <rect x="965" y="280" width="175" height="48" rx="6" fill="#14332a" stroke="#10b981" stroke-width="1"/>
+  <text x="1052" y="300" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold">Prometheus Metrics</text>
+  <text x="1052" y="315" text-anchor="middle" fill="#a7f3d0" font-size="9">Observability</text>
+
+  <!-- Modules row -->
+  <rect x="55" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="102" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Auth</text>
+  <text x="102" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Login/Register</text>
+
+  <rect x="160" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="207" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Products</text>
+  <text x="207" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Catalog/Search</text>
+
+  <rect x="265" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="312" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Cart</text>
+  <text x="312" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">CRUD Ops</text>
+
+  <rect x="370" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="417" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Checkout</text>
+  <text x="417" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Multi-Step</text>
+
+  <rect x="475" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="522" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Orders</text>
+  <text x="522" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Lifecycle Mgmt</text>
+
+  <rect x="580" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="627" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Wallet</text>
+  <text x="627" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Balance/Limits</text>
+
+  <rect x="685" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="732" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">AI Memory</text>
+  <text x="732" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Behavior/Prefs</text>
+
+  <rect x="790" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="837" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">ACP</text>
+  <text x="837" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Agent Protocol</text>
+
+  <rect x="895" y="338" width="95" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="942" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Seller Copilot</text>
+  <text x="942" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">AI Analytics</text>
+
+  <rect x="1000" y="338" width="130" height="45" rx="6" fill="#14332a" stroke="#059669" stroke-width="0.8"/>
+  <text x="1065" y="358" text-anchor="middle" fill="#a7f3d0" font-size="9" font-weight="bold">Feature Flags</text>
+  <text x="1065" y="372" text-anchor="middle" fill="#cbd5e1" font-size="8">Rollout / A-B Test</text>
+
+  <!-- KAFKA EVENT BUS -->
+  <rect x="350" y="415" width="500" height="45" rx="22" fill="url(#kafkaGrad)" opacity="0.85" filter="url(#shadow)"/>
+  <text x="600" y="435" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Apache Kafka 7.5 — Event Streaming Bus</text>
+  <text x="600" y="450" text-anchor="middle" fill="#fecaca" font-size="10">commerce-events | user-behavior | ml-events | analytics | recommendations</text>
+
+  <!-- Arrows to Kafka -->
+  <line x1="600" y1="395" x2="600" y2="415" stroke="#64748b" stroke-width="2"/>
+
+  <!-- DATA LAYER -->
+  <rect x="30" y="485" width="340" height="110" rx="10" fill="url(#dataGrad)" opacity="0.12" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="55" y="510" fill="#fcd34d" font-size="14" font-weight="bold">DATA LAYER</text>
+
+  <rect x="55" y="520" width="140" height="60" rx="8" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="125" y="545" text-anchor="middle" fill="#fcd34d" font-size="12" font-weight="bold">PostgreSQL 16</text>
+  <text x="125" y="560" text-anchor="middle" fill="#fde68a" font-size="10">Prisma 7.5 ORM</text>
+  <text x="125" y="573" text-anchor="middle" fill="#fde68a" font-size="9">30+ Models</text>
+
+  <rect x="210" y="520" width="140" height="60" rx="8" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="280" y="545" text-anchor="middle" fill="#fcd34d" font-size="12" font-weight="bold">Redis 7</text>
+  <text x="280" y="560" text-anchor="middle" fill="#fde68a" font-size="10">Cache + Sessions</text>
+  <text x="280" y="573" text-anchor="middle" fill="#fde68a" font-size="9">TTL-based</text>
+
+  <!-- AI SERVICE LAYER -->
+  <rect x="400" y="485" width="380" height="110" rx="10" fill="url(#aiGrad)" opacity="0.12" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="425" y="510" fill="#c4b5fd" font-size="14" font-weight="bold">AI/ML LAYER — Python Microservices</text>
+
+  <rect x="415" y="520" width="110" height="60" rx="8" fill="#2e1065" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="470" y="540" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">AI Service</text>
+  <text x="470" y="553" text-anchor="middle" fill="#ddd6fe" font-size="9">FastAPI :8000</text>
+  <text x="470" y="566" text-anchor="middle" fill="#ddd6fe" font-size="9">Recommendations</text>
+
+  <rect x="535" y="520" width="110" height="60" rx="8" fill="#2e1065" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="590" y="540" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">Intent Parser</text>
+  <text x="590" y="553" text-anchor="middle" fill="#ddd6fe" font-size="9">NLP + LLM</text>
+  <text x="590" y="566" text-anchor="middle" fill="#ddd6fe" font-size="9">GPT-4 / Claude</text>
+
+  <rect x="655" y="520" width="110" height="60" rx="8" fill="#2e1065" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="710" y="540" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="bold">Aggregator</text>
+  <text x="710" y="553" text-anchor="middle" fill="#ddd6fe" font-size="9">Multi-Source</text>
+  <text x="710" y="566" text-anchor="middle" fill="#ddd6fe" font-size="9">Amazon+Flipkart</text>
+
+  <!-- AUTOPILOT and RANKING -->
+  <rect x="810" y="485" width="360" height="110" rx="10" fill="#1a0a2e" stroke="#a855f7" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="835" y="510" fill="#d8b4fe" font-size="14" font-weight="bold">AUTONOMOUS ENGINE</text>
+
+  <rect x="825" y="520" width="155" height="60" rx="8" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="902" y="540" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="bold">Autopilot Engine</text>
+  <text x="902" y="553" text-anchor="middle" fill="#e9d5ff" font-size="9">Rule + Decision</text>
+  <text x="902" y="566" text-anchor="middle" fill="#e9d5ff" font-size="9">Safety + HITL</text>
+
+  <rect x="990" y="520" width="155" height="60" rx="8" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="1067" y="540" text-anchor="middle" fill="#d8b4fe" font-size="10" font-weight="bold">Ranking Engine</text>
+  <text x="1067" y="553" text-anchor="middle" fill="#e9d5ff" font-size="9">ML Scoring</text>
+  <text x="1067" y="566" text-anchor="middle" fill="#e9d5ff" font-size="9">5-Factor Weighted</text>
+
+  <!-- Arrows from Kafka to services -->
+  <line x1="500" y1="460" x2="200" y2="485" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+  <line x1="550" y1="460" x2="470" y2="520" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="600" y1="460" x2="590" y2="520" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="650" y1="460" x2="710" y2="520" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="700" y1="460" x2="902" y2="520" stroke="#a855f7" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- EXTERNAL INTEGRATIONS -->
+  <rect x="30" y="620" width="1140" height="100" rx="10" fill="#0c1222" stroke="#475569" stroke-width="1" filter="url(#shadow)"/>
+  <text x="55" y="645" fill="#94a3b8" font-size="14" font-weight="bold">EXTERNAL INTEGRATIONS &amp; INFRASTRUCTURE</text>
+
+  <rect x="55" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="125" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Razorpay</text>
+  <text x="125" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">Payment Gateway</text>
+
+  <rect x="210" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="280" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Amazon API</text>
+  <text x="280" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">Product Source</text>
+
+  <rect x="365" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="435" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Flipkart API</text>
+  <text x="435" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">Product Source</text>
+
+  <rect x="520" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="590" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">OpenAI GPT-4</text>
+  <text x="590" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">LLM Provider</text>
+
+  <rect x="675" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="745" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Claude 3</text>
+  <text x="745" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">LLM Provider</text>
+
+  <rect x="830" y="658" width="140" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="900" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Gemini / Groq</text>
+  <text x="900" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">LLM Providers</text>
+
+  <rect x="985" y="658" width="160" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="1065" y="678" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">Docker / K8s</text>
+  <text x="1065" y="693" text-anchor="middle" fill="#94a3b8" font-size="9">Containerized Deploy</text>
+
+  <!-- LEGEND -->
+  <rect x="30" y="740" width="1140" height="145" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <text x="55" y="765" fill="#e2e8f0" font-size="13" font-weight="bold">Architecture Highlights</text>
+
+  <circle cx="70" cy="790" r="6" fill="#3b82f6"/>
+  <text x="85" y="794" fill="#cbd5e1" font-size="11">Next.js 14 SSR + React 18 Server Components for SEO &amp; performance</text>
+
+  <circle cx="70" cy="812" r="6" fill="#10b981"/>
+  <text x="85" y="816" fill="#cbd5e1" font-size="11">NestJS modular architecture with 15+ feature modules, guards, interceptors, middleware</text>
+
+  <circle cx="70" cy="834" r="6" fill="#ef4444"/>
+  <text x="85" y="838" fill="#cbd5e1" font-size="11">Kafka event-driven: 11+ topics, async processing, durable event log for replay &amp; audit</text>
+
+  <circle cx="70" cy="856" r="6" fill="#8b5cf6"/>
+  <text x="85" y="860" fill="#cbd5e1" font-size="11">4 Python AI microservices: Recommendations, NLP Intent Parsing, Multi-Source Aggregation, ML Ranking</text>
+
+  <circle cx="70" cy="878" r="6" fill="#f59e0b"/>
+  <text x="85" y="882" fill="#cbd5e1" font-size="11">PostgreSQL 16 (Prisma ORM, 30+ models) + Redis 7 (cache, sessions, rate limiting, circuit breakers)</text>
+</svg>

@@ -1,0 +1,1226 @@
+// This is a Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // Prisma 7: uses JavaScript-based client engine with driver adapter (see prisma.service.ts)
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Users
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String?
+  passwordHash  String?   // Null for OAuth users
+  // Role-based access control — authoritative source of truth
+  role              String    @default("customer")      // admin | analytics | aiplus | observability | reinforced-learning | basic | customer
+  subscriptionPlan  String    @default("BASIC")         // BASIC | AI_PLUS
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  orders              Order[]
+  carts               Cart[]
+  chatHistory         ChatMessage[]
+  buyRequests         BuyRequest[]
+  wallet              Wallet?
+  seller              Seller?
+  
+  // AI Memory Relations
+  userPreferences     UserPreferences?
+  userMemory          UserMemory?
+  rankingPersonalization RankingPersonalization?
+  autoDecisions       AutoDecisionLog[]
+  
+  // Agentic Checkout Relations
+  approvalRequests    ApprovalRequest[]
+  aiDecisionLogs      AIDecisionLog[]
+  preferenceQuizzes   PreferenceQuiz[]
+  
+  // Validation/metrics sessions
+  validationSessions  ValidationSession[]
+
+  // Auth tokens
+  refreshTokens       RefreshToken[]
+
+  // Wishlist Relations
+  wishlistCollections WishlistCollection[]
+  wishlistItems       WishlistItem[]
+}
+
+// Products
+model Product {
+  id        Int       @id @default(autoincrement())
+  name        String
+  genericName String?   // Generic product type: "Washing Machine", "Refrigerator", "Laptop" — for search matching
+  price       Float
+  category    String
+  description String?
+  imageUrl    String?
+  inStock     Boolean   @default(true)  // Whether this product is currently available for purchase
+  featured    Boolean   @default(false)  // Mark as featured product
+  eligibleForReplacement Boolean @default(true)
+  eligibleForReturn      Boolean @default(true)
+  eligibleForVirtualTryOn Boolean @default(false)
+  categoryId    Int?
+  subCategoryId Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  cartItems CartItem[]
+  orderItems OrderItem[]
+  businessMetrics ProductBusinessMetrics?
+  productCategory    ProductCategory?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  productSubCategory ProductSubCategory? @relation(fields: [subCategoryId], references: [id], onDelete: SetNull)
+  categoryMappings    ProductCategoryMap[]
+  subCategoryMappings ProductSubCategoryMap[]
+  tagMappings         ProductTagMap[]
+  wishlistProducts    WishlistCollectionProduct[]
+  
+  @@index([featured])
+  @@index([featured, createdAt])
+  @@index([inStock])
+  @@index([genericName])
+  @@index([categoryId])
+  @@index([subCategoryId])
+}
+
+// Product Category — Top-level product organization
+model ProductCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  status      String   @default("ACTIVE") // ACTIVE | INACTIVE
+  sortOrder   Int      @default(0)
+  createdBy   String?  @default("system")
+  modifiedBy  String?  @default("system")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subCategories ProductSubCategory[]
+  products      Product[]
+  productMappings ProductCategoryMap[]
+}
+
+// Product Sub-Category — Granular product classification under a category
+model ProductSubCategory {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  categoryId  Int
+  status      String   @default("ACTIVE") // ACTIVE | INACTIVE
+  sortOrder   Int      @default(0)
+  createdBy   String?  @default("system")
+  modifiedBy  String?  @default("system")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products Product[]
+  productMappings ProductSubCategoryMap[]
+
+  @@unique([name, categoryId])
+  @@index([categoryId])
+  @@index([status])
+}
+
+// Many-to-Many: Product ↔ ProductCategory
+model ProductCategoryMap {
+  productId  Int
+  categoryId Int
+  isPrimary  Boolean  @default(false)
+  approved   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  product  Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([categoryId])
+  @@index([isPrimary])
+  @@index([approved])
+}
+
+// Many-to-Many: Product ↔ ProductSubCategory
+model ProductSubCategoryMap {
+  productId     Int
+  subCategoryId Int
+  isPrimary     Boolean  @default(false)
+  approved      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+
+  product     Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+  subCategory ProductSubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, subCategoryId])
+  @@index([subCategoryId])
+  @@index([isPrimary])
+  @@index([approved])
+}
+
+// Product Tag — Structured search enrichment taxonomy
+model ProductTag {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  tagType     String   @default("FEATURE") // FEATURE | TECHNOLOGY | PRICE_RANGE | USE_CASE | BRAND_TIER | QUALITY
+  status      String   @default("ACTIVE")  // ACTIVE | INACTIVE
+  sortOrder   Int      @default(0)
+  createdBy   String?  @default("system")
+  modifiedBy  String?  @default("system")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  productMappings ProductTagMap[]
+}
+
+// Many-to-Many: Product ↔ ProductTag
+model ProductTagMap {
+  productId  Int
+  tagId      Int
+  approved   Boolean   @default(false)
+  approvedBy String?
+  approvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  product Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag     ProductTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+  @@index([tagId])
+  @@index([approved])
+}
+
+// Scoring Dimension — Admin-managed scoring weights
+model ScoringDimension {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  label       String
+  weightage   Float    @default(0.10)
+  description String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Wishlist Collection
+model WishlistCollection {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  name        String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       WishlistItem[]
+  products    WishlistCollectionProduct[]
+  
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+// WishlistCollectionProduct — Mobile multi-collection product membership
+// Allows the same product to exist in multiple collections simultaneously.
+model WishlistCollectionProduct {
+  id           Int      @id @default(autoincrement())
+  collectionId Int
+  productId    Int
+  addedAt      DateTime @default(now())
+
+  collection WishlistCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  product    Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, productId])
+  @@index([collectionId])
+  @@index([productId])
+}
+
+// Wishlist Item
+model WishlistItem {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  collectionId Int?
+  productId    String?
+  productName  String
+  price        Float?
+  imageUrl     String?
+  url          String?
+  addedAt      DateTime  @default(now())
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collection   WishlistCollection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, productName])
+  @@index([userId])
+  @@index([collectionId])
+}
+
+// Product Business Metrics — Multi-objective ranking + dynamic pricing
+model ProductBusinessMetrics {
+  id               Int      @id @default(autoincrement())
+  productId        Int      @unique
+  product          Product  @relation(fields: [productId], references: [id])
+  marginPercentage Float    @default(20)     // e.g. 20–60%
+  inventoryCount   Int      @default(100)
+  salesVelocity    Float    @default(0)      // units/day
+  conversionRate   Float    @default(0.05)   // clicks → purchase (0.0–1.0)
+  returnRate       Float    @default(0)      // 0.0–1.0
+  lastUpdated      DateTime @default(now())  @updatedAt
+
+  @@index([productId])
+  @@index([inventoryCount])
+  @@index([conversionRate])
+}
+
+// Shopping Cart
+model Cart {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model CartItem {
+  id        Int       @id @default(autoincrement())
+  cartId    Int
+  cart      Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product   @relation(fields: [productId], references: [id])
+  quantity  Int
+  
+  @@unique([cartId, productId])
+}
+
+// Orders
+model Order {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  total     Float
+  status    String    @default("pending")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model OrderItem {
+  id        Int       @id @default(autoincrement())
+  orderId   Int
+  order     Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product   @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+// Feature Flags
+model FeatureFlag {
+  id                  Int       @id @default(autoincrement())
+  name                String    @unique
+  description         String?
+  isEnabled           Boolean   @default(false)
+  rolloutPercentage   Int       @default(0)  // 0-100 for gradual rollout
+  targetUserIds       String[]  @default([]) // CSV of user IDs for targeted rollout
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  @@index([name])
+}
+
+// Chat Messages - for AI shopping assistant
+model ChatMessage {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String    // "user" or "assistant"
+  content   String
+  
+  // Metadata for search/analytics
+  intent    String?   // "product_search", "recommendation", etc.
+  extractedKeywords String[] @default([])
+  
+  createdAt DateTime  @default(now())
+  
+  @@index([userId, createdAt])
+}
+
+// Activity Logs - for monitoring & analytics
+model ActivityLog {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  action    String    // "chat", "product_view", "purchase", etc.
+  metadata  Json?     // Additional context
+  createdAt DateTime  @default(now())
+  
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}
+
+// Smart Buy Request - for auto-purchase or notification
+model BuyRequest {
+  id                Int       @id @default(autoincrement())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Product Information
+  productName       String    // What they want to buy
+  description       String?   // Additional details/requirements
+  
+  // Budget
+  budgetMin         Float
+  budgetMax         Float
+  
+  // Quality & Preference
+  qualityScore      Int       // 1-10 scale for minimum acceptable quality
+  preferredBrands   Json?     // ["Brand1", "Brand2"] - stored as JSON array
+  
+  // Delivery
+  deliveryDate      DateTime  // By when they want it
+  
+  // Execution Settings
+  autoExecute       Boolean   @default(false)  // Auto-purchase when match found
+  notifyChannels    Json?     // ["email", "whatsapp"] - stored as JSON array
+  
+  // Status Tracking
+  status            String    @default("pending")  // pending, matched, purchased, cancelled
+  matchedProducts   Json?     // Store matched product info if auto_execute
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userId, status, createdAt])
+  @@index([status, createdAt])
+}
+
+// Wallet System - for AI-authorized purchases
+model Wallet {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Balance tracking
+  balance           Float     @default(0)  // Current wallet balance
+  totalAdded        Float     @default(0)  // Lifetime amount added (for analytics)
+  totalSpent        Float     @default(0)  // Lifetime amount spent (for analytics)
+  
+  // Spending limits
+  maxPerOrder       Float?    // Maximum allowed per single order (null = unlimited)
+  dailyLimit        Float?    // Maximum allowed per day (null = unlimited)
+  dailySpentToday   Float     @default(0)  // Amount spent today (resets at midnight)
+  lastResetDate     DateTime  @default(now())  // Last time daily limit was reset
+  
+  // AI Authorization
+  isAiAuthorized    Boolean   @default(false)  // Whether AI is authorized to spend
+  aiSpendingLimit   Float?    // Max AI can spend per transaction (null = no separate limit)
+  
+  // Status
+  isActive          Boolean   @default(true)
+  isLocked          Boolean   @default(false)  // Locked due to suspicious activity
+  lockReason        String?   // Reason for locking (fraud, max retries, etc.)
+  
+  // Metadata
+  metadata          Json?     // Custom data (payment method, source, etc.)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  transactions      WalletTransaction[]
+  authorizations    WalletAuthorization[]
+  spendingLimits    WalletSpendingLimit[]
+  auditLogs         WalletAuditLog[]
+  
+  @@index([userId])
+  @@index([isAiAuthorized])
+  @@index([isLocked])
+}
+
+// Wallet Transactions - detailed audit trail
+model WalletTransaction {
+  id                Int       @id @default(autoincrement())
+  walletId          Int
+  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  // Transaction details
+  type              String    // "topup", "debit", "refund", "hold", "release"
+  amount            Float
+  description       String?   // Human-readable description
+  
+  // Associated data
+  orderId           Int?      // Related order, if any
+  referenceId       String?   // External transaction ID (payment gateway, etc.)
+  
+  // Status tracking
+  status            String    @default("completed")  // "pending", "completed", "failed", "reversed"
+  reason            String?   // Reason for transaction (e.g., order #123, manual refund)
+  
+  // Balance snapshot
+  balanceBefore     Float     // Balance before transaction
+  balanceAfter      Float     // Balance after transaction
+  
+  // Metadata
+  metadata          Json?     // Extra data (AI authorization, order details, etc.)
+  ipAddress         String?   // IP address of requester
+  userAgent         String?   // User agent when applicable
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([walletId, createdAt])
+  @@index([type, status, createdAt])
+  @@index([orderId])
+  @@index([referenceId])
+}
+
+// AI Authorization - track AI spending authorizations
+model WalletAuthorization {
+  id                Int       @id @default(autoincrement())
+  walletId          Int
+  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  // Authorization details
+  amount            Float     // Amount authorized for this transaction
+  purpose           String    // e.g., "product_purchase", "auto_renewal"
+  
+  // AI request details
+  aiRequestId       String?   // Reference to AI request that triggered this
+  proposedProducts  Json?     // Products AI proposed to purchase
+  
+  // Approval
+  status            String    @default("pending")  // "pending", "approved", "rejected", "executed"
+  approvedBy        Int?      // User ID who approved (if manual approval needed)
+  approvedAt        DateTime? // Timestamp of approval
+  
+  // Execution
+  executedAt        DateTime? // When the authorization was actually used
+  executionTxnId    Int?      // Related transaction ID
+  
+  // Metadata
+  metadata          Json?
+  ipAddress         String?
+  
+  expiresAt         DateTime  // When this authorization expires
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([walletId, status])
+  @@index([status, expiresAt])
+}
+
+// Spending Limits - user-defined rules
+model WalletSpendingLimit {
+  id                Int       @id @default(autoincrement())
+  walletId          Int
+  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  // Limit details
+  limitType         String    // "daily", "weekly", "monthly", "per_order"
+  amount            Float     // The limit amount
+  
+  // Configuration
+  isActive          Boolean   @default(true)
+  startDate         DateTime  @default(now())
+  endDate           DateTime? // null = no end date
+  
+  // Metadata
+  notes             String?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([walletId, limitType])
+  @@index([isActive, limitType])
+}
+
+// Wallet Audit Log - detailed audit trail
+model WalletAuditLog {
+  id                Int       @id @default(autoincrement())
+  walletId          Int
+  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  // Audit details
+  action            String    // "balance_updated", "limit_changed", "ai_auth_toggled", "transaction_initiated"
+  performer         String?   // "user", "ai", "system", "admin"
+  performerId       Int?      // User ID of performer
+  
+  // What changed
+  changesBefore     Json?     // Previous values
+  changesAfter      Json?     // New values
+  
+  // Context
+  reason            String?   // Why this action was taken
+  details           Json?     // Additional context
+  ipAddress         String?   // IP address of performer
+  userAgent         String?   // Browser/client info
+  
+  createdAt         DateTime  @default(now())
+  
+  @@index([walletId, createdAt])
+  @@index([action, createdAt])
+}
+
+// ==================== SELLER AI COPILOT ====================
+
+// Seller - Extended user profile for sellers
+model Seller {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Seller Info
+  storeName         String    // Name of seller's store
+  storeDescription  String?   // Store description
+  storeImageUrl     String?   // Store logo/image
+  
+  // Performance Metrics
+  totalSales        Float     @default(0)  // Total revenue
+  totalSold         Int       @default(0)  // Total items sold
+  averageRating     Float     @default(0)  // Average seller rating
+  ratingCount       Int       @default(0)  // Number of ratings
+  
+  // AI Settings
+  autoGenListings   Boolean   @default(false)  // Enable auto-generation of listings
+  usePricingSuggestions Boolean @default(true)  // Use AI price suggestions
+  useDemandPrediction Boolean @default(true)  // Use demand prediction
+  
+  // Configuration
+  category          String?   // Primary category seller focuses on
+  vendorTier        String    @default("standard")  // standard, premium, enterprise
+  
+  // Status
+  isActive          Boolean   @default(true)
+  isVerified        Boolean   @default(false)  // KYC verification status
+  
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  products          SellerProduct[]
+  listings          ListingTemplate[]
+  priceHistory      PriceHistory[]
+  demandMetrics     DemandMetrics[]
+  aiAnalytics       SellerAiAnalytics?
+  
+  @@index([userId])
+  @@index([storeName])
+  @@index([vendorTier])
+}
+
+// Seller Products - Products for sale by specific seller
+model SellerProduct {
+  id                Int       @id @default(autoincrement())
+  sellerId          Int
+  seller            Seller    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // Basic Product Info
+  title             String
+  description       String?
+  category          String
+  subCategory       String?
+  
+  // Pricing
+  basePrice         Float     // Original price set by seller
+  currentPrice      Float     // Current selling price (may differ from base due to AI suggestions)
+  costPrice         Float?    // What seller paid for it (for margin calculation)
+  
+  // Inventory
+  quantity          Int       @default(0)  // Available quantity
+  sku               String?   // Stock keeping unit
+  
+  // Media
+  images            String[]  @default([])  // Array of image URLs
+  thumbnail         String?
+  
+  // Listing Quality
+  listingScore      Float     @default(0)  // AI-calculated quality score (0-100)
+  autoGeneratedText Boolean   @default(false)  // Was description generated by AI?
+  
+  // Performance
+  views             Int       @default(0)  // Total views
+  clicks            Int       @default(0)  // Times clicked/added to cart
+  conversions       Int       @default(0)  // Times sold
+  conversionRate    Float     @default(0)  // conversions / clicks
+  
+  // AI Insights
+  demandScore       Float     @default(0)  // How in-demand this product is (0-100)
+  priceRecommendation Float?  // Latest AI price suggestion
+  listingTemplate   Int?      // Which template was used for this listing
+  
+  // Status & Dates
+  status            String    @default("active")  // active, inactive, delisted, archived
+  publishedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([sellerId, status])
+  @@index([category, subCategory])
+  @@index([demandScore])
+  @@index([conversionRate])
+}
+
+// Listing Template - AI-generated listing templates for sellers
+model ListingTemplate {
+  id                Int       @id @default(autoincrement())
+  sellerId          Int
+  seller            Seller    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // Template Info
+  name              String    // e.g., "Electronics Template", "Fashion Template"
+  description       String?
+  category          String    // Which category this template is for
+  
+  // Template Content
+  titleTemplate     String    // Template with variables: {brand} {model} {size}
+  descriptionTemplate String  // Template for description
+  bulletPoints      String[]  // Key selling points template
+  
+  // AI Configuration
+  aiModel           String    @default("gpt-3.5")  // Which AI model to use
+  tone              String    @default("professional")  // professional, casual, luxury, etc.
+  focusKeywords     String[]  @default([])  // Keywords to emphasize
+  
+  // Usage Stats
+  timesUsed         Int       @default(0)  // How many listings used this
+  successRate       Float     @default(0)  // Conversion rate of products using this
+  
+  // Status
+  isActive          Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([sellerId, category])
+  @@index([isActive])
+}
+
+// Price History - Track price changes over time
+model PriceHistory {
+  id                Int       @id @default(autoincrement())
+  sellerId          Int
+  seller            Seller    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  productId         Int       // Product ID (from SellerProduct)
+  
+  // Price Data
+  oldPrice          Float     // Previous price
+  newPrice          Float     // New price
+  reason            String?   // Why price changed: "ai_suggestion", "manual", "seasonal", "competition"
+  
+  // AI Info
+  aiSuggestionScore Float?    // Confidence of AI suggestion (0-100)
+  competitorAvgPrice Float?   // Average price among competitors
+  demandAtOldPrice  Float?    // Demand metric at old price
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  
+  @@index([sellerId, createdAt])
+  @@index([productId, createdAt])
+}
+
+// Demand Metrics - Predicted and actual demand data
+model DemandMetrics {
+  id                Int       @id @default(autoincrement())
+  sellerId          Int
+  seller            Seller    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // Scope
+  scope             String    // "product", "category", "overall"
+  scopeId           String?   // Product/category ID if applicable
+  
+  // Demand Data
+  actualDemand      Float     // Current views, clicks, conversions combined
+  predictedDemand   Float     // AI prediction for next period
+  seasonalFactor    Float     @default(1.0)  // Seasonal multiplier (1.0 = normal)
+  trendDirection    String    @default("stable")  // up, down, stable
+  
+  // Insights
+  topProducts       String[]  @default([])  // IDs of top-performing products
+  lowDemandProducts String[]  @default([])  // IDs of low-demand products
+  
+  // Forecasting
+  confidence        Float     // Confidence in prediction (0-100)
+  forecastPeriod    String    @default("next_7_days")  // Time period of forecast
+  
+  // Historical
+  previousActualDemand Float?  // Previous period's actual demand (for comparison)
+  previousPrediction Float?   // Previous period's prediction (for accuracy)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([sellerId, scope, createdAt])
+  @@unique([sellerId, scope, scopeId])
+}
+
+// Seller AI Analytics - Aggregated insights for seller dashboard
+model SellerAiAnalytics {
+  id                Int       @id @default(autoincrement())
+  sellerId          Int       @unique
+  seller            Seller    @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // AI Generated Listings
+  generatedListingsCount Int @default(0)  // # of auto-generated listings
+  suggestionsAccepted Int @default(0)
+  revenueLift Float @default(0)
+  forecastAccuracy Float @default(0)
+  pricingAccuracy Float @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== AI MEMORY SYSTEM ====================
+
+// User Preferences - What users like/dislike
+model UserPreferences {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Category Preferences
+  preferredCategories String[] @default([])  // ["electronics", "books", "fashion"]
+  avoidedCategories String[] @default([])    // Categories to avoid in recommendations
+  categoryWeights   Json?                      // Category scores: {"electronics": 0.9, "books": 0.3}
+  
+  // Price Preferences
+  priceMin          Float?    // Minimum acceptable price
+  priceMax          Float?    // Maximum willing to pay
+  pricePreference   String?   // "budget", "mid-range", "luxury"
+  discountSensitivity Float @default(0.5)    // 0-1, how much discounts affect purchase
+  
+  // Brand Preferences
+  preferredBrands   String[] @default([])    // Brands user likes
+  avoidedBrands     String[] @default([])    // Brands user dislikes
+  brandWeights      Json?                     // Brand affinity scores
+  
+  // Quality & Features
+  minQualityRating  Float     @default(3.0)  // Minimum 1-5 star rating
+  featurePreferences Json?                    // {"warranty": 1.0, "fastShipping": 0.8}
+  
+  // Delivery Preferences
+  preferredShipping String?   // "fastest", "cheap", "any"
+  maxDeliveryDays   Int?      // Max days willing to wait
+  
+  // Seasonal Preferences
+  seasonalPreferences Json?                   // {"summer": ["ACs", "fans"], "winter": ["heaters"]}
+  
+  // Auto-Decision Settings
+  autoDecisionsEnabled Boolean @default(false)
+  autoAddToCart     Boolean @default(false)  // Automatically add recommended items to cart
+  autoPurchaseEnabled Boolean @default(false) // Enable auto-purchase of matched items
+  autoPurchaseThreshold Float? // Auto-purchase only if recommendation score > threshold
+  
+  // Accuracy & Learning
+  lastUpdated       DateTime  @default(now())
+  updateFrequency   String    @default("weekly")  // How often to update preferences
+  
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  buyingPatterns    BuyingPattern?
+  memoryInsights    MemoryInsight[]
+  
+  @@index([userId])
+}
+
+// Buying Pattern - User purchase behavior analysis
+model BuyingPattern {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  userPreferences   UserPreferences @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Purchase Frequency
+  avgPurchasesPerMonth Float @default(0)     // How often they buy
+  seasonalBuyingPeak String?                 // Which month they buy most: "december", "july"
+  seasonalBuyingLow String?                  // Which month they buy least
+  dayOfWeekPreference Int?                   // 0-6 (0=Monday) when they typically buy
+  timeOfDayPreference String?                // "morning", "afternoon", "evening"
+  
+  // Category Behavior
+  topCategories     String[] @default([])    // Categories they buy most from
+  categoryPurchaseFreq Json?                 // {"electronics": 1.2, "books": 0.3} purchases per month
+  categoryVariety   Float    @default(0)     // How diverse their purchases are (0-1)
+  
+  // Price Behavior
+  actualSpendPerPurchase Float @default(0)   // Average order value
+  avgDiscount        Float @default(0)       // % discount typically received
+  priceRangePreference String? // "0-100", "100-500", "500+"
+  
+  // Timing Patterns
+  purchaseGap       Int @default(0)          // Average days between purchases (in days)
+  averageOrderValue Float @default(0)        // Average amount spent per order
+  
+  // Browsing Behavior
+  avgCategoryBrowseTime Int?                 // Average seconds browsing per category
+  avgProductsViewedPerSession Int?           // How many products they typically view
+  clickThroughRate  Float @default(0)        // % of products viewed that they purchase
+  cartAbandonmentRate Float @default(0)      // % of carts not purchased
+  
+  // Trend Indicators
+  spendingTrend     String @default("stable") // "increasing", "decreasing", "stable"
+  categoryTrendScore Json?                   // Which categories they're buying more/less of
+  
+  // Brand Loyalty
+  repeatBrandPurchaseRate Float @default(0) // % of purchases from same brands
+  avgBrandsPerCategory Int?                  // How many different brands they typically try
+  
+  // Device & Channel
+  preferredDevice   String?                  // "mobile", "desktop", "both"
+  preferredPlatform String?                  // "web", "app", "both"
+  
+  // Prediction
+  nextLikelyPurchaseCategory String?         // Based on patterns
+  daysUntilNextPurchase Int?                 // Estimated days until next purchase
+  
+  lastAnalyzed      DateTime  @default(now())
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userId])
+}
+
+// User Memory - Core memory storage and AI insights
+model UserMemory {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Preference Memory (snapshot of current state)
+  currentPreferences Json     // Serialized UserPreferences for fast access
+  currentPatterns   Json      // Serialized BuyingPattern for fast access
+  
+  // Historical Memory
+  preferencesHistory Json[]   @default([])  // Array of preference snapshots over time
+  behaviorHistory   Json[]    @default([])  // Array of behavior snapshots
+  
+  // Recommendation Memory
+  lastRecommendations Json?   // Previous recommendations shown to user
+  recommendationHistory Json[]@default([])  // Array of past recommendations
+  recommendationAcceptanceRate Float @default(0.5)  // % of recommendations accepted
+  
+  // Search Memory
+  lastSearchQueries String[]  @default([])  // Recent search queries
+  searchQueryHistory Json[]   @default([])  // Full search history with metadata
+  
+  // Product Interaction Memory
+  viewedProducts    String[]  @default([])  // Recently viewed product IDs
+  wishlistItems     String[]  @default([])  // Favorited products
+  reviewedProducts  String[]  @default([])  // Products they've reviewed
+  
+  // Auto-Decision History
+  autoDecisionHistory Json[]  @default([])  // Record of auto-decisions made (product added, purchased)
+  autoDecisionSuccessRate Float @default(0) // % of auto-decisions that satisfied user
+  
+  // AI Insights Cache
+  cachedInsights    Json?     // Cached calculations from MemoryInsight for performance
+  
+  // Memory Stats
+  memoryAge         Int       @default(0)   // Days since memory created/reset
+  updateCount       Int       @default(0)   // Times memory updated
+  lastAccessed      DateTime  @default(now())
+  accuracy          Float     @default(0.75)// How accurate memory is (0-1)
+  
+  // Ranking Boosts
+  rankingBoosts     Json?     // {"category_boost": {...}, "brand_boost": {...}}
+  
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  interactions      UserMemoryInteraction[]
+  insights          MemoryInsight?
+  
+  @@index([userId])
+  @@index([lastAccessed])
+}
+
+// Memory Insight - AI-extracted insights from user behavior
+model MemoryInsight {
+  id                Int       @id @default(autoincrement())
+  userPreferencesId Int       @unique
+  userPreferences   UserPreferences @relation(fields: [userPreferencesId], references: [id], onDelete: Cascade)
+  userMemoryId      Int       @unique
+  userMemory        UserMemory @relation(fields: [userMemoryId], references: [id], onDelete: Cascade)
+  
+  // AI Insights
+  topInsights       String[]  @default([])  // Key insights about user (3-5 bullet points)
+  recommendedCategories String[] @default([]) // Top 5 categories to recommend
+  recommendedBrands String[] @default([])   // Top brands to push
+  
+  // Prediction Scores
+  likelyhoodToConvert Float @default(0.5)   // Probability they'll click/purchase (0-1)
+  purchaseProbability Float @default(0.5)   // Probability they'll buy (0-1)
+  churnRisk          Float @default(0)      // Risk they'll stop using platform (0-1)
+  
+  // Auto-Decision Confidence
+  autoDecisionConfidence Float @default(0.5)  // How confident AI is about auto-decisions
+  
+  // Trend Indicators
+  emergingInterests String[] @default([])   // New categories forming interest in
+  fadingInterests   String[] @default([])   // Categories losing interest
+  
+  // Recommendations
+  topProductRecommendations String[] @default([]) // Top 10 product IDs to recommend
+  bundleOpportunities Json[]   @default([])  // Recommended product bundles
+  
+  // Personalization Settings
+  personalizationLevel String @default("medium")  // "low", "medium", "high"
+  privacyPreferences String? // "minimal", "moderate", "none"
+  
+  // Accuracy Metrics
+  predictionAccuracy Float @default(0)      // How accurate recent predictions were
+  lastPredictionDate DateTime?
+  
+  // Performance
+  conversionLift     Float @default(0)      // % increase in conversions from personalization
+  avgOrderValueLift  Float @default(0)      // % increase in order value
+  engagementIncrease Float @default(0)      // % increase in platform engagement
+  
+  analysisDate      DateTime  @default(now())
+  expiresAt         DateTime  // When this insight expires and needs reanalysis
+  
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userPreferencesId])
+  @@index([expiresAt])
+}
+
+// User Memory Interaction - Track how memory is used and its effectiveness
+model UserMemoryInteraction {
+  id                Int       @id @default(autoincrement())
+  userMemoryId      Int
+  userMemory        UserMemory @relation(fields: [userMemoryId], references: [id], onDelete: Cascade)
+  
+  // Interaction Details
+  interactionType   String    // "recommendation_shown", "recommendation_clicked", "product_auto_added", "purchase_auto_completed"
+  confidence        Float      // AI confidence for this interaction (0-1)
+  
+  // Product/Recommendation
+  targetProductId   String     // Product ID involved
+  targetCategoryId  String?    // Category if applicable
+  
+  // Consumer Satisfaction
+  userFeedback      String?   // "liked", "disliked", "neutral"
+  wasSuccessful     Boolean   // Did the interaction lead to engagement?
+  conversionValue   Float @default(0) // Value of transaction if sale occurred
+  
+  // Metadata
+  metadata          Json?
+  timestamp         DateTime  @default(now())
+  
+  @@index([userMemoryId, timestamp])
+  @@index([interactionType, wasSuccessful])
+}
+
+// Ranking Personalization Cache - Store personalized ranking weights per user
+model RankingPersonalization {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Personalized Ranking Weights (vs default weights)
+  categoryWeights   Json      // {"electronics": 0.4, "books": 0.1, ...} (override default)
+  brandWeights      Json?     // {"samsung": 0.3, "lg": 0.2, ...}
+  priceWeight       Float @default(0.25)  // How much price affects ranking
+  qualityWeight     Float @default(0.25)  // How much quality/rating affects ranking
+  brandWeight       Float @default(0.2)
+  deliveryWeight    Float @default(0.15)  // How much delivery affects ranking
+  newProductBoost   Float @default(0)     // Boost for new products (0-1)
+  
+  // Seasonality Weights
+  seasonalWeights   Json?     // Category weights adjusted for season
+  trendingBoost     Float @default(0.1)   // Boost for trending products
+  
+  // User Behavior Weights
+  viewHistoryWeight Float @default(0.1)   // How much recent views affect ranking
+  purchaseHistoryWeight Float @default(0.15)
+  wishlistWeight    Float @default(0.05)
+  
+  // Cache Metadata
+  version           Int @default(1)       // Version of weight set (increment on update)
+  lastCalculated    DateTime @default(now())
+  confidenceScore   Float @default(0.5)   // How confident in these weights
+  appliedToResults  Int @default(0)       // How many search results used this
+  conversionRate    Float @default(0)     // Conversion rate of results ranked with this
+  
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([lastCalculated])
+}
+
+// Auto-Decision Log - Track automatic decisions made by AI
+model AutoDecisionLog {
+  id                Int       @id @default(autoincrement())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  decisionType      String    // "auto_purchase", "recommendation_boost", "category_suggest"
+  decision          String    // The decision made
+  confidence        Float     // 0-1 confidence score
+  resultingAction   String?   // What action was taken
+  successful        Boolean?  // Whether it led to engagement
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  
+  @@index([userId, createdAt])
+}
+
+// ==================== AGENTIC CHECKOUT ENGINE ====================
+
+// ApprovalRequest - HITL workflow for high-value AI orders
+model ApprovalRequest {
+  id                String    @id @default(cuid())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderId           Int?
+  
+  // Approval Context
+  reason            String    // "high_value", "low_confidence", "overkill_detected", "budget_risk", "fraud_risk", "ai_decision", "seller_trust"
+  status            String    @default("pending")  // "pending", "approved", "rejected", "expired"
+  
+  // Order Details
+  orderAmount       Float     // Total order amount in rupees
+  recommendations   Json      // Array of recommended products with prices
+  
+  // AI Reasoning
+  aiReasoning       Json      // {decision, confidence, reasoning[], strengths[], weaknesses[], assumption, fallbackOptions[]}
+  alternatives      Json      // Alternative recommendations
+  riskScore         Int       // 0-100 risk level
+  
+  // Approval Timeline
+  expiresAt         DateTime  // 24-hour approval window expiry
+  respondedAt       DateTime? // When user responded
+  responseReason    String?   // User's reason for approval/rejection
+  
+  // Tracing
+  correlationId     String    // For distributed tracing
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userId, status])
+  @@index([status, expiresAt])
+  @@index([correlationId])
+}
+
+// AIDecisionLog - Complete audit trail of AI decisions
+model AIDecisionLog {
+  id                String    @id @default(cuid())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // OpenTelemetry Tracing
+  traceId           String    // OpenTelemetry trace ID
+  spanId            String    // OpenTelemetry span ID
+  correlationId     String    // Application correlation ID
+  
+  // Decision Details
+  decisionType      String    // "RANKING", "RECOMMENDATION", "AUTO_EXECUTE", "APPROVAL_NEEDED", "GUARDRAIL_BLOCKED"
+  input             Json      // Input data to decision (products, budget, etc.)
+  output            Json      // Output of decision (ranked products, recommendations, etc.)
+  confidence        Int       // 0-100 confidence score
+  duration          Int       // Duration in milliseconds
+  status            String    // "success", "blocked", "error"
+  
+  // AI Reasoning
+  reasoning         Json      // Decision reasoning chains, explanations
+  metadata          Json?     // Additional context
+  
+  timestamp         DateTime  @default(now())
+  
+  @@index([userId, timestamp])
+  @@index([correlationId])
+  @@index([traceId])
+  @@index([decisionType])
+}
+
+// PreferenceQuiz - Track user quiz progress and responses
+model PreferenceQuiz {
+  id                String    @id @default(cuid())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Quiz State
+  status            String    @default("in_progress")  // "in_progress", "completed"
+  answers           Json      @default("[]")
+  
+  // Timeline
+  completedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+}
+
+// Relations to add to User model
+// These would be added to the User model:
+// userPreferences   UserPreferences?
+// userMemory        UserMemory?
+// rankingPersonalization RankingPersonalization?
+// autoDecisions     AutoDecisionLog[]
+
+// ==================== AUTH TOKENS ====================
+
+// RefreshToken — long-lived tokens for JWT refresh flow
+model RefreshToken {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hashedToken   String    @unique
+  expiresAt     DateTime
+  isRevoked     Boolean   @default(false)
+  lastUsedAt    DateTime?
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([hashedToken])
+  @@index([expiresAt, isRevoked])
+}
+
+
+// ValidationSession — persists per-query search/ranking artifacts for metrics audit
+// Accessible by admin/analytics (all rows) and basic/aiplus (own rows only)
+model ValidationSession {
+  id              Int       @id @default(autoincrement())
+  userId          Int?
+  user            User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userExternalId  String    // localStorage userId or email (for non-DB users)
+  userEmail       String?   // resolved email for display
+  queryText       String    // the search/chat query
+  sessionSource   String    @default("smart-shopping-assistant") // shopping-assistant | shopping-list | ai-plus | chat-assistant
+  productsJson    Json      // ranked products array
+  timelineJson    Json?     // pipeline step durations
+  feedbackJson    Json      @default("[]") // user feedback on results
+  metricsJson     Json      @default("{}") // aggregate metrics snapshot
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([userExternalId, createdAt])
+  @@index([sessionSource, createdAt])
+  @@index([createdAt])
+}

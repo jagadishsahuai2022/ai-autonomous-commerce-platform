@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "aliasPrefix": "@",
+  "alias": {
+    "@": "./",
+    "@/components": "./components",
+    "@/lib": "./lib",
+    "@/app": "./app"
+  },
+  "theme": {
+    "name": "delegatecart",
+    "baseColor": "indigo"
+  }
+}

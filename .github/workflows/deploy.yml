@@ -1,0 +1,151 @@
+name: Deploy — DelegateCart to Hostinger VPS
+
+# Trigger: push to main branch only (after CI passes)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # Allow manual trigger from GitHub Actions UI
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false  # Never cancel a running deploy
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository_owner }}/delegatecart
+
+jobs:
+  # ── Job 1: Build & Push Docker Images ────────────────────────────────────────
+  build-and-push:
+    name: Build & Push Images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        include:
+          - service: api
+            dockerfile: infra/docker/Dockerfile.api.latest
+            context: .
+          - service: web
+            dockerfile: infra/docker/Dockerfile.web.latest
+            context: .
+          - service: ai-service
+            dockerfile: infra/docker/Dockerfile.python.latest
+            context: apps/ai-service
+          - service: intent-parser
+            dockerfile: infra/docker/Dockerfile.python.latest
+            context: apps/intent-parser
+          - service: product-aggregator
+            dockerfile: infra/docker/Dockerfile.python.latest
+            context: apps/product-aggregator
+          - service: product-ranking-engine
+            dockerfile: infra/docker/Dockerfile.python.latest
+            context: apps/product-ranking-engine
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & push ${{ matrix.service }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:${{ github.sha }}
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  # ── Job 2: Deploy to VPS via SSH ─────────────────────────────────────────────
+  deploy:
+    name: Deploy to Hostinger VPS
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER || 'root' }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+
+            cd /opt/delegatecart
+
+            # Pull latest compose files from repo
+            git pull origin main --ff-only
+
+            # Pull pre-built images from GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Bring up services using existing compose files
+            docker compose \
+              -f docker-compose.latest.yml \
+              -f docker-compose.prod.yml \
+              pull
+
+            docker compose \
+              -f docker-compose.latest.yml \
+              -f docker-compose.prod.yml \
+              up -d --remove-orphans
+
+            # Wait for health checks
+            echo "Waiting for services to become healthy..."
+            sleep 15
+
+            # Verify key services
+            docker compose \
+              -f docker-compose.latest.yml \
+              -f docker-compose.prod.yml \
+              ps --format "table {{.Name}}\t{{.Status}}"
+
+            # Prune old images to save disk
+            docker image prune -f --filter "until=168h"
+
+            echo "✅ Deployment complete"
+
+  # ── Job 3: Post-deploy smoke test ────────────────────────────────────────────
+  smoke-test:
+    name: Smoke Test
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Health check
+        run: |
+          DOMAIN="${{ secrets.DOMAIN || 'delegatecart.com' }}"
+
+          echo "Testing https://${DOMAIN}/api/health ..."
+          curl --fail --silent --max-time 15 \
+            "https://${DOMAIN}/api/health" | jq .
+
+          echo "Testing https://${DOMAIN} (web) ..."
+          HTTP_CODE=$(curl --silent --output /dev/null --write-out "%{http_code}" \
+            --max-time 15 "https://${DOMAIN}")
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 400 ]; then
+            echo "❌ Web returned HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          echo "✅ Smoke tests passed (web: HTTP $HTTP_CODE)"

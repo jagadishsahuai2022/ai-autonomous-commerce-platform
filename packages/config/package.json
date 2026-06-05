@@ -1,0 +1,8 @@
+{
+  "name": "@config/eslint",
+  "version": "1.0.0",
+  "description": "Shared ESLint configuration",
+  "private": true,
+  "main": "index.js",
+  "scripts": {}
+}

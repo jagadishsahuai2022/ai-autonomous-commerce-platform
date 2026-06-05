@@ -1,0 +1,140 @@
+groups:
+  # ── API Health ─────────────────────────────────────────────────────────────
+  - name: api.health
+    interval: 30s
+    rules:
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "Instance {{ $labels.instance }} has been unreachable for 1 minute."
+          runbook: "https://github.com/delegatecart/docs/runbooks/service-down"
+
+      - alert: HighErrorRate
+        # HTTP 5xx rate > 5 % of all requests over 5 min window
+        expr: |
+          (
+            sum(rate(http_requests_total{status=~"5.."}[5m])) by (job)
+            /
+            sum(rate(http_requests_total[5m])) by (job)
+          ) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High HTTP 5xx error rate on {{ $labels.job }}"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5 %)."
+
+      - alert: HighLatencyP95
+        # p95 HTTP response time > 2 s
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_request_duration_seconds_bucket[5m])) by (job, le)
+          ) > 2
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p95 latency {{ $value | humanizeDuration }} on {{ $labels.job }}"
+          description: "95th-percentile response time has exceeded 2 seconds for 3 minutes."
+
+      - alert: HighLatencyP99
+        expr: |
+          histogram_quantile(0.99,
+            sum(rate(http_request_duration_seconds_bucket[5m])) by (job, le)
+          ) > 5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "p99 latency {{ $value | humanizeDuration }} on {{ $labels.job }}"
+
+  # ── Resource Saturation ────────────────────────────────────────────────────
+  - name: api.saturation
+    rules:
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes{job="api"} / 1024 / 1024 > 512
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "API memory usage is {{ $value | humanize }}MB (threshold: 512 MB)"
+
+      - alert: HighEventLoopLag
+        # Node.js event loop lag > 500 ms
+        expr: nodejs_eventloop_lag_seconds{job="api"} > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "Node.js event loop lag {{ $value | humanizeDuration }} on API"
+
+      - alert: HighHeapUsage
+        expr: |
+          nodejs_heap_size_used_bytes{job="api"}
+          /
+          nodejs_heap_size_total_bytes{job="api"}
+          > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "Node.js heap usage > 85 % on API"
+
+  # ── Kafka ──────────────────────────────────────────────────────────────────
+  - name: kafka.lag
+    rules:
+      - alert: KafkaConsumerLagHigh
+        expr: kafka_consumer_group_lag > 1000
+        for: 5m
+        labels:
+          severity: warning
+          service: kafka
+        annotations:
+          summary: "Kafka consumer group {{ $labels.consumergroup }} lag is {{ $value }}"
+          description: "Topic {{ $labels.topic }}, partition {{ $labels.partition }}."
+
+      - alert: KafkaConsumerLagCritical
+        expr: kafka_consumer_group_lag > 10000
+        for: 2m
+        labels:
+          severity: critical
+          service: kafka
+        annotations:
+          summary: "Kafka consumer lag is critically high: {{ $value }}"
+
+      - alert: KafkaBrokerDown
+        expr: kafka_brokers < 1
+        for: 1m
+        labels:
+          severity: critical
+          service: kafka
+        annotations:
+          summary: "No Kafka brokers are available"
+
+  # ── Database ───────────────────────────────────────────────────────────────
+  - name: database.health
+    rules:
+      - alert: PostgresConnectionsNearLimit
+        expr: pg_stat_activity_count > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: postgres
+        annotations:
+          summary: "PostgreSQL connection count {{ $value }} approaching limit"
+
+      - alert: SlowQueries
+        expr: pg_stat_activity_max_tx_duration > 30
+        for: 2m
+        labels:
+          severity: warning
+          service: postgres
+        annotations:
+          summary: "Long-running PostgreSQL transaction > 30 s"

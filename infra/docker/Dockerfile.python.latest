@@ -1,0 +1,52 @@
+# Dockerfile for Python AI Services — latest stack
+# Python 3.12-slim-bookworm | FastAPI 0.115.5
+# Shared base image for: ai-service, intent-parser, product-aggregator, product-ranking-engine
+
+FROM python:3.12-slim-bookworm
+
+# ---------------------------------------------------------------------------
+# Free-threaded mode (PEP 703): disabled by default.
+#
+# PYTHON_GIL=0 removes the GIL and allows true multi-core parallelism but
+# breaks I/O-heavy Kafka consumers that rely on GIL-protected C extensions
+# (confluent-kafka librdkafka, psycopg2).  Enable ONLY after verifying all
+# native extensions in requirements.txt are free-thread-safe.
+#
+# Uncomment the line below to enable — never toggle at container runtime.
+# ENV PYTHON_GIL=0
+# ---------------------------------------------------------------------------
+
+WORKDIR /app
+
+# Install system dependencies required for native package compilation.
+# gcc      : builds C-extension wheels (confluent-kafka, psycopg2-binary)
+# libpq-dev: PostgreSQL headers for psycopg2
+# curl     : used by the HEALTHCHECK
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for Docker layer caching
+COPY requirements.txt .
+
+# Upgrade pip to pick up Python 3.14-compatible wheel metadata,
+# then install service dependencies.
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create non-root user for security (UID 1001 matches production convention)
+RUN useradd -m -u 1001 python && chown -R python:python /app
+
+USER python
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=5 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

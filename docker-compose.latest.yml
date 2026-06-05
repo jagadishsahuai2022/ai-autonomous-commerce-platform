@@ -1,0 +1,297 @@
+# docker-compose.latest.yml
+# Project: delegatecard-tech-stack-latest-version
+#
+# Isolated environment for the upgraded stack. Runs on non-conflicting ports
+# so it can be validated alongside the existing ai-commerce-* stack.
+#
+# Usage:
+#   docker compose -p delegatecard-tech-stack-latest-version \
+#                  -f docker-compose.latest.yml up -d
+#
+# Port mapping (avoids clashes with existing stack):
+#   Postgres  : 5433  (existing: 5432)
+#   Redis     : 6380  (existing: 6379)
+#   Kafka     : 9093  (existing: 9092)
+#   ZooKeeper : 2182  (existing: 2181)
+#   API       : 3002  (existing: 3001)
+#   Web       : 3010  (existing: 3000)
+#   AI Service: 8001  (existing: 8000)
+
+name: delegatecard-tech-stack-latest-version
+
+services:
+  # ── PostgreSQL 17 ────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:17-alpine
+    container_name: dc-latest-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-delegatecart}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./data/postgres-latest:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dc-latest-network
+
+  # ── Redis 7.4 LTS ────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7.4-alpine
+    container_name: dc-latest-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./data/redis-latest:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dc-latest-network
+
+  # ── ZooKeeper for Kafka 7.7.1 ────────────────────────────────────────────────
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.7.1
+    container_name: dc-latest-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2182:2181"
+    networks:
+      - dc-latest-network
+
+  # ── Apache Kafka 7.7.1 (Confluent Platform) ──────────────────────────────────
+  kafka:
+    image: confluentinc/cp-kafka:7.7.1
+    container_name: dc-latest-kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    ports:
+      - "9093:9093"
+      - "29093:29092"
+    depends_on:
+      - zookeeper
+    networks:
+      - dc-latest-network
+
+  # ── NestJS API — Node 22 / NestJS v11.1.19 ───────────────────────────────────
+  api:
+    build:
+      context: ./
+      dockerfile: ./infra/docker/Dockerfile.api.latest
+    container_name: dc-latest-api
+    environment:
+      NODE_ENV: production
+      API_PORT: 3001
+      WEB_PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-delegatecart}
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-DelegatecartDB@May2026}
+      DATABASE_URL: postgresql://${DB_USER:-admin}:${DB_PASSWORD:-DelegatecartDB@May2026}@postgres:5432/${DB_NAME:-delegatecart}?schema=public
+      REDIS_URL: redis://redis:6379
+      KAFKA_BROKERS: kafka:29092
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-key-change-this-in-production-12345}
+      # Allow browser requests from the web container's public origin (VPS IP or domain).
+      # Falls back to allowing all localhost origins when CORS_ORIGIN is unset (dev mode).
+      CORS_ORIGIN: ${CORS_ORIGIN:-}
+    ports:
+      - "3002:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - dc-latest-network
+
+  # ── FastAPI AI Service — Python 3.12 / FastAPI 0.115.5 ──────────────────────────────
+  ai-service:
+    build:
+      context: ./apps/ai-service
+      dockerfile: ../../infra/docker/Dockerfile.python.latest
+    container_name: dc-latest-ai-service
+    # ai-service has its app module nested under app/ subdirectory
+    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      PYTHONUNBUFFERED: 1
+      KAFKA_BROKERS: kafka:29092
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "8001:8000"
+    depends_on:
+      - kafka
+      - redis
+    networks:
+      - dc-latest-network
+
+  # ── Intent Parser — Python 3.14.4 / FastAPI 0.115.5 ──────────────────────────────
+  intent-parser:
+    build:
+      context: ./apps/intent-parser
+      dockerfile: ../../infra/docker/Dockerfile.python.latest
+    container_name: dc-latest-intent-parser
+    environment:
+      PYTHONUNBUFFERED: 1
+      HOST: 0.0.0.0
+      PORT: 8000
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONSUMER_GROUP: intent-parser-service
+      KAFKA_TOPIC_BUY_REQUEST: buy_request.created
+      KAFKA_TOPIC_INTENT_PROCESSED: intent.processed
+      LLM_PROVIDER: ${LLM_PROVIDER:-anthropic}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4-turbo-preview}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-3-opus-20240229}
+      INTENT_CONFIDENCE_THRESHOLD: 0.7
+      LOG_LEVEL: INFO
+      ENVIRONMENT: production
+      # PYTHON_GIL: 0   # disabled — see Dockerfile.python.latest comment
+    ports:
+      - "8002:8000"
+    depends_on:
+      - kafka
+    networks:
+      - dc-latest-network
+
+  # ── Product Aggregator — Python 3.14.4 / FastAPI 0.115.5 ─────────────────────────
+  product-aggregator:
+    build:
+      context: ./apps/product-aggregator
+      dockerfile: ../../infra/docker/Dockerfile.python.latest
+    container_name: dc-latest-product-aggregator
+    environment:
+      PYTHONUNBUFFERED: 1
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONSUMER_GROUP: product-aggregator-service
+      KAFKA_TOPIC_INTENT_PROCESSED: intent.processed
+      KAFKA_TOPIC_PRODUCTS_FETCHED: products.fetched
+      REDIS_URL: redis://redis:6379/0
+      CACHE_ENABLED: 'true'
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      DB_NAME: ${DB_NAME:-delegatecart}
+      LOG_LEVEL: INFO
+      ENVIRONMENT: production
+      # PYTHON_GIL: 0   # disabled — see Dockerfile.python.latest comment
+    ports:
+      - "8003:8000"
+    depends_on:
+      kafka:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - dc-latest-network
+
+  # ── Product Ranking Engine — Python 3.14.4 / FastAPI 0.115.5 ───────────────────────
+  product-ranking-engine:
+    build:
+      context: ./apps/product-ranking-engine
+      dockerfile: ../../infra/docker/Dockerfile.python.latest
+    container_name: dc-latest-product-ranking
+    environment:
+      PYTHONUNBUFFERED: 1
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONSUMER_GROUP: product-ranking-engine-service
+      KAFKA_TOPIC_PRODUCTS_FETCHED: products.fetched
+      KAFKA_TOPIC_PRODUCTS_RANKED: products.ranked
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-delegatecart}
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      WEIGHT_BUDGET_FIT: 0.25
+      WEIGHT_QUALITY_SCORE: 0.25
+      WEIGHT_BRAND_PREFERENCE: 0.20
+      WEIGHT_DELIVERY_SPEED: 0.15
+      WEIGHT_RATINGS: 0.15
+      LOG_LEVEL: INFO
+      ENVIRONMENT: production
+      # PYTHON_GIL: 0   # disabled — see Dockerfile.python.latest comment
+    ports:
+      - "8004:8000"
+    depends_on:
+      kafka:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+      retries: 5
+    networks:
+      - dc-latest-network
+
+  # ── Next.js Frontend — Node 22 / Next.js 16.2.3 / React 19.2 ────────────────
+  web:
+    build:
+      context: ./
+      dockerfile: ./infra/docker/Dockerfile.web.latest
+    container_name: dc-latest-web
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: /api/v1
+      NEXT_PUBLIC_AI_SERVICE_URL: http://localhost:8001
+      NEXT_PUBLIC_ENABLE_MOCK_PAYMENT: '${ENABLE_MOCK_PAYMENT:-false}'
+      NEXT_PUBLIC_RAZORPAY_KEY_ID: 'rzp_test_SZMvk0O3vCYwWM'
+      NEXT_PUBLIC_AUTO_CHECKOUT_PAYMENT_METHODS: '["WALLET"]'
+      GOOGLE_GEMINI_API_KEY: '${GOOGLE_GEMINI_API_KEY:-}'
+      GROQ_API_KEY: '${GROQ_API_KEY:-}'
+      OPENROUTER_API_KEY: '${OPENROUTER_API_KEY:-}'
+      LLM_PROVIDER: anthropic
+      ANTHROPIC_API_KEY: '${ANTHROPIC_API_KEY:-}'
+      ANTHROPIC_MODEL: claude-3-opus-20240229
+      OPENAI_API_KEY: '${OPENAI_API_KEY:-}'
+      OPENAI_MODEL: gpt-4-turbo-preview
+      RAZORPAY_KEY_ID: 'rzp_test_SZMvk0O3vCYwWM'
+      RAZORPAY_KEY_SECRET: '${RAZORPAY_KEY_SECRET:-}'
+      API_INTERNAL_URL: http://api:3001
+      AI_INTERNAL_URL: http://ai-service:8000
+      RANKING_SERVICE_URL: http://product-ranking-engine:8000
+      DATABASE_URL: postgresql://${DB_USER:-admin}:${DB_PASSWORD:-password}@postgres:5432/${DB_NAME:-delegatecart}?schema=public
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-delegatecart-secret-key-change-in-production}
+      NEXTAUTH_URL: http://localhost:3010
+    ports:
+      - "3010:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_started
+      product-ranking-engine:
+        condition: service_healthy
+    networks:
+      - dc-latest-network
+
+networks:
+  dc-latest-network:
+    driver: bridge

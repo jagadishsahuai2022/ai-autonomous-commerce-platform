@@ -1,0 +1,81 @@
+cd /root/delegatecart
+
+# 1. Stop everything
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml down -v --remove-orphans
+
+# 2. Verify .env has correct values
+grep -E "^DB_" .env
+
+# 3. Force-recreate with fresh volume
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d --force-recreate
+
+# 4. Wait for postgres to be healthy
+echo "Waiting for postgres..." && sleep 15 && \
+  docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec postgres \
+  pg_isready -U admin -d delegatecart
+
+# 5. Confirm the DATABASE_URL the api container sees
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec api \
+  sh -c 'echo $DATABASE_URL'
+  
+  
+******************************************************************************************************************************************
+#If it shows delegatecart anywhere, fix it first:
+#Conditional
+sed -i 's/^DB_NAME=.*/DB_NAME=delegatecart/' .env
+sed -i 's/^DB_USER=.*/DB_USER=admin/' .env
+sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=password/' .env
+
+
+****************************************************************************************************************************************
+
+sed -i 's/^DB_NAME=.*/DB_NAME=delegatecart/' .env
+sed -i 's/^DB_USER=.*/DB_USER=admin/' .env
+sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=password/' .env
+
+*******************************************************************************************************************************************
+
+
+# 6. Push schema
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec api \
+  sh -c 'apt-get install -y --no-install-recommends openssl >/dev/null 2>&1; npx prisma db push'
+
+# 7. Seed data
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec api \
+  npx prisma db seed
+  
+  
+******************************************************************************************************************************************
+
+cd /root/delegatecart
+
+# Rebuild only the api image (schema is already pushed, no need for full restart)
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml build api
+
+# Restart the api container with the new image
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d api
+
+# Wait for it to start
+sleep 5
+
+# Now run seed (seed.ts in the new image has the correct Prisma 7 adapter)
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec api \
+  npx prisma db seed
+
+***********************************************************************************************************
+
+Path B: Force a Clean Initialization (Recommended if you are still in early dev)
+If you are still setting up and do not have critical production data yet, the easiest way to reset the credentials is to wipe the database and start fresh with the correct variables:
+
+Stop the containers: docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml down
+
+Delete the existing data volume: Your logs show you are using data/postgres-latest. Remove it so the database can re-initialize with the new credentials:
+rm -rf data/postgres-latest
+
+Start everything fresh:
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d
+
+Prisma will now re-initialize the database using the credentials currently in your .env file.
+
+
+****************************************************************************************************************************

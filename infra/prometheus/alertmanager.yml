@@ -1,0 +1,43 @@
+global:
+  resolve_timeout: 5m
+  # Prevent alert storms: group similar alerts for 30 s before sending
+  smtp_require_tls: false
+
+route:
+  group_by: ['alertname', 'service', 'job']
+  group_wait: 30s          # wait to batch alerts in same group
+  group_interval: 5m       # how often to re-send grouped alert
+  repeat_interval: 12h     # re-notify if still firing after 12 h
+  receiver: autopilot-webhook
+
+  routes:
+    # Critical alerts get routed immediately with shorter repeat
+    - matchers:
+        - severity = "critical"
+      receiver: autopilot-webhook
+      group_wait: 10s
+      repeat_interval: 4h
+      continue: true        # also send to default receiver
+
+    # Kafka lag alerts to autopilot only
+    - matchers:
+        - service = "kafka"
+      receiver: autopilot-webhook
+
+receivers:
+  - name: autopilot-webhook
+    webhook_configs:
+      - url: 'http://autopilot-engine:3002/api/v1/ops/alerts'
+        send_resolved: true
+        max_alerts: 20
+        http_config:
+          # Shared secret so only Alertmanager can call the webhook
+          bearer_token: '${AUTOPILOT_WEBHOOK_SECRET}'
+
+inhibit_rules:
+  # If a critical alert fires for a service, suppress warnings for same service
+  - source_matchers:
+      - severity = "critical"
+    target_matchers:
+      - severity = "warning"
+    equal: ['job', 'service']

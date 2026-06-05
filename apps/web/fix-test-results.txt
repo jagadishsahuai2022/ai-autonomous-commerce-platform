@@ -1,0 +1,195 @@
+﻿node.exe : Debugger listening on 
+ws://127.0.0.1:63809/76801c3e-a3a2-409e-adf8-1b37093be30b
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\JAGADISH SAHU\AppData\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Debugger listen...f8-1b37093be30b 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger listening on ws://127.0.0.1:50513/59a14c3f-f8c0-4f12-b61a-51a0ef226676
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+
+[Global Setup] Pre-warming Next.js pages...
+  http://127.0.0.1:3000 ΓåÆ HTTP 200
+  http://127.0.0.1:3000/products ΓåÆ HTTP 200
+  http://127.0.0.1:3000/about ΓåÆ HTTP 200
+  http://127.0.0.1:3000/signin ΓåÆ HTTP 200
+  http://127.0.0.1:3000/ai-assistant ΓåÆ HTTP 200
+  http://127.0.0.1:3000/dashboard ΓåÆ HTTP 200
+  http://127.0.0.1:3000/orders ΓåÆ HTTP 200
+  http://127.0.0.1:3000/account ΓåÆ HTTP 200
+  http://127.0.0.1:3000/spending ΓåÆ HTTP 200
+  http://127.0.0.1:3000/order-insights ΓåÆ HTTP 200
+  http://127.0.0.1:3000/api/auth/register ΓåÆ HTTP 405
+  http://127.0.0.1:3000/api/orders ΓåÆ HTTP 401
+[Global Setup] All pages warmed up. Starting tests...
+
+
+Running 23 tests using 1 worker
+
+[1A[2KDebugger listening on 
+ws://127.0.0.1:55253/f9a6a810-dd48-42fd-9aff-784a0873946e
+For help, see: https://nodejs.org/en/docs/inspector
+
+
+[1A[2KDebugger attached.
+
+
+[1A[2K[1/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:87:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.1 Account Details button navigates to specific order detail
+[1A[2K[2/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:121:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.2 Orders page View Details links to specific order
+[1A[2K[3/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:144:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.1 Orders page renders without horizontal scrollbar
+[1A[2K[4/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:155:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.2 Order detail page renders without horizontal scrollbar
+[1A[2K[5/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are truncated properly
+[1A[2K[6/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:183:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data
+[1A[2K[7/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:196:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.2 Spending page heat map and category breakdown visible
+[1A[2K[8/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:207:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.3 Order insights page shows personality and analytics
+[1A[2K[9/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:218:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.4 Order insights shows reorder probability
+[1A[2K[10/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:233:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.1 Shopping list API returns stationery matches for ball pen
+[1A[2K[11/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:264:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.2 Shopping list API returns stationery matches for notebook
+[1A[2K[12/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:291:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.3 Generic product returns empty matches (no fake results)
+[1A[2K[13/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:317:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results
+[1A[2K[14/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:375:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.1 Shopping list page has auto-checkout checkbox
+[1A[2K[15/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:385:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.2 Clicking auto-checkout shows terms acceptance
+[1A[2K[16/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:400:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.3 Terms modal opens and can be accepted
+[1A[2K[17/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:431:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.1 No horizontal overflow on spending page
+[1A[2K[18/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:443:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.2 No horizontal overflow on order insights page
+[1A[2K[19/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:459:7 ΓÇ║ Fix Validation Tests ΓÇ║ 8.1 All key pages load under 10s
+[1A[2K[20/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:475:7 ΓÇ║ Fix Validation Tests ΓÇ║ 9.1 Full flow: Account ΓåÆ Order Detail ΓåÆ Orders ΓåÆ Spending ΓåÆ Insights
+[1A[2K[21/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:526:7 ΓÇ║ Fix Validation Tests ΓÇ║ 10.1 Shopping list page submit with stationery items
+[1A[2K[22/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:552:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.1 Account page has no critical JS errors
+[1A[2K[23/23] [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:564:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.2 Shopping list page has no critical JS errors
+
+
+[1A[2KWaiting for the debugger to disconnect...
+
+
+[1A[2KDebugger listening on 
+ws://127.0.0.1:53984/8cb7c61f-f5b5-4aaf-b086-10161da1c186
+For help, see: https://nodejs.org/en/docs/inspector
+[1A[2KDebugger attached.
+
+
+[1A[2K[24/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:87:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.1 Account Details button navigates to specific order detail (retry #1)
+[1A[2K[25/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:121:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.2 Orders page View Details links to specific order (retry #1)
+[1A[2K[26/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:144:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.1 Orders page renders without horizontal scrollbar (retry #1)
+[1A[2K[27/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:155:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.2 Order detail page renders without horizontal scrollbar (retry #1)
+[1A[2K[28/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are truncated properly (retry #1)
+[1A[2K  1) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are truncated properly 
+
+    Retry #1 ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      174 |     const truncatedElements = page.locator('.truncate');
+      175 |     const count = await truncatedElements.count();
+    > 176 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      177 |   });
+      178 |
+      179 |   // ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+        at D:\PersonalProject\GIT\delegatecart\apps\web\e2e\fixes-validation.spec.ts:176:19
+
+    attachment #1: screenshot (image/png) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-ae5bf-ames-are-truncated-properly-chromium-retry1\test-failed-1.png
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    attachment #2: video (video/webm) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-ae5bf-ames-are-truncated-properly-chromium-retry1\video.webm
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error Context: test-results\fixes-validation-Fix-Valid-ae5bf-ames-are-truncated-properly-chromium-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-ae5bf-ames-are-truncated-properly-chromium-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\fixes-validation-Fix-Valid-ae5bf-ames-are-truncated-properly-chromium-retry1\trace.zip
+
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+[1A[2K[29/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:317:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results (retry #1)
+[1A[2K  2) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:317:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected pattern: [32m/Smart Delegate|items searched|matches/i[39m
+    Received string:  [31m"DC[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-Powered E-Commerce┬╖[39m
+    [31mHome[39m
+    [31mProducts[39m
+    [31mAI Assistant[39m
+    [31mShopping List[39m
+    [31mAbout[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-powered e-commerce platform delivering intelligent shopping experiences.┬╖[39m
+    [31mProduct[39m
+    [31mFeatures[39m
+    [31mPricing[39m
+    [31mSecurity[39m
+    [31mCompany[39m
+    [31mAbout[39m
+    [31mBlog[39m
+    [31mCareers[39m
+    [31mLegal[39m
+    [31mPrivacy[39m
+    [31mTerms[39m
+    [31mContact┬╖[39m
+    [31m┬⌐ 2024 DelegateCart. All rights reserved. | delegatecart.com"[39m
+
+      366 |     const body = await page.innerText('body');
+      367 |     // Should show results summary
+    > 368 |     expect(body).toMatch(/Smart Delegate|items searched|matches/i);
+          |                  ^
+      369 |   });
+      370 |
+      371 |   // ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+        at D:\PersonalProject\GIT\delegatecart\apps\web\e2e\fixes-validation.spec.ts:368:18
+
+    attachment #1: screenshot (image/png) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-14ed7-ate-page-loads-with-results-chromium\test-failed-1.png
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    attachment #2: video (video/webm) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-14ed7-ate-page-loads-with-results-chromium\video.webm
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error Context: test-results\fixes-validation-Fix-Valid-14ed7-ate-page-loads-with-results-chromium\error-context.md
+
+
+[1A[2K[30/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:183:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data (retry #1)
+[1A[2K[31/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:196:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.2 Spending page heat map and category breakdown visible (retry #1)
+[1A[2K[32/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:207:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.3 Order insights page shows personality and analytics (retry #1)
+[1A[2K[33/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:218:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.4 Order insights shows reorder probability (retry #1)
+[1A[2K[34/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:233:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.1 Shopping list API returns stationery matches for ball pen (retry #1)
+[1A[2K[35/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:264:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.2 Shopping list API returns stationery matches for notebook (retry #1)
+[1A[2K[36/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:291:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.3 Generic product returns empty matches (no fake results) (retry #1)
+[1A[2K[37/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:375:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.1 Shopping list page has auto-checkout checkbox (retry #1)
+[1A[2K[38/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:385:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.2 Clicking auto-checkout shows terms acceptance (retry #1)
+[1A[2K[39/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:400:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.3 Terms modal opens and can be accepted (retry #1)
+[1A[2K[40/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:431:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.1 No horizontal overflow on spending page (retry #1)
+[1A[2K[41/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:443:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.2 No horizontal overflow on order insights page (retry #1)
+[1A[2K[42/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:459:7 ΓÇ║ Fix Validation Tests ΓÇ║ 8.1 All key pages load under 10s (retry #1)
+[1A[2K[43/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:475:7 ΓÇ║ Fix Validation Tests ΓÇ║ 9.1 Full flow: Account ΓåÆ Order Detail ΓåÆ Orders ΓåÆ Spending ΓåÆ Insights (retry #1)
+[1A[2K[44/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:526:7 ΓÇ║ Fix Validation Tests ΓÇ║ 10.1 Shopping list page submit with stationery items (retry #1)
+[1A[2K[45/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:552:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.1 Account page has no critical JS errors (retry #1)
+[1A[2K[46/23] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:564:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.2 Shopping list page has no critical JS errors (retry #1)
+
+
+[1A[2KWaiting for the debugger to disconnect...
+[1A[2K  1 failed
+    [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:317:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results 
+  1 flaky
+    [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are truncated properly 
+  10 did not run
+  11 passed (10.1m)
+Waiting for the debugger to disconnect...
+Waiting for the debugger to disconnect...

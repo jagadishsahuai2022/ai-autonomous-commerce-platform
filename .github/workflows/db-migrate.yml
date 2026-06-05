@@ -1,0 +1,181 @@
+name: DB — Schema Sync & Migration (manual)
+# ──────────────────────────────────────────────────────────────────────────────
+# Manually triggered workflow for all database operations on the VPS.
+#
+# Actions:
+#   schema-sync             — prisma db push (safe, aborts on data-loss risk)
+#   schema-sync-force       — prisma db push --accept-data-loss (DESTRUCTIVE)
+#   migrate-deploy          — prisma migrate deploy (Prisma migration files)
+#   migrate-reset           — prisma migrate reset (⚠️ WIPES all data)
+#   seed-demo-data          — prisma db seed
+#   schema-and-seed         — schema-sync + seed-demo-data
+#   run-versioned-migrations        — apply pending db/migrations/V*.sql only
+#   schema-and-versioned-migrations — schema-sync + db/migrations/V*.sql
+#   db-status               — show migration status + applied migration log
+#
+# Migration file naming convention (db/migrations/):
+#   V{VERSION}__{YYYYMMDD_HHMMSS}__{kebab-description}.sql
+#   e.g. V0070__20260501_143022__add-payment-table.sql
+#
+# How to run:
+#   GitHub repo → Actions → "DB — Schema Sync & Migration (manual)"
+#   → Run workflow → choose action → type "yes" to confirm
+#
+# Required GitHub Secrets:
+#   SERVER_IP    — VPS IP address
+#   SERVER_USER  — SSH user (e.g. root)
+#   SSH_KEY      — private SSH key
+#   SSH_PORT     — SSH port (default 22; set if VPS uses a custom port)
+# ──────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'DB action to run on the VPS'
+        required: true
+        default: 'schema-sync'
+        type: choice
+        options:
+          - schema-sync
+          - schema-sync-force
+          - migrate-deploy
+          - migrate-reset
+          - seed-demo-data
+          - schema-and-seed
+          - run-versioned-migrations
+          - schema-and-versioned-migrations
+          - db-status
+      confirm:
+        description: 'Type "yes" to confirm (required for all destructive actions)'
+        required: true
+        default: ''
+
+jobs:
+  db-operation:
+    name: 'DB: ${{ inputs.action }}'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+
+    steps:
+      # ── Guard: require explicit confirmation ──────────────────────────────────
+      - name: Validate confirmation
+        run: |
+          if [[ "${{ inputs.confirm }}" != "yes" ]]; then
+            echo "❌ Confirmation required — type 'yes' in the confirm input"
+            exit 1
+          fi
+          echo "✅ Confirmed. Running action: ${{ inputs.action }}"
+
+      # ── Extra warning for destructive operations ──────────────────────────────
+      - name: Warn on destructive action
+        if: contains(fromJSON('["schema-sync-force","migrate-reset"]'), inputs.action)
+        run: |
+          echo "⚠️  WARNING: '${{ inputs.action }}' is a DESTRUCTIVE operation."
+          echo "    Data loss may occur. Proceeding because confirmation was given."
+
+      # ── Run DB action on VPS ──────────────────────────────────────────────────
+      - name: Run '${{ inputs.action }}' via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 15m
+          script: |
+            set -euo pipefail
+            cd /root/delegatecart
+
+            COMPOSE="docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml"
+            ACTION="${{ inputs.action }}"
+
+            # ── Helpers ────────────────────────────────────────────────────────
+
+            wait_for_postgres() {
+              echo "⏳ Waiting for postgres to be ready (up to 60s)..."
+              for i in $(seq 1 12); do
+                if $COMPOSE exec -T postgres pg_isready -U "${DB_USER:-admin}" -q 2>/dev/null; then
+                  echo "✅ Postgres is ready"
+                  return 0
+                fi
+                echo "   attempt $i/12 — waiting 5s..."
+                sleep 5
+              done
+              echo "❌ Postgres not ready after 60s"
+              exit 1
+            }
+
+            schema_sync() {
+              wait_for_postgres
+              echo "🔄 Running prisma db push (safe — aborts on data-loss)..."
+              $COMPOSE exec -T api sh -c 'apt-get install -y --no-install-recommends openssl >/dev/null 2>&1 || true'
+              $COMPOSE exec -T api npx prisma db push
+              echo "✅ Schema sync complete"
+            }
+
+            schema_sync_force() {
+              wait_for_postgres
+              echo "⚠️  Running prisma db push --accept-data-loss (DESTRUCTIVE)..."
+              $COMPOSE exec -T api sh -c 'apt-get install -y --no-install-recommends openssl >/dev/null 2>&1 || true'
+              $COMPOSE exec -T api npx prisma db push --accept-data-loss
+              echo "✅ Forced schema sync complete"
+            }
+
+            migrate_deploy() {
+              wait_for_postgres
+              echo "🔄 Running prisma migrate deploy..."
+              $COMPOSE exec -T api npx prisma migrate deploy
+              echo "✅ Migration deploy complete"
+            }
+
+            migrate_reset() {
+              wait_for_postgres
+              echo "⚠️  Running prisma migrate reset (WIPES ALL DATA)..."
+              $COMPOSE exec -T api npx prisma migrate reset --force
+              echo "✅ Migration reset complete"
+            }
+
+            seed_data() {
+              wait_for_postgres
+              echo "🌱 Running prisma db seed..."
+              $COMPOSE exec -T api npx prisma db seed
+              echo "✅ Seed complete"
+            }
+
+            db_status() {
+              wait_for_postgres
+              echo "📊 Prisma migration status:"
+              $COMPOSE exec -T api npx prisma migrate status || true
+              echo ""
+              echo "📋 Applied versioned migrations (_migration_log):"
+              docker exec dc-latest-postgres psql -U "${DB_USER:-admin}" -d "${DB_NAME:-delegatecart}" \
+                -c "SELECT migration_name, applied_at, run_id FROM _migration_log ORDER BY applied_at DESC LIMIT 50;" \
+                2>/dev/null || echo "   (table not yet created)"
+            }
+
+            run_versioned_migrations() {
+              wait_for_postgres
+              echo "🗄️  Running versioned migrations (db/migrations/V*.sql)..."
+              chmod +x scripts/run-migrations.sh
+              bash scripts/run-migrations.sh dc-latest-postgres admin "${DB_NAME:-delegatecart}"
+              echo "✅ Versioned migrations complete"
+            }
+
+            # ── Dispatch ───────────────────────────────────────────────────────
+            case "$ACTION" in
+              schema-sync)                    schema_sync ;;
+              schema-sync-force)              schema_sync_force ;;
+              migrate-deploy)                 migrate_deploy ;;
+              migrate-reset)                  migrate_reset ;;
+              seed-demo-data)                 seed_data ;;
+              schema-and-seed)                schema_sync; seed_data ;;
+              run-versioned-migrations)               run_versioned_migrations ;;
+              schema-and-versioned-migrations)        schema_sync; run_versioned_migrations ;;
+              db-status)                      db_status ;;
+              *)                              echo "Unknown action: $ACTION"; exit 1 ;;
+            esac
+
+            echo ""
+            echo "✅ DB action '$ACTION' finished at $(date -u)"

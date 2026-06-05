@@ -1,0 +1,49 @@
+#Modification to .env , environment variable & apply in VPS
+#Open terminal in VPS
+#Go to /root/delegatecart folder
+
+cd  /root/delegatecart
+
+# 1: Stops All Docker Container
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml down
+
+# 2: Start only the Database
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d postgres
+
+#Optional | How to verify your service names
+#If postgres also returns "no such service," run this command to see the list of valid service names defined in your files:
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml config --services
+
+# 3: Run the rename command
+#Now, target the postgres service to run the SQL command. I've also added the -d postgres flag to ensure you aren't "inside" the d#atabase you are trying to rename:
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec postgres psql -U admin -d postgres -c "ALTER DATABASE ai_commerce RENAME TO delegatecart;"
+
+# 4 Opne .env file & Edit/Rename DB_NAME or anything else you needed
+#Check specific pameter value such as DB_NAME & update if needed
+#Presss ctrl + o & confirm by pressing enter to save & ctrl + x for closing as shown in command palate on the footer
+nano .env
+
+
+# 5: Start Everything Back Up
+#Once the rename is done and your config is updated, bring the whole stack back online:
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml up -d
+
+# 6: Verify the Fix
+#Check the logs of the web service to ensure the "database does not exist" error is gone:
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml logs -f web
+
+#What if the rename fails?
+#If it says database "ai_commerce" does not exist, it’s possible the database was already renamed or was never named that in the first #place. You can list all current databases to check by running:
+
+docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml exec db psq
+
+
+
+
+
+

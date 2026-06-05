@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "description": "API monorepo",
+  "author": "",
+  "private": true,
+  "license": "MIT",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "tsConfigPath": "tsconfig.build.json",
+    "sourceMap": true,
+    "declaration": true
+  }
+}

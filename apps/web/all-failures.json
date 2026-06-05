@@ -1,0 +1,36 @@
+﻿node.exe : Debugger listening on 
+ws://127.0.0.1:61246/2d910fec-e9a7-40a7-ac4a-d07c8b09e4dc
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\JAGADISH SAHU\AppData\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Debugger listen...4a-d07c8b09e4dc 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger listening on ws://127.0.0.1:53462/0f91e0c3-e87c-4589-b0f4-86995e8a64c9
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+
+[Global Setup] Pre-warming Next.js pages...
+  http://127.0.0.1:3000 ΓåÆ HTTP 200
+  http://127.0.0.1:3000/products ΓåÆ HTTP 200
+  http://127.0.0.1:3000/about ΓåÆ HTTP 200
+  http://127.0.0.1:3000/signin ΓåÆ HTTP 200
+  http://127.0.0.1:3000/ai-assistant ΓåÆ HTTP 200
+  http://127.0.0.1:3000/dashboard ΓåÆ HTTP 200
+  http://127.0.0.1:3000/orders ΓåÆ HTTP 200
+  http://127.0.0.1:3000/account ΓåÆ HTTP 200
+  http://127.0.0.1:3000/spending ΓåÆ HTTP 200
+  http://127.0.0.1:3000/order-insights ΓåÆ HTTP 200
+  http://127.0.0.1:3000/cart ΓåÆ HTTP 200
+  http://127.0.0.1:3000/checkout ΓåÆ HTTP 200
+  http://127.0.0.1:3000/profile ΓåÆ HTTP 200
+  http://127.0.0.1:3000/shopping-list ΓåÆ HTTP 200
+  http://127.0.0.1:3000/smart-delegate ΓåÆ HTTP 200
+  http://127.0.0.1:3000/shopping-assistant ΓåÆ HTTP 200
+  http://127.0.0.1:3000/api/auth/register ΓåÆ HTTP 405
+  http://127.0.0.1:3000/api/orders ΓåÆ HTTP 401
+[Global Setup] All pages warmed up. Starting tests...
+

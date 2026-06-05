@@ -1,0 +1,99 @@
+{
+  "name": "ai-commerce-platform",
+  "version": "1.0.0",
+  "description": "Production-grade AI-powered e-commerce platform using monorepo architecture",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:api": "turbo run dev --filter=api",
+    "dev:ai": "turbo run dev --filter=ai-service",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "start:prod": "pnpm -r --filter='./apps/*' start",
+    "test": "turbo run test",
+    "test:unit": "turbo run test:unit",
+    "test:integration": "turbo run test:integration",
+    "test:e2e": "cd apps/web && pnpm test:e2e",
+    "test:performance": "turbo run test:performance",
+    "test:coverage": "turbo run test:coverage",
+    "test:all": "pnpm test:unit && pnpm test:integration && pnpm test:e2e && pnpm test:performance",
+    "test:watch": "turbo run test:watch",
+    "test:ci": "turbo run test:coverage && turbo run test:e2e",
+    "lint": "turbo run lint",
+    "check": "turbo run type-check && turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "type-check": "turbo run type-check",
+    "db:seed": "cd apps/api && npx prisma db seed",
+    "db:migrate": "cd apps/api && npx prisma migrate dev",
+    "db:push": "cd apps/api && npx prisma db push",
+    "db:studio": "cd apps/api && npx prisma studio",
+    "db:reset": "cd apps/api && npx prisma migrate reset",
+    "metrics": "echo 'Metrics available at http://localhost:9090/metrics'",
+    "health": "curl -s http://localhost:3000/health | jq .",
+    "health:ready": "curl -s http://localhost:3000/health/ready | jq .",
+    "load-test": "k6 run -u 1000 -d 5m apps/api/tests/load-test.js",
+    "load-test:stress": "k6 run -u 10000 -d 20m apps/api/tests/load-test.js",
+    "docker:build": "docker-compose -f docker-compose.yml build",
+    "docker:up": "docker-compose -f docker-compose.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.yml down",
+    "docker:logs": "docker-compose -f docker-compose.yml logs -f",
+    "k8s:deploy": "kubectl apply -f infra/kubernetes/deployment.yaml",
+    "k8s:status": "kubectl get pods -n delegatecart",
+    "k8s:logs": "kubectl logs -n delegatecart deployment/delegatecart-api -f",
+    "k8s:delete": "kubectl delete namespace delegatecart",
+    "setup": "bash setup-production.sh",
+    "setup:windows": "call setup-production.bat",
+    "ci": "pnpm lint && pnpm build && pnpm test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "^5.95.2",
+    "@types/node": "^20.10.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.1.0",
+    "tailwind-merge": "^3.5.0",
+    "turbo": "^1.10.16",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "lint-staged": {
+    "apps/api/**/*.{ts}": [
+      "bash -c 'pnpm --filter api lint --max-warnings 0'"
+    ],
+    "apps/web/**/*.{ts,tsx}": [
+      "bash -c 'pnpm --filter web lint --max-warnings 0'"
+    ]
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^19.0.0",
+      "@types/react-dom": "^19.0.0",
+      "react": "19.2.0",
+      "react-dom": "19.2.0"
+    }
+  },
+  "dependencies": {
+    "@types/socket.io-client": "^3.0.0",
+    "axios": "^1.6.2",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.577.0",
+    "next-auth": "^4.24.13",
+    "react-hook-form": "^7.72.0",
+    "socket.io-client": "^4.8.3",
+    "zustand": "^5.0.12"
+  }
+}

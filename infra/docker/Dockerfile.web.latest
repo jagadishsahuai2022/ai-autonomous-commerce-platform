@@ -1,0 +1,47 @@
+# Multi-stage Dockerfile for Next.js Frontend — latest stack
+# Node 22 LTS (bookworm-slim) | Next.js 16.2.3 | React 19.2
+
+FROM node:22-bookworm-slim
+
+WORKDIR /app
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install dumb-init for proper signal handling
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init bash && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy root configuration
+COPY package*.json ./
+COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml .
+COPY tsconfig.json .
+COPY turbo.json .
+
+# Copy app files
+COPY apps/web ./apps/web
+COPY packages ./packages
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+WORKDIR /app/apps/web
+
+# Allow the API internal URL to be customised at build-time so that Next.js
+# bakes the correct rewrite destination into routes-manifest.json.
+# Default value works for the standard docker-compose.latest.yml setup where
+# the NestJS service is named "api" and listens on port 3001.
+ARG API_INTERNAL_URL=http://api:3001
+ENV API_INTERNAL_URL=$API_INTERNAL_URL
+
+# Build the Next.js application for production
+RUN pnpm build
+
+EXPOSE 3000
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Run next production server
+CMD ["pnpm", "start"]

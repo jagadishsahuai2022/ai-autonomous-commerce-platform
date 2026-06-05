@@ -1,0 +1,86 @@
+# OpenTelemetry Collector — receives OTLP from all services,
+# exports metrics to Prometheus, traces to Jaeger (optional), logs to stdout.
+
+receivers:
+  # Accept OTLP from instrumented services (gRPC + HTTP)
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+  # Scrape Prometheus-format metrics directly from api and web
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: api
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['api:3001']
+          metrics_path: /metrics
+        - job_name: autopilot-engine
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['autopilot-engine:3002']
+          metrics_path: /metrics
+
+processors:
+  # Drop spans/metrics when memory pressure is high
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 256
+    spike_limit_mib: 64
+
+  # Batch before export to reduce network calls
+  batch:
+    timeout: 10s
+    send_batch_size: 1024
+
+  # Add service name from resource attributes
+  resource:
+    attributes:
+      - action: insert
+        key: deployment.environment
+        value: production
+
+exporters:
+  # Expose metrics for Prometheus to scrape on :8889/metrics
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    namespace: delegatecart
+
+  # Debug — print a summary of every received batch to stdout
+  logging:
+    verbosity: normal
+    sampling_initial: 5
+    sampling_thereafter: 100
+
+  # Jaeger trace export (service must be running; safe to leave if absent)
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [otlp/jaeger, logging]
+
+    metrics:
+      receivers: [otlp, prometheus]
+      processors: [memory_limiter, batch]
+      exporters: [prometheus]
+
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging]
+
+  telemetry:
+    logs:
+      level: "info"
+    metrics:
+      address: 0.0.0.0:8888

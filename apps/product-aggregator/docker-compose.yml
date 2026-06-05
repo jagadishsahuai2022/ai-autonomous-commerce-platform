@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: product-aggregator-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - product-aggregator-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: product-aggregator-kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    depends_on:
+      - zookeeper
+    networks:
+      - product-aggregator-network
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:29092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: product-aggregator-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - product-aggregator-network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: product-aggregator-kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - kafka
+      - zookeeper
+    networks:
+      - product-aggregator-network
+
+  product-aggregator:
+    build: .
+    container_name: product-aggregator-service
+    ports:
+      - "3003:3003"
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: 3003
+      LOG_LEVEL: INFO
+      REDIS_URL: redis://redis:6379/0
+      REDIS_TTL: 3600
+      CACHE_ENABLED: 'true'
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONSUMER_GROUP: product-aggregator-service
+      KAFKA_TOPIC_INTENT_PROCESSED: intent.processed
+      KAFKA_TOPIC_PRODUCTS_FETCHED: products.fetched
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: delegatecart
+      AMAZON_API_TIMEOUT: 5
+      FLIPKART_API_TIMEOUT: 5
+      MAX_RESULTS_PER_SOURCE: 10
+      AGGREGATOR_TIMEOUT: 10
+      ENVIRONMENT: production
+    depends_on:
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - product-aggregator-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  redis_data:
+
+networks:
+  product-aggregator-network:
+    driver: bridge

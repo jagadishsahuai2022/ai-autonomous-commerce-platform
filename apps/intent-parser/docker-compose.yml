@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Kafka Broker
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: intent-parser-kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    networks:
+      - intent-parser-network
+
+  # Zookeeper (required by Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: intent-parser-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - intent-parser-network
+
+  # Kafka UI (optional, for monitoring)
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: intent-parser-kafka-ui
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+    networks:
+      - intent-parser-network
+
+  # Intent Parser Service
+  intent-parser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intent-parser-service
+    environment:
+      LLM_PROVIDER: openai
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: gpt-4-turbo-preview
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONSUMER_GROUP: intent-parser-service
+      KAFKA_TOPIC_BUY_REQUEST: buy_request.created
+      KAFKA_TOPIC_INTENT_PROCESSED: intent.processed
+      HOST: 0.0.0.0
+      PORT: 3002
+      LOG_LEVEL: INFO
+      ENVIRONMENT: production
+    ports:
+      - "3002:3002"
+    depends_on:
+      - kafka
+    networks:
+      - intent-parser-network
+    command: python main.py
+
+networks:
+  intent-parser-network:
+    driver: bridge

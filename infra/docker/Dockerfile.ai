@@ -1,0 +1,35 @@
+# Dockerfile for FastAPI AI Service
+# Python 3.13-slim: latest stable with pre-built wheels for pydantic-core (Rust) and psycopg2-binary
+# NOTE: Python 3.14 not used here — pydantic-core/psycopg2-binary have no abi3 wheels for 3.14 yet
+
+FROM python:3.13-slim-bookworm
+
+WORKDIR /app
+
+# Install system dependencies (build-essential + libpq-dev for psycopg2 compilation on slim)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create non-root user for security
+RUN useradd -m -u 1001 python && chown -R python:python /app
+
+USER python
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=5 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

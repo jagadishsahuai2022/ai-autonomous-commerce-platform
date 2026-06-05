@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 930" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="930" fill="url(#bg4)" rx="12"/>
+  <text x="550" y="38" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="bold">Wallet System — Security &amp; Transaction Architecture</text>
+  <text x="550" y="58" text-anchor="middle" fill="#94a3b8" font-size="12">Balance Management | Spending Limits | AI Authorization | Fraud Detection | Audit Trail</text>
+
+  <!-- Wallet Core -->
+  <rect x="380" y="80" width="340" height="130" rx="12" fill="#14532d" stroke="#22c55e" stroke-width="2"/>
+  <text x="550" y="105" text-anchor="middle" fill="#4ade80" font-size="16" font-weight="bold">Digital Wallet</text>
+  <rect x="400" y="115" width="300" height="28" rx="4" fill="#052e16"/>
+  <text x="550" y="134" text-anchor="middle" fill="#86efac" font-size="12">balance: ₹25,000.00</text>
+  <rect x="400" y="148" width="145" height="22" rx="4" fill="#052e16"/>
+  <text x="472" y="163" text-anchor="middle" fill="#a7f3d0" font-size="10">maxPerOrder: ₹10,000</text>
+  <rect x="555" y="148" width="145" height="22" rx="4" fill="#052e16"/>
+  <text x="627" y="163" text-anchor="middle" fill="#a7f3d0" font-size="10">dailyLimit: ₹50,000</text>
+  <rect x="400" y="175" width="145" height="22" rx="4" fill="#052e16"/>
+  <text x="472" y="190" text-anchor="middle" fill="#4ade80" font-size="10">isAiAuthorized: ✓</text>
+  <rect x="555" y="175" width="145" height="22" rx="4" fill="#052e16"/>
+  <text x="627" y="190" text-anchor="middle" fill="#4ade80" font-size="10">isLocked: ✗</text>
+
+  <!-- Transaction Types (Left) -->
+  <text x="150" y="105" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="bold">Transaction Types</text>
+
+  <rect x="40" y="120" width="220" height="38" rx="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="80" y="143" fill="#93c5fd" font-size="11" font-weight="bold">TOPUP</text>
+  <text x="200" y="143" text-anchor="middle" fill="#bfdbfe" font-size="10">Add funds (Razorpay)</text>
+
+  <rect x="40" y="165" width="220" height="38" rx="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="80" y="188" fill="#93c5fd" font-size="11" font-weight="bold">DEBIT</text>
+  <text x="200" y="188" text-anchor="middle" fill="#bfdbfe" font-size="10">Spend (manual/AI)</text>
+
+  <rect x="40" y="210" width="220" height="38" rx="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="80" y="233" fill="#93c5fd" font-size="11" font-weight="bold">HOLD</text>
+  <text x="200" y="233" text-anchor="middle" fill="#bfdbfe" font-size="10">Reserve for pending</text>
+
+  <rect x="40" y="255" width="220" height="38" rx="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="80" y="278" fill="#93c5fd" font-size="11" font-weight="bold">RELEASE</text>
+  <text x="200" y="278" text-anchor="middle" fill="#bfdbfe" font-size="10">Cancel hold</text>
+
+  <rect x="40" y="300" width="220" height="38" rx="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="80" y="323" fill="#93c5fd" font-size="11" font-weight="bold">REFUND</text>
+  <text x="200" y="323" text-anchor="middle" fill="#bfdbfe" font-size="10">Return to wallet</text>
+
+  <!-- Spending Limits (Right) -->
+  <text x="930" y="105" text-anchor="middle" fill="#fcd34d" font-size="14" font-weight="bold">Spending Limits</text>
+
+  <rect x="810" y="120" width="250" height="38" rx="6" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="935" y="143" text-anchor="middle" fill="#fcd34d" font-size="11">DAILY: ₹50,000 max/day</text>
+
+  <rect x="810" y="165" width="250" height="38" rx="6" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="935" y="188" text-anchor="middle" fill="#fcd34d" font-size="11">WEEKLY: ₹200,000 max/week</text>
+
+  <rect x="810" y="210" width="250" height="38" rx="6" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="935" y="233" text-anchor="middle" fill="#fcd34d" font-size="11">MONTHLY: ₹500,000 max/month</text>
+
+  <rect x="810" y="255" width="250" height="38" rx="6" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+  <text x="935" y="278" text-anchor="middle" fill="#fcd34d" font-size="11">PER_ORDER: ₹10,000 max</text>
+
+  <!-- AI Authorization Flow -->
+  <text x="550" y="370" text-anchor="middle" fill="#c4b5fd" font-size="15" font-weight="bold">AI-Initiated Transaction Flow</text>
+
+  <!-- AI Agent box — moved below Transaction Types -->
+  <rect x="40" y="390" width="160" height="55" rx="8" fill="#2e1065" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="120" y="413" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="bold">AI Agent</text>
+  <text x="120" y="430" text-anchor="middle" fill="#ddd6fe" font-size="9">Requests wallet debit</text>
+
+  <!-- Arrow boxes for the flow -->
+  <rect x="120" y="495" width="180" height="55" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="210" y="518" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="bold">1. Auth Check</text>
+  <text x="210" y="535" text-anchor="middle" fill="#c7d2fe" font-size="9">isAiAuthorized == true?</text>
+
+  <rect x="340" y="495" width="180" height="55" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="430" y="518" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="bold">2. Limit Check</text>
+  <text x="430" y="535" text-anchor="middle" fill="#c7d2fe" font-size="9">Amount ≤ spending limits?</text>
+
+  <rect x="560" y="495" width="180" height="55" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="650" y="518" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="bold">3. Balance Check</text>
+  <text x="650" y="535" text-anchor="middle" fill="#c7d2fe" font-size="9">Balance ≥ amount?</text>
+
+  <rect x="780" y="495" width="180" height="55" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="870" y="518" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="bold">4. Fraud Check</text>
+  <text x="870" y="535" text-anchor="middle" fill="#c7d2fe" font-size="9">Anomaly detection pass?</text>
+
+  <!-- Arrows between flow steps -->
+  <line x1="300" y1="522" x2="340" y2="522" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="520" y1="522" x2="560" y2="522" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="740" y1="522" x2="780" y2="522" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="120" y1="445" x2="120" y2="475" stroke="#8b5cf6" stroke-width="1.5"/>
+  <line x1="120" y1="475" x2="120" y2="495" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#a4)"/>
+
+  <!-- Success/Fail branches -->
+  <rect x="340" y="590" width="240" height="55" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="2"/>
+  <text x="460" y="613" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="bold">ALL CHECKS PASS</text>
+  <text x="460" y="630" text-anchor="middle" fill="#86efac" font-size="10">Create HOLD → Execute → DEBIT</text>
+
+  <rect x="660" y="590" width="240" height="55" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="2"/>
+  <text x="780" y="613" text-anchor="middle" fill="#f87171" font-size="12" font-weight="bold">ANY CHECK FAILS</text>
+  <text x="780" y="630" text-anchor="middle" fill="#fca5a5" font-size="10">Block transaction + Log reason</text>
+
+  <line x1="550" y1="550" x2="460" y2="590" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="750" y1="550" x2="780" y2="590" stroke="#ef4444" stroke-width="1.5"/>
+
+  <!-- Fraud Detection System -->
+  <text x="550" y="680" text-anchor="middle" fill="#f87171" font-size="15" font-weight="bold">Fraud Detection System</text>
+
+  <rect x="40" y="700" width="240" height="75" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+  <text x="160" y="723" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="bold">Velocity Check</text>
+  <text x="160" y="740" text-anchor="middle" fill="#fecaca" font-size="10">Too many transactions</text>
+  <text x="160" y="755" text-anchor="middle" fill="#fecaca" font-size="10">in short time window?</text>
+
+  <rect x="310" y="700" width="240" height="75" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+  <text x="430" y="723" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="bold">Amount Anomaly</text>
+  <text x="430" y="740" text-anchor="middle" fill="#fecaca" font-size="10">Unusual transaction amount</text>
+  <text x="430" y="755" text-anchor="middle" fill="#fecaca" font-size="10">vs. user's history?</text>
+
+  <rect x="580" y="700" width="240" height="75" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+  <text x="700" y="723" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="bold">Pattern Detection</text>
+  <text x="700" y="740" text-anchor="middle" fill="#fecaca" font-size="10">Suspicious purchase</text>
+  <text x="700" y="755" text-anchor="middle" fill="#fecaca" font-size="10">patterns detected?</text>
+
+  <rect x="850" y="700" width="210" height="75" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+  <text x="955" y="723" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="bold">Auto Lockout</text>
+  <text x="955" y="740" text-anchor="middle" fill="#fecaca" font-size="10">3 fraud triggers →</text>
+  <text x="955" y="755" text-anchor="middle" fill="#fecaca" font-size="10">Lock wallet + Alert</text>
+
+  <!-- Audit Trail -->
+  <text x="550" y="810" text-anchor="middle" fill="#fcd34d" font-size="15" font-weight="bold">Complete Audit Trail</text>
+
+  <rect x="40" y="825" width="1020" height="90" rx="10" fill="#422006" stroke="#f59e0b" stroke-width="1"/>
+
+  <text x="80" y="850" fill="#fde68a" font-size="11" font-weight="bold">WalletTransaction Record:</text>
+  <text x="80" y="870" fill="#fcd34d" font-size="10">type | amount | balanceBefore | balanceAfter | description | status | ipAddress | userAgent | createdAt</text>
+
+  <text x="80" y="892" fill="#fde68a" font-size="11" font-weight="bold">WalletAuditLog Record:</text>
+  <text x="80" y="908" fill="#fcd34d" font-size="10">action | performer (user|ai|system|admin) | changesBefore (JSON) | changesAfter (JSON) | ipAddress | createdAt</text>
+</svg>

@@ -1,0 +1,62 @@
+name: Deploy DB Migrations (DigitalOcean)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/prisma/migrations/**'
+      - '.github/workflows/digitalocean-db-migrate.yml'
+
+jobs:
+  migrate:
+    name: Apply PostgreSQL Migrations
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DO_DATABASE_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Validate required secret
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DO_DATABASE_URL secret is not configured."
+            exit 1
+          fi
+
+      - name: Create schema migration ledger
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE TABLE IF NOT EXISTS public.schema_migrations (
+            name TEXT PRIMARY KEY,
+            applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+          );
+          SQL
+
+      - name: Apply pending SQL migrations
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            migration_name="${file#apps/api/prisma/migrations/}"
+            already_applied=$(psql "$DATABASE_URL" -tAc "SELECT 1 FROM public.schema_migrations WHERE name = '$migration_name' LIMIT 1;")
+
+            if [ "$already_applied" = "1" ]; then
+              echo "Skipping already applied migration: $migration_name"
+              continue
+            fi
+
+            echo "Applying migration: $migration_name"
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$file"
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "INSERT INTO public.schema_migrations(name) VALUES ('$migration_name');"
+          done < <(find apps/api/prisma/migrations -type f -name '*.sql' | sort)
+
+      - name: Verify migration tables
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT name, applied_at FROM public.schema_migrations ORDER BY applied_at DESC LIMIT 20;"

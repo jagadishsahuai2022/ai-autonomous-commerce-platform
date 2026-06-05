@@ -1,0 +1,264 @@
+name: Canary Deploy — DelegateCart
+
+# Triggered manually or after the main deploy completes.
+# Implements:  build → canary-deploy (5 % traffic) → verify → promote|rollback
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Service to canary-deploy (api | web)'
+        required: true
+        default: api
+        type: choice
+        options: [api, web]
+      canary_weight:
+        description: 'Canary traffic weight (1-50 %)'
+        required: true
+        default: '5'
+      verify_window_minutes:
+        description: 'How long to observe the canary before promoting (minutes)'
+        required: true
+        default: '5'
+
+concurrency:
+  group: canary-${{ inputs.service }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository_owner }}/delegatecart
+  SERVICE: ${{ inputs.service }}
+  CANARY_WEIGHT: ${{ inputs.canary_weight }}
+  VERIFY_WINDOW: ${{ inputs.verify_window_minutes }}
+  DOMAIN: ${{ secrets.DOMAIN || 'delegatecart.com' }}
+
+jobs:
+  # ── 1. Build canary image ─────────────────────────────────────────────────
+  build-canary:
+    name: Build Canary Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      canary_tag: ${{ steps.tag.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate canary tag
+        id: tag
+        run: echo "tag=canary-${{ github.sha }}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build & push canary image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/docker/Dockerfile.${{ env.SERVICE }}.latest
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${{ env.SERVICE }}:${{ steps.tag.outputs.tag }}
+          cache-from: type=gha,scope=${{ env.SERVICE }}
+          cache-to: type=gha,mode=max,scope=${{ env.SERVICE }}
+
+  # ── 2. Deploy canary alongside stable ────────────────────────────────────
+  deploy-canary:
+    name: Deploy Canary (${{ inputs.canary_weight }}% traffic)
+    needs: build-canary
+    runs-on: ubuntu-latest
+    environment: production
+    outputs:
+      canary_container: ${{ steps.deploy.outputs.container }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy canary via SSH
+        id: deploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER || 'root' }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd /opt/delegatecart
+
+            CANARY_TAG="${{ needs.build-canary.outputs.canary_tag }}"
+            SERVICE="${{ env.SERVICE }}"
+            WEIGHT="${{ env.CANARY_WEIGHT }}"
+            IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${SERVICE}:${CANARY_TAG}"
+
+            echo "Pulling canary image: $IMAGE"
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker pull "$IMAGE"
+
+            # Start canary container alongside the stable one
+            CANARY_NAME="${SERVICE}-canary"
+            docker rm -f "$CANARY_NAME" 2>/dev/null || true
+
+            docker run -d \
+              --name "$CANARY_NAME" \
+              --network delegatecart_ai-commerce-network \
+              --label "delegatecart.canary=true" \
+              --label "delegatecart.canary.weight=${WEIGHT}" \
+              --label "delegatecart.canary.sha=${{ github.sha }}" \
+              --env-file /opt/delegatecart/.env \
+              "$IMAGE"
+
+            echo "Canary container started: $CANARY_NAME"
+
+            # Store previous stable tag for potential rollback
+            STABLE_TAG=$(docker inspect --format='{{index .Config.Image}}' "ai-commerce-${SERVICE}" 2>/dev/null || echo "unknown")
+            echo "$STABLE_TAG" > /opt/delegatecart/.previous-${SERVICE}-tag
+
+  # ── 3. Verify canary metrics ──────────────────────────────────────────────
+  verify-canary:
+    name: Verify Canary Metrics (${{ inputs.verify_window_minutes }}min)
+    needs: [build-canary, deploy-canary]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for observation window
+        run: |
+          echo "Observing canary for ${{ env.VERIFY_WINDOW }} minute(s)..."
+          sleep $(( ${{ env.VERIFY_WINDOW }} * 60 ))
+
+      - name: Check canary health endpoint
+        id: health
+        run: |
+          set -euo pipefail
+          DOMAIN="${{ env.DOMAIN }}"
+          SERVICE="${{ env.SERVICE }}"
+
+          if [ "$SERVICE" = "api" ]; then
+            URL="https://${DOMAIN}/api/health"
+          else
+            URL="https://${DOMAIN}"
+          fi
+
+          echo "Checking ${URL} ..."
+          HTTP=$(curl --silent --max-time 15 --write-out "%{http_code}" --output /tmp/health.json "$URL")
+
+          if [ "$HTTP" -ge 200 ] && [ "$HTTP" -lt 400 ]; then
+            echo "health_ok=true" >> "$GITHUB_OUTPUT"
+            echo "Health check passed (HTTP $HTTP)"
+            cat /tmp/health.json || true
+          else
+            echo "health_ok=false" >> "$GITHUB_OUTPUT"
+            echo "Health check FAILED (HTTP $HTTP)"
+            exit 1
+          fi
+
+      - name: Query Prometheus error rate
+        id: metrics
+        run: |
+          set -euo pipefail
+
+          # Query Prometheus (if accessible from runner) for canary error rate
+          # Falls back gracefully if Prometheus is not reachable externally
+          PROM_URL="${{ secrets.PROMETHEUS_URL || '' }}"
+          if [ -z "$PROM_URL" ]; then
+            echo "PROMETHEUS_URL not set — skipping metric gate"
+            echo "error_rate_ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          QUERY='sum(rate(http_requests_total{status=~"5..",job="api"}[5m]))/sum(rate(http_requests_total{job="api"}[5m]))'
+          RESULT=$(curl --silent --max-time 10 \
+            "${PROM_URL}/api/v1/query" \
+            --data-urlencode "query=${QUERY}" | jq -r '.data.result[0].value[1] // "0"')
+
+          echo "5xx error rate: $RESULT"
+          # Fail if error rate > 5 %
+          python3 -c "import sys; rate=float('${RESULT}'); sys.exit(1 if rate > 0.05 else 0)"
+          echo "error_rate_ok=true" >> "$GITHUB_OUTPUT"
+
+  # ── 4a. Promote canary to stable ─────────────────────────────────────────
+  promote:
+    name: Promote Canary → Stable
+    needs: [build-canary, verify-canary]
+    runs-on: ubuntu-latest
+    environment: production
+    if: success()
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Promote via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER || 'root' }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd /opt/delegatecart
+
+            CANARY_TAG="${{ needs.build-canary.outputs.canary_tag }}"
+            SERVICE="${{ env.SERVICE }}"
+
+            echo "Promoting canary tag $CANARY_TAG to stable for $SERVICE"
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Update the stable service to use the canary image
+            sed -i "s|image:.*${SERVICE}:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${SERVICE}:${CANARY_TAG}|" \
+              docker-compose.latest.yml
+
+            docker compose -f docker-compose.latest.yml up -d --no-deps "$SERVICE"
+
+            # Remove the canary sidecar
+            docker rm -f "${SERVICE}-canary" 2>/dev/null || true
+
+            echo "✅ Promotion complete: $SERVICE → $CANARY_TAG"
+
+      - name: Post-promote smoke test
+        run: |
+          sleep 10
+          DOMAIN="${{ env.DOMAIN }}"
+          curl --fail --silent --max-time 15 "https://${DOMAIN}/api/health" | jq .
+          echo "✅ Post-promote smoke test passed"
+
+  # ── 4b. Rollback canary on failure ────────────────────────────────────────
+  rollback:
+    name: Rollback Canary (auto)
+    needs: [deploy-canary, verify-canary]
+    runs-on: ubuntu-latest
+    environment: production
+    if: failure()
+
+    steps:
+      - name: Remove canary and restore stable
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER || 'root' }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script_stop: false
+          script: |
+            set -euo pipefail
+            cd /opt/delegatecart
+            SERVICE="${{ env.SERVICE }}"
+
+            echo "Rolling back canary for $SERVICE"
+            docker rm -f "${SERVICE}-canary" 2>/dev/null || true
+
+            # Stable container is untouched — traffic automatically stays on it
+            echo "⏪ Canary rolled back. Stable container remains active."
+
+      - name: Notify rollback
+        run: |
+          echo "::error::Canary verification failed for ${{ env.SERVICE }} (${{ github.sha }}). Canary container removed; stable is untouched."

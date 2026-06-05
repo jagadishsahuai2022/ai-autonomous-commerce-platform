@@ -1,0 +1,38 @@
+# Multi-stage Dockerfile for Next.js Frontend
+
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install dumb-init for proper signal handling and build tools for native modules (bcrypt)
+RUN apk add --no-cache dumb-init bash python3 make g++
+
+# Copy root configuration
+COPY package*.json ./
+COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml .
+COPY tsconfig.json .
+COPY turbo.json .
+
+# Copy app files
+COPY apps/web ./apps/web
+COPY packages ./packages
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+WORKDIR /app/apps/web
+
+# Build the Next.js application for production
+RUN pnpm build
+
+EXPOSE 3000
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Run next production server
+CMD ["pnpm", "start"]

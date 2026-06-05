@@ -1,0 +1,82 @@
+{
+  "globalDependencies": [
+    "**/.env",
+    "**/.env.*.local"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint": {
+      "outputs": [],
+      "cache": false
+    },
+    "type-check": {
+      "cache": false
+    },
+    "test": {
+      "outputs": [
+        "coverage/**",
+        ".coverage/**"
+      ],
+      "cache": false,
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test:unit": {
+      "outputs": [
+        "coverage/**"
+      ],
+      "cache": false
+    },
+    "test:integration": {
+      "outputs": [
+        "coverage/**"
+      ],
+      "cache": false,
+      "dependsOn": [
+        "^build",
+        "dev"
+      ]
+    },
+    "test:e2e": {
+      "cache": false,
+      "dependsOn": [
+        "^build",
+        "dev"
+      ]
+    },
+    "test:performance": {
+      "cache": false,
+      "dependsOn": [
+        "^build",
+        "dev"
+      ]
+    },
+    "test:coverage": {
+      "outputs": [
+        "coverage/**",
+        ".coverage/**"
+      ],
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

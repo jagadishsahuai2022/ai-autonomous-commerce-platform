@@ -1,0 +1,272 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Autopilot Rules - User-defined purchase rules
+model AutopilotRule {
+  id                    String   @id @default(cuid())
+  userId                String
+  name                  String
+  description           String?
+  conditions            Json     // Array of RuleCondition
+  action                Json     // AutopilotAction
+  maxSpendPerMonth      Decimal
+  maxOrderValue         Decimal
+  status                String   @default("active") // active, inactive, paused
+  priority              Int      @default(0)
+  notificationEnabled   Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  lastTriggeredAt       DateTime?
+  triggerCount          Int      @default(0)
+  successCount          Int      @default(0)
+  failureCount          Int      @default(0)
+
+  decisions             AutopilotDecision[]
+  metadata              RuleMetadata?
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+/// Autopilot Decisions - Recorded purchase decisions
+model AutopilotDecision {
+  id                    String   @id @default(cuid())
+  userId                String
+  ruleId                String?
+  productId             String
+  timestamp             DateTime @default(now())
+  shouldProceed         Boolean
+  confidence            Decimal
+  confidenceFactors     Json     // Breakdown of confidence scores
+  reasoning             Json     // DecisionReasoning
+  requiresApproval      Boolean
+  riskLevel             String   // low, medium, high
+  status                String   @default("pending") // pending, approved, executed, rejected
+  orderId               String?
+  approvedAt            DateTime?
+  executedAt            DateTime?
+  approvalRequestId     String?
+
+  rule                  AutopilotRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+  approvalRequest       ApprovalRequest? @relation(fields: [approvalRequestId], references: [id], onDelete: SetNull)
+  analytics             DecisionAnalytic?
+
+  @@index([userId])
+  @@index([ruleId])
+  @@index([status])
+  @@index([timestamp])
+  @@unique([approvalRequestId])
+}
+
+/// Approval Workflow - For decisions requiring user approval
+model ApprovalRequest {
+  id                    String   @id @default(cuid())
+  userId                String
+  decisionId            String?
+  reason                String   // Why approval is needed
+  status                String   @default("pending") // pending, approved, rejected
+  requestedAt           DateTime @default(now())
+  respondedAt           DateTime?
+  responseReason        String?
+  approverNotes         String?
+
+  decision              AutopilotDecision?
+
+  @@index([userId])
+  @@index([status])
+  @@index([requestedAt])
+}
+
+/// Anomaly Detection - Tracks unusual patterns
+model AnomalyDetection {
+  id                    String   @id @default(cuid())
+  userId                String
+  detectionType         String   // unusual_spend, pattern_change, fraud_signal, etc
+  severity              String   // low, medium, high, critical
+  description           String
+  metadata              Json     // Detection details
+  flagged               Boolean  @default(false)
+  reviewedAt            DateTime?
+  resolutionNotes       String?
+  detectedAt            DateTime @default(now())
+
+  @@index([userId])
+  @@index([severity])
+  @@index([detectedAt])
+}
+
+/// Usage Analytics - Tracks autopilot system usage
+model DecisionAnalytic {
+  id                    String   @id @default(cuid())
+  decisionId            String   @unique
+  userId                String
+  ruleId                String?
+  productId             String
+  decision              AutopilotDecision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  
+  // Scoring breakdown
+  priceConfidence       Decimal
+  qualityConfidence     Decimal
+  historyConfidence     Decimal
+  marketConfidence      Decimal
+  rankingConfidence     Decimal
+  intentConfidence      Decimal
+  
+  // Product data
+  productPrice          Decimal
+  productRating         Decimal
+  productStock          Int
+  
+  // User behavior
+  userTotalPurchases    Int
+  userReturnRate        Decimal
+  
+  // Outcomes
+  userApproved          Boolean?
+  purchaseCompleted     Boolean?
+  orderValue            Decimal?
+  
+  recordedAt            DateTime @default(now())
+
+  @@index([userId])
+  @@index([recordedAt])
+}
+
+/// Rule Metadata - Extended rule information
+model RuleMetadata {
+  id                    String   @id @default(cuid())
+  ruleId                String   @unique
+  rule                  AutopilotRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  
+  // Category preferences
+  preferredCategories   String[]
+  excludedBrands        String[]
+  allowedPriceRange     Json?    // { min: number, max: number }
+  
+  // Time-based rules
+  activeHoursStart      Int?
+  activeHoursEnd        Int?
+  activeDaysOfWeek      String[] // Monday, Tuesday, etc
+  
+  // Special conditions
+  requiresWarranty      Boolean  @default(false)
+  requiresCOD           Boolean  @default(false)
+  preferEMI             Boolean  @default(false)
+  
+  // Localization (India-specific)
+  regionSpecific        Boolean  @default(false)
+  preferredPincodes     String[]
+  
+  tags                  String[]
+  customMetadata        Json?
+
+  @@index([ruleId])
+}
+
+/// India-Specific Features
+model IndiaLocalizedFeature {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  
+  // EMI preferences
+  emiEnabled            Boolean  @default(true)
+  preferredTenures      Int[]    // Months: 3, 6, 12
+  maxEMIAmount          Decimal
+  
+  // COD preferences
+  codEnabled            Boolean  @default(true)
+  codMaxAmount          Decimal
+  
+  // Payment methods
+  preferredPaymentMethods String[] @default(["card", "upi", "netbanking"])
+  
+  // Regional
+  defaultPincode        String?
+  homeState             String?
+  preferredCurrency     String   @default("INR")
+  
+  // Delivery preferences
+  maxDeliveryDays       Int      @default(3)
+  preferExpress         Boolean  @default(false)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([userId])
+}
+
+/// Rules Performance Tracking
+model RulePerformanceMetric {
+  id                    String   @id @default(cuid())
+  ruleId                String
+  userId                String
+  
+  // Performance metrics
+  totalTriggered        Int      @default(0)
+  totalSuccessful       Int      @default(0)
+  totalFailed           Int      @default(0)
+  totalApprovedByUser   Int      @default(0)
+  totalRejectedByUser   Int      @default(0)
+  
+  // Financial metrics
+  totalSpent            Decimal  @default(0)
+  averageOrderValue     Decimal  @default(0)
+  totalAverageSavings   Decimal  @default(0) // Price reductions
+  
+  // Quality metrics
+  userSatisfactionRate  Decimal  @default(0.5) // 0-1 scale
+  returnRate            Decimal  @default(0) // 0-1 scale
+  
+  // Confidence metrics
+  averageConfidence     Decimal  @default(0.5)
+  highConfidenceCount   Int      @default(0) // >= 0.8
+  mediumConfidenceCount Int      @default(0) // 0.6-0.8
+  lowConfidenceCount    Int      @default(0) // < 0.6
+  
+  periodStart           DateTime
+  periodEnd             DateTime
+  recordedAt            DateTime @default(now())
+
+  @@index([ruleId])
+  @@index([userId])
+  @@index([periodStart])
+}
+
+/// User Autopilot Preferences
+model AutopilotUserPreference {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  
+  // Global settings
+  autoPurchaseEnabled   Boolean  @default(true)
+  maxMonthlySpend       Decimal
+  approvalRequired      Boolean  @default(true) // Always require approval before purchase
+  
+  // Notification preferences
+  notifyOnRuleTriggered Boolean  @default(true)
+  notifyOnPurchase      Boolean  @default(true)
+  notifyOnAnomaly       Boolean  @default(true)
+  
+  // Decision preferences
+  minConfidenceThreshold Decimal  @default(0.65)
+  autoApproveThreshold   Decimal  @default(0.85) // Auto-approve if confidence >= this
+  
+  // Feature flags
+  allowAnomalyDetection Boolean  @default(true)
+  allowIntentAnalysis   Boolean  @default(true)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([userId])
+}

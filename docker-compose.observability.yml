@@ -1,0 +1,164 @@
+# docker-compose.observability.yml
+#
+# Observability overlay — pair with the upgraded stack:
+#
+#   # Development:
+#   docker compose -f docker-compose.latest.yml \
+#                  -f docker-compose.observability.yml up -d
+#
+#   # Production (Hostinger VPS):
+#   docker compose -f docker-compose.latest.yml \
+#                  -f docker-compose.prod.yml \
+#                  -f docker-compose.observability.yml up -d
+#
+# Services added:
+#   autopilot-engine  — closed-loop ops controller (not in base compose files)
+#   otel-collector    — receives OTLP from all services, re-exports to Prometheus
+#   prometheus        — scrapes metrics, evaluates alert rules
+#   alertmanager      — routes alerts to the autopilot-engine webhook
+#   grafana           — dashboards  (port 3030)
+#   jaeger            — distributed tracing UI (port 16686)
+#
+# Port inventory (no conflicts with docker-compose.latest.yml):
+#   autopilot-engine : 3003 → 3002  (latest api uses 3002 → 3001)
+#   otel gRPC        : 4317
+#   otel HTTP        : 4318
+#   prometheus       : 9090
+#   alertmanager     : 9093
+#   grafana          : 3030
+#   jaeger UI        : 16686
+
+name: delegatecard-tech-stack-latest-version    # must match base compose project name
+
+services:
+
+  # ── Autopilot Engine (ops controller) ────────────────────────────────────
+  # Not present in docker-compose.latest.yml — defined in full here.
+  autopilot-engine:
+    build:
+      context: ./apps/autopilot-engine
+      dockerfile: Dockerfile
+    container_name: dc-latest-autopilot-engine
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      AUTOPILOT_ENABLED: ${AUTOPILOT_ENABLED:-true}
+      AUTOPILOT_WEBHOOK_SECRET: ${AUTOPILOT_WEBHOOK_SECRET:-change-me-in-production}
+      INCIDENT_LOG_DIR: /data/incidents
+      POLICY_FILE: /app/infra/autopilot/policies.yml
+      KAFKA_BROKERS: kafka:29092
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3003:3002"   # host 3003 — avoids conflict with api on host 3002
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro   # Docker socket for restart/rollback
+      - incident-log:/data/incidents
+      - ./infra/autopilot/policies.yml:/app/infra/autopilot/policies.yml:ro
+    depends_on:
+      - kafka
+      - redis
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+
+  # ── OpenTelemetry Collector ───────────────────────────────────────────────
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.99.0
+    container_name: dc-latest-otel-collector
+    command: ["--config=/etc/otel/otel-collector.yml"]
+    volumes:
+      - ./infra/otel/otel-collector.yml:/etc/otel/otel-collector.yml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+      - "8888:8888"   # Collector internal metrics
+      - "8889:8889"   # Prometheus metrics export
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+
+  # ── Prometheus ────────────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: dc-latest-prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
+      - "--web.enable-lifecycle"
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infra/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+    depends_on:
+      - otel-collector
+
+  # ── Alertmanager ──────────────────────────────────────────────────────────
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: dc-latest-alertmanager
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    environment:
+      AUTOPILOT_WEBHOOK_SECRET: ${AUTOPILOT_WEBHOOK_SECRET:-change-me-in-production}
+    volumes:
+      - ./infra/prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager-data:/alertmanager
+    ports:
+      - "9093:9093"
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+      - autopilot-engine
+
+  # ── Grafana ───────────────────────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: dc-latest-grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./infra/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./infra/grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    ports:
+      - "3030:3000"   # host 3030 — avoids conflict with web on 3010 and api on 3002
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+  # ── Jaeger (distributed tracing) ─────────────────────────────────────────
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: dc-latest-jaeger
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "14317:4317"    # OTLP gRPC (host-mapped to avoid collision with otel-collector:4317)
+    networks:
+      - dc-latest-network
+    restart: unless-stopped
+
+networks:
+  # Declared as external — owned and created by docker-compose.latest.yml
+  dc-latest-network:
+    external: true
+
+volumes:
+  prometheus-data:
+  alertmanager-data:
+  grafana-data:
+  incident-log:
+

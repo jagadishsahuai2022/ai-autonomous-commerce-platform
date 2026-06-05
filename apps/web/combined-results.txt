@@ -1,0 +1,360 @@
+﻿node.exe : Debugger listening on 
+ws://127.0.0.1:55218/ce7af2f5-605f-4a1d-abc7-6f21ca97375e
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\JAGADISH SAHU\AppData\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Debugger listen...c7-6f21ca97375e 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger listening on ws://127.0.0.1:52182/8d5dda91-1a12-45a1-bd87-d5fc99bcbb8a
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+
+[Global Setup] Pre-warming Next.js pages...
+  http://127.0.0.1:3000 ΓåÆ HTTP 200
+  http://127.0.0.1:3000/products ΓåÆ HTTP 200
+  http://127.0.0.1:3000/about ΓåÆ HTTP 200
+  http://127.0.0.1:3000/signin ΓåÆ HTTP 200
+  http://127.0.0.1:3000/ai-assistant ΓåÆ HTTP 200
+  http://127.0.0.1:3000/dashboard ΓåÆ HTTP 200
+  http://127.0.0.1:3000/orders ΓåÆ HTTP 200
+  http://127.0.0.1:3000/account ΓåÆ HTTP 200
+  http://127.0.0.1:3000/spending ΓåÆ HTTP 200
+  http://127.0.0.1:3000/order-insights ΓåÆ HTTP 200
+  http://127.0.0.1:3000/api/auth/register ΓåÆ HTTP 405
+  http://127.0.0.1:3000/api/orders ΓåÆ HTTP 401
+[Global Setup] All pages warmed up. Starting tests...
+
+
+Running 63 tests using 1 worker
+
+[1A[2KDebugger listening on 
+ws://127.0.0.1:50339/d120398f-9e48-47e3-8f07-4aac2ecaa3b1
+For help, see: https://nodejs.org/en/docs/inspector
+
+
+[1A[2KDebugger attached.
+
+
+[1A[2K[1/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:86:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.1 Register API returns token and user
+[1A[2K[2/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:103:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.2 Login API authenticates existing user
+[1A[2K[3/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:114:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.3 Session API validates token
+[1A[2K[4/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:123:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.4 Unauthorized request returns 401
+[1A[2K[5/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:132:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.1 Create order returns 201 with order data
+[1A[2K[6/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:138:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.2 Get orders returns list with items
+[1A[2K[7/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:150:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.3 Get order by ID returns full order
+[1A[2K[8/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:160:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.4 Get non-existent order returns 404
+[1A[2K[9/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:169:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 3.1 Get profile returns user data
+[1A[2K[10/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:179:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 3.2 Update profile sets notification email and WhatsApp
+[1A[2K[11/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:198:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.1 Orders page loads with real orders from DB
+[1A[2K[12/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:208:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.2 Orders page shows real order number
+[1A[2K[13/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:217:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.3 Orders page shows no critical JS errors
+[1A[2K[14/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:236:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.1 Order detail page renders with premium UI
+[1A[2K[15/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:248:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.2 Order detail shows Package Journey timeline
+[1A[2K[16/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:259:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.3 Order detail shows AI Savings for AI-assisted order
+[1A[2K[17/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:270:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.4 Order detail shows item cards with scroll
+[1A[2K[18/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:282:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.5 Order detail shows shipping address
+[1A[2K[19/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:294:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.6 Order detail has Print Receipt button
+[1A[2K[20/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:305:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.7 Order detail back link navigates to orders
+[1A[2K[21/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:320:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.8 Non-existent order shows error state
+[1A[2K[22/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:333:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.1 Spending page loads successfully
+[1A[2K[23/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:345:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.2 Spending page shows real spending data
+[1A[2K[24/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:356:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.3 Spending page has no critical JS errors
+[1A[2K[25/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:372:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.1 Order insights page loads successfully
+[1A[2K[26/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:383:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.2 Order insights shows shopping personality
+[1A[2K[27/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:395:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.3 Order insights page has no critical JS errors
+[1A[2K[28/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:411:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.1 Account page loads with real order data
+[1A[2K[29/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:420:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.2 Total Spent tile links to /spending
+[1A[2K[30/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:433:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.3 Avg Order tile links to /order-insights
+[1A[2K[31/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:445:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.4 Account page shows orders section with real data
+[1A[2K[32/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:455:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.1 Orders error boundary catches and displays errors gracefully
+[1A[2K[33/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:466:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.2 Order detail without auth shows sign-in prompt
+[1A[2K[34/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:475:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.3 Spending page without auth handles gracefully
+[1A[2K[35/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:483:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.4 Order insights page without auth handles gracefully
+[1A[2K[36/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:493:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.1 Orders page loads within 10s
+[1A[2K[37/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:501:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.2 Order detail page loads within 10s
+[1A[2K[38/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:512:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.3 Spending page loads within 10s
+[1A[2K[39/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:520:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.4 Order insights page loads within 10s
+[1A[2K[40/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:530:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 11.1 Complete flow: Account ΓåÆ Orders ΓåÆ Detail ΓåÆ Spending ΓåÆ Insights
+
+
+[1A[2KWaiting for the debugger to disconnect...
+
+
+[1A[2KDebugger listening on 
+ws://127.0.0.1:59856/86bc1f00-2c26-4fe7-9b72-210dad7b3bcf
+For help, see: https://nodejs.org/en/docs/inspector
+[1A[2KDebugger attached.
+
+
+[1A[2K[41/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:86:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.1 Register API returns token and user (retry #1)
+[1A[2K[42/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:103:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.2 Login API authenticates existing user (retry #1)
+[1A[2K[43/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:114:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.3 Session API validates token (retry #1)
+[1A[2K[44/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:123:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 1.4 Unauthorized request returns 401 (retry #1)
+[1A[2K[45/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:132:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.1 Create order returns 201 with order data (retry #1)
+[1A[2K[46/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:138:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.2 Get orders returns list with items (retry #1)
+[1A[2K[47/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:150:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.3 Get order by ID returns full order (retry #1)
+[1A[2K[48/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:160:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 2.4 Get non-existent order returns 404 (retry #1)
+[1A[2K[49/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:169:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 3.1 Get profile returns user data (retry #1)
+[1A[2K[50/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:179:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 3.2 Update profile sets notification email and WhatsApp (retry #1)
+[1A[2K[51/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:198:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.1 Orders page loads with real orders from DB (retry #1)
+[1A[2K[52/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:208:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.2 Orders page shows real order number (retry #1)
+[1A[2K[53/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:217:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 4.3 Orders page shows no critical JS errors (retry #1)
+[1A[2K[54/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:236:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.1 Order detail page renders with premium UI (retry #1)
+[1A[2K  1) [chromium] ΓÇ║ e2e\db-integration.spec.ts:236:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.1 Order detail page renders with premium UI 
+
+    Retry #1 ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByText('ORD-1774965402832-5799').first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByText('ORD-1774965402832-5799').first()[22m
+
+
+      243 |
+      244 |     // Should show order number (use .first() as it appears multiple times on page)
+    > 245 |     await expect(page.getByText(testOrder.orderNumber).first()).toBeVisible({ timeout: 10000 });
+          |                                                                 ^
+      246 |   });
+      247 |
+      248 |   test('5.2 Order detail shows Package Journey timeline', async ({ page }) => {
+        at D:\PersonalProject\GIT\delegatecart\apps\web\e2e\db-integration.spec.ts:245:65
+
+    attachment #1: screenshot (image/png) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\db-integration-Full-DB-Int-0af7e-age-renders-with-premium-UI-chromium-retry1\test-failed-1.png
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    attachment #2: video (video/webm) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\db-integration-Full-DB-Int-0af7e-age-renders-with-premium-UI-chromium-retry1\video.webm
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error Context: test-results\db-integration-Full-DB-Int-0af7e-age-renders-with-premium-UI-chromium-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\db-integration-Full-DB-Int-0af7e-age-renders-with-premium-UI-chromium-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\db-integration-Full-DB-Int-0af7e-age-renders-with-premium-UI-chromium-retry1\trace.zip
+
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+[1A[2K[55/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:466:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.2 Order detail without auth shows sign-in prompt (retry #1)
+[1A[2K  2) [chromium] ΓÇ║ e2e\db-integration.spec.ts:466:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.2 Order detail without auth shows sign-in prompt 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected pattern: [32m/sign in|login|orders/i[39m
+    Received string:  [31m"DC[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-Powered E-Commerce┬╖[39m
+    [31mHome[39m
+    [31mProducts[39m
+    [31mAI Assistant[39m
+    [31mShopping List[39m
+    [31mAbout┬╖[39m
+    [31mLoading order details...┬╖[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-powered e-commerce platform delivering intelligent shopping experiences.┬╖[39m
+    [31mProduct[39m
+    [31mFeatures[39m
+    [31mPricing[39m
+    [31mSecurity[39m
+    [31mCompany[39m
+    [31mAbout[39m
+    [31mBlog[39m
+    [31mCareers[39m
+    [31mLegal[39m
+    [31mPrivacy[39m
+    [31mTerms[39m
+    [31mContact┬╖[39m
+    [31m┬⌐ 2024 DelegateCart. All rights reserved. | delegatecart.com"[39m
+
+      470 |     // Should show sign in prompt, not crash
+      471 |     const content = await page.innerText('body');
+    > 472 |     expect(content).toMatch(/sign in|login|orders/i);
+          |                     ^
+      473 |   });
+      474 |
+      475 |   test('9.3 Spending page without auth handles gracefully', async ({ page }) => {
+        at D:\PersonalProject\GIT\delegatecart\apps\web\e2e\db-integration.spec.ts:472:21
+
+    attachment #1: screenshot (image/png) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\db-integration-Full-DB-Int-2d601-t-auth-shows-sign-in-prompt-chromium\test-failed-1.png
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    attachment #2: video (video/webm) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\db-integration-Full-DB-Int-2d601-t-auth-shows-sign-in-prompt-chromium\video.webm
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error Context: test-results\db-integration-Full-DB-Int-2d601-t-auth-shows-sign-in-prompt-chromium\error-context.md
+
+
+[1A[2K[56/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:248:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.2 Order detail shows Package Journey timeline (retry #1)
+[1A[2K[57/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:259:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.3 Order detail shows AI Savings for AI-assisted order (retry #1)
+[1A[2K[58/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:270:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.4 Order detail shows item cards with scroll (retry #1)
+[1A[2K[59/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:282:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.5 Order detail shows shipping address (retry #1)
+[1A[2K[60/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:294:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.6 Order detail has Print Receipt button (retry #1)
+[1A[2K[61/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:305:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.7 Order detail back link navigates to orders (retry #1)
+[1A[2K[62/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:320:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.8 Non-existent order shows error state (retry #1)
+[1A[2K[63/63] [chromium] ΓÇ║ e2e\db-integration.spec.ts:333:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.1 Spending page loads successfully (retry #1)
+[1A[2K[64/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:345:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.2 Spending page shows real spending data (retry #1)
+[1A[2K[65/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:356:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 6.3 Spending page has no critical JS errors (retry #1)
+[1A[2K[66/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:372:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.1 Order insights page loads successfully (retry #1)
+[1A[2K[67/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:383:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.2 Order insights shows shopping personality (retry #1)
+[1A[2K[68/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:395:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 7.3 Order insights page has no critical JS errors (retry #1)
+[1A[2K[69/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:411:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.1 Account page loads with real order data (retry #1)
+[1A[2K[70/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:420:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.2 Total Spent tile links to /spending (retry #1)
+[1A[2K[71/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:433:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.3 Avg Order tile links to /order-insights (retry #1)
+[1A[2K[72/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:445:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 8.4 Account page shows orders section with real data (retry #1)
+[1A[2K[73/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:455:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.1 Orders error boundary catches and displays errors gracefully (retry #1)
+[1A[2K[74/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:475:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.3 Spending page without auth handles gracefully (retry #1)
+[1A[2K[75/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:483:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.4 Order insights page without auth handles gracefully (retry #1)
+[1A[2K[76/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:493:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.1 Orders page loads within 10s (retry #1)
+[1A[2K[77/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:501:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.2 Order detail page loads within 10s (retry #1)
+[1A[2K[78/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:512:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.3 Spending page loads within 10s (retry #1)
+[1A[2K[79/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:520:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 10.4 Order insights page loads within 10s (retry #1)
+[1A[2K[80/63] (retries) [chromium] ΓÇ║ e2e\db-integration.spec.ts:530:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 11.1 Complete flow: Account ΓåÆ Orders ΓåÆ Detail ΓåÆ Spending ΓåÆ Insights (retry #1)
+
+
+[1A[2KWaiting for the debugger to disconnect...
+[1A[2KDebugger listening on 
+ws://127.0.0.1:58215/14cd7573-fd17-4074-801c-c71be030e691
+For help, see: https://nodejs.org/en/docs/inspector
+
+
+[1A[2KDebugger attached.
+
+
+[1A[2K[81/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:87:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.1 Account Details button navigates to specific order detail
+[1A[2K[82/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:121:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.2 Orders page View Details links to specific order
+[1A[2K[83/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:144:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.1 Orders page renders without horizontal scrollbar
+[1A[2K[84/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:155:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.2 Order detail page renders without horizontal scrollbar
+[1A[2K[85/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are contained within cards
+[1A[2K[86/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:184:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data
+[1A[2K[87/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:197:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.2 Spending page heat map and category breakdown visible
+[1A[2K[88/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:208:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.3 Order insights page shows personality and analytics
+[1A[2K[89/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:219:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.4 Order insights shows reorder probability
+[1A[2K[90/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:234:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.1 Shopping list API returns stationery matches for ball pen
+[1A[2K[91/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:265:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.2 Shopping list API returns stationery matches for notebook
+[1A[2K[92/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:292:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.3 Generic product returns empty matches (no fake results)
+[1A[2K[93/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:318:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results
+[1A[2K[94/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:364:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.1 Shopping list page has auto-checkout checkbox
+[1A[2K[95/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:374:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.2 Clicking auto-checkout shows terms acceptance
+[1A[2K[96/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:388:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.3 Terms modal opens and can be accepted
+[1A[2K[97/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:423:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.1 No horizontal overflow on spending page
+[1A[2K[98/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:435:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.2 No horizontal overflow on order insights page
+[1A[2K[99/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:451:7 ΓÇ║ Fix Validation Tests ΓÇ║ 8.1 All key pages load under 10s
+[1A[2K[100/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:467:7 ΓÇ║ Fix Validation Tests ΓÇ║ 9.1 Full flow: Account ΓåÆ Order Detail ΓåÆ Orders ΓåÆ Spending ΓåÆ Insights
+[1A[2K[101/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:518:7 ΓÇ║ Fix Validation Tests ΓÇ║ 10.1 Shopping list page submit with stationery items
+[1A[2K[102/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:544:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.1 Account page has no critical JS errors
+[1A[2K[103/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:556:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.2 Shopping list page has no critical JS errors
+
+
+[1A[2KWaiting for the debugger to disconnect...
+[1A[2KDebugger listening on 
+ws://127.0.0.1:59656/2b635fb7-7a97-4df6-bb22-e6b90e12d509
+
+
+For help, see: https://nodejs.org/en/docs/inspector
+[1A[2KDebugger attached.
+
+
+[1A[2K[104/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:87:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.1 Account Details button navigates to specific order detail (retry #1)
+[1A[2K[105/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:121:7 ΓÇ║ Fix Validation Tests ΓÇ║ 1.2 Orders page View Details links to specific order (retry #1)
+[1A[2K[106/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:144:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.1 Orders page renders without horizontal scrollbar (retry #1)
+[1A[2K[107/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:155:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.2 Order detail page renders without horizontal scrollbar (retry #1)
+[1A[2K[108/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:168:7 ΓÇ║ Fix Validation Tests ΓÇ║ 2.3 Orders page item names are contained within cards (retry #1)
+[1A[2K[109/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:184:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data (retry #1)
+[1A[2K  3) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:184:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected pattern: [32m/Spending Analytics|Total Spent|spend/i[39m
+    Received string:  [31m"DC[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-Powered E-Commerce┬╖[39m
+    [31mHome[39m
+    [31mProducts[39m
+    [31mAI Assistant[39m
+    [31mShopping List[39m
+    [31mAbout[39m
+    [31mCart[39m
+    [31mFI┬╖[39m
+    [31mfix_1774965645957┬╖[39m
+    [31mfix_1774965645957@test.com┬╖[39m
+    [31mLogout[39m
+    [31mDelegateCart┬╖[39m
+    [31mAI-powered e-commerce platform delivering intelligent shopping experiences.┬╖[39m
+    [31mProduct[39m
+    [31mFeatures[39m
+    [31mPricing[39m
+    [31mSecurity[39m
+    [31mCompany[39m
+    [31mAbout[39m
+    [31mBlog[39m
+    [31mCareers[39m
+    [31mLegal[39m
+    [31mPrivacy[39m
+    [31mTerms[39m
+    [31mContact┬╖[39m
+    [31m┬⌐ 2024 DelegateCart. All rights reserved. | delegatecart.com"[39m
+
+      190 |
+      191 |     const body = await page.innerText('body');
+    > 192 |     expect(body).toMatch(/Spending Analytics|Total Spent|spend/i);
+          |                  ^
+      193 |     // Should show currency data
+      194 |     expect(body).toMatch(/Γé╣/);
+      195 |   });
+        at D:\PersonalProject\GIT\delegatecart\apps\web\e2e\fixes-validation.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-647cc-ws-analytics-with-real-data-chromium\test-failed-1.png
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    attachment #2: video (video/webm) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    test-results\fixes-validation-Fix-Valid-647cc-ws-analytics-with-real-data-chromium\video.webm
+    ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+    Error Context: test-results\fixes-validation-Fix-Valid-647cc-ws-analytics-with-real-data-chromium\error-context.md
+
+
+[1A[2K[110/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:197:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.2 Spending page heat map and category breakdown visible (retry #1)
+[1A[2K[111/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:208:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.3 Order insights page shows personality and analytics (retry #1)
+[1A[2K[112/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:219:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.4 Order insights shows reorder probability (retry #1)
+[1A[2K[113/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:234:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.1 Shopping list API returns stationery matches for ball pen (retry #1)
+[1A[2K[114/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:265:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.2 Shopping list API returns stationery matches for notebook (retry #1)
+[1A[2K[115/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:292:7 ΓÇ║ Fix Validation Tests ΓÇ║ 4.3 Generic product returns empty matches (no fake results) (retry #1)
+[1A[2K[116/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:318:7 ΓÇ║ Fix Validation Tests ΓÇ║ 5.1 Smart delegate page loads with results (retry #1)
+[1A[2K[117/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:364:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.1 Shopping list page has auto-checkout checkbox (retry #1)
+[1A[2K[118/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:374:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.2 Clicking auto-checkout shows terms acceptance (retry #1)
+[1A[2K[119/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:388:7 ΓÇ║ Fix Validation Tests ΓÇ║ 6.3 Terms modal opens and can be accepted (retry #1)
+[1A[2K[120/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:423:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.1 No horizontal overflow on spending page (retry #1)
+[1A[2K[121/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:435:7 ΓÇ║ Fix Validation Tests ΓÇ║ 7.2 No horizontal overflow on order insights page (retry #1)
+[1A[2K[122/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:451:7 ΓÇ║ Fix Validation Tests ΓÇ║ 8.1 All key pages load under 10s (retry #1)
+[1A[2K[123/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:467:7 ΓÇ║ Fix Validation Tests ΓÇ║ 9.1 Full flow: Account ΓåÆ Order Detail ΓåÆ Orders ΓåÆ Spending ΓåÆ Insights (retry #1)
+[1A[2K[124/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:518:7 ΓÇ║ Fix Validation Tests ΓÇ║ 10.1 Shopping list page submit with stationery items (retry #1)
+[1A[2K[125/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:544:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.1 Account page has no critical JS errors (retry #1)
+[1A[2K[126/63] (retries) [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:556:7 ΓÇ║ Fix Validation Tests ΓÇ║ 11.2 Shopping list page has no critical JS errors (retry #1)
+
+
+[1A[2KWaiting for the debugger to disconnect...
+[1A[2K  1 failed
+    [chromium] ΓÇ║ e2e\db-integration.spec.ts:466:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 9.2 Order detail without auth shows sign-in prompt 
+  2 flaky
+    [chromium] ΓÇ║ e2e\db-integration.spec.ts:236:7 ΓÇ║ Full DB Integration Flow ΓÇ║ 5.1 Order detail page renders with premium UI 
+    [chromium] ΓÇ║ e2e\fixes-validation.spec.ts:184:7 ΓÇ║ Fix Validation Tests ΓÇ║ 3.1 Spending page shows analytics with real data 
+  7 did not run
+  53 passed (26.7m)
+
+[36m  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.[39m

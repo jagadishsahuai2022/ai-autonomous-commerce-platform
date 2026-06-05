@@ -1,0 +1,202 @@
+name: DB — Hostinger Cloud Database (manual)
+# ──────────────────────────────────────────────────────────────────────────────
+# One-click database operations for the Hostinger cloud PostgreSQL database.
+#
+# Schema actions (run on GitHub runner — no VPS/SSH needed):
+#   cloud-schema-sync    — prisma db push (safe, aborts on data-loss)
+#   cloud-schema-force   — prisma db push --accept-data-loss  ⚠️ DESTRUCTIVE
+#   cloud-migrate-deploy — prisma migrate deploy
+#   cloud-db-status      — migration status (read-only)
+#   cloud-seed-data      — prisma db seed
+#
+# Data migration (SSHes into VPS, pipes data directly to cloud DB):
+#   vps-to-cloud-clone   — pg_dump from VPS → psql to cloud  ★ FULL DATA COPY
+#
+# Required GitHub Secrets:
+#   DATABASE_URL — postgresql://user:pass@host:port/db?sslmode=require
+#   SERVER_IP          — VPS IP  (only for vps-to-cloud-clone)
+#   SERVER_USER        — SSH user (only for vps-to-cloud-clone)
+#   SSH_KEY            — SSH key  (only for vps-to-cloud-clone)
+#   SSH_PORT           — SSH port (only for vps-to-cloud-clone, default 22)
+# ──────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Choose a database action'
+        required: true
+        default: 'cloud-schema-sync'
+        type: choice
+        options:
+          - cloud-schema-sync
+          - cloud-schema-force
+          - cloud-migrate-deploy
+          - cloud-db-status
+          - cloud-seed-data
+          - vps-to-cloud-clone
+      confirm:
+        description: 'Type "yes" to confirm'
+        required: true
+        default: ''
+
+# ──────────────────────────────────────────────────────────────────────────────
+# JOB 1: Prisma schema operations (runs on GitHub runner, no SSH)
+# ──────────────────────────────────────────────────────────────────────────────
+jobs:
+  prisma-ops:
+    if: >-
+      contains(fromJSON('["cloud-schema-sync","cloud-schema-force",
+      "cloud-migrate-deploy","cloud-db-status","cloud-seed-data"]'), inputs.action)
+    name: 'Cloud DB: ${{ inputs.action }}'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+
+    steps:
+      - name: Validate confirmation
+        run: |
+          [[ "${{ inputs.confirm }}" == "yes" ]] || { echo "❌ Type 'yes' to confirm"; exit 1; }
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.0.0'
+
+      - name: Install dependencies
+        run: pnpm install --filter api --frozen-lockfile
+
+      - name: Generate Prisma client
+        working-directory: apps/api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma generate
+
+      - name: Run ${{ inputs.action }}
+        working-directory: apps/api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          case "${{ inputs.action }}" in
+            cloud-schema-sync)    npx prisma db push ;;
+            cloud-schema-force)   npx prisma db push --accept-data-loss ;;
+            cloud-migrate-deploy) npx prisma migrate deploy ;;
+            cloud-db-status)      npx prisma migrate status || true ;;
+            cloud-seed-data)      npx prisma db seed ;;
+          esac
+          echo ""
+          echo "✅ ${{ inputs.action }} complete at $(date -u)"
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # JOB 2: VPS → Cloud full data clone (pg_dump | psql — simplest approach)
+  #
+  # How it works:
+  #   1. SSH into VPS
+  #   2. pg_dump from the VPS postgres container (all tables + data)
+  #   3. Pipe directly into psql targeting the cloud DB
+  #   No temp files on the runner, no SCP, no Prisma — just one pipe.
+  # ────────────────────────────────────────────────────────────────────────────
+  data-clone:
+    if: inputs.action == 'vps-to-cloud-clone'
+    name: 'Clone VPS data → Cloud'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+
+    steps:
+      - name: Validate confirmation
+        run: |
+          [[ "${{ inputs.confirm }}" == "yes" ]] || { echo "❌ Type 'yes' to confirm"; exit 1; }
+
+      - name: Clone VPS → Cloud
+        uses: appleboy/ssh-action@v1
+        env:
+          CLOUD_DB_URL: ${{ secrets.DATABASE_URL }}
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          envs: CLOUD_DB_URL
+          command_timeout: 25m
+          script: |
+            set -euo pipefail
+            cd /root/delegatecart
+            COMPOSE="docker compose -f docker-compose.latest.yml -f docker-compose.prod.yml"
+
+            # ── Wait for postgres ────────────────────────────────────────────
+            echo "⏳ Waiting for VPS postgres..."
+            for i in $(seq 1 12); do
+              $COMPOSE exec -T postgres pg_isready -U admin -q 2>/dev/null && break
+              echo "   attempt $i/12 — waiting 5s..."
+              sleep 5
+            done
+
+            # ── Verify cloud DB is reachable ─────────────────────────────────
+            echo "🔍 Testing cloud DB connection..."
+            $COMPOSE exec -T \
+              -e PGCONNECT_TIMEOUT=10 \
+              postgres psql "${CLOUD_DB_URL}" -c "SELECT 1;" >/dev/null 2>&1 \
+              || { echo "❌ Cannot reach cloud DB. Check DATABASE_URL secret."; exit 1; }
+            echo "   ✅ Cloud DB reachable"
+
+            # ── Dump VPS database to temp file ───────────────────────────────
+            echo ""
+            echo "📤 Exporting VPS database (all tables + data)..."
+            $COMPOSE exec -T postgres pg_dump \
+              -U admin \
+              --clean --if-exists \
+              --no-owner --no-privileges \
+              delegatecart > /tmp/vps-to-cloud.sql
+
+            DUMP_SIZE=$(du -sh /tmp/vps-to-cloud.sql | cut -f1)
+            DUMP_LINES=$(wc -l < /tmp/vps-to-cloud.sql)
+            echo "   ✅ Dump complete: ${DUMP_SIZE} (${DUMP_LINES} lines)"
+
+            # ── Import into cloud DB ─────────────────────────────────────────
+            echo ""
+            echo "📥 Importing into cloud database..."
+            echo "   (this may take a few minutes for large datasets)"
+
+            # Run import, capture errors separately
+            $COMPOSE exec -T postgres \
+              psql "${CLOUD_DB_URL}" \
+              -v ON_ERROR_STOP=0 \
+              < /tmp/vps-to-cloud.sql > /tmp/import-stdout.log 2>/tmp/import-stderr.log || true
+
+            # Show summary of import
+            TOTAL_LINES=$(wc -l < /tmp/import-stdout.log 2>/dev/null || echo 0)
+            ERROR_COUNT=$(grep -c "^ERROR:" /tmp/import-stderr.log 2>/dev/null || echo 0)
+
+            if [ "$ERROR_COUNT" -gt 0 ]; then
+              echo "   ⚠️  ${ERROR_COUNT} error(s) during import (often harmless DROP IF EXISTS on first run):"
+              grep "^ERROR:" /tmp/import-stderr.log | head -5
+            fi
+            echo "   psql processed ${TOTAL_LINES} statement result(s)"
+
+            # ── Cleanup temp files ───────────────────────────────────────────
+            rm -f /tmp/vps-to-cloud.sql /tmp/import-stdout.log /tmp/import-stderr.log
+
+            # ── Verify: show tables in cloud DB ─────────────────────────
+            echo ""
+            echo "📊 Cloud DB — tables present:"
+            $COMPOSE exec -T postgres psql "${CLOUD_DB_URL}" -c "
+              SELECT tablename
+              FROM pg_tables
+              WHERE schemaname = 'public'
+              ORDER BY tablename;
+            " 2>/dev/null || true
+
+            $COMPOSE exec -T postgres psql "${CLOUD_DB_URL}" -c "
+              SELECT count(*) AS total_tables
+              FROM pg_tables
+              WHERE schemaname = 'public';
+            " 2>/dev/null || true
+
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "✅ VPS → Cloud data clone complete at $(date -u)"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

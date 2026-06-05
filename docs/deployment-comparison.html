@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DelegateCart — Cloud Deployment Comparison</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface2: #334155;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
+            --green: #4ade80;
+            --yellow: #fbbf24;
+            --red: #f87171;
+            --orange: #fb923c;
+            --purple: #a78bfa;
+            --border: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #172554 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 48px 0 32px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p.sub {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        /* Stack Summary */
+        .stack-box {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            border: 1px solid var(--border);
+        }
+
+        .stack-box h2 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .stack-item {
+            background: var(--surface2);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .stack-item .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+        }
+
+        .stack-item .value {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .stack-item .value.warn {
+            color: var(--yellow);
+        }
+
+        /* Requirements */
+        .req-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .req-card {
+            background: linear-gradient(135deg, var(--surface), var(--surface2));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .req-card .num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .req-card .unit {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* Plan Cards */
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .plan {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 28px;
+            border: 2px solid var(--border);
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .plan:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .plan.recommended {
+            border-color: var(--green);
+        }
+
+        .plan.recommended::before {
+            content: '★ RECOMMENDED';
+            position: absolute;
+            top: -14px;
+            left: 24px;
+            background: var(--green);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        .plan .provider {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--muted);
+        }
+
+        .plan .plan-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 4px 0 8px;
+        }
+
+        .plan .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .plan .price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .plan .price-note {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .plan .specs {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .plan .specs li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .plan .specs li .spec-label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .plan .specs li .spec-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Ratings */
+        .ratings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .rating {
+            text-align: center;
+            background: var(--surface2);
+            border-radius: 8px;
+            padding: 10px 8px;
+        }
+
+        .rating .score {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .rating .score.high {
+            color: var(--green);
+        }
+
+        .rating .score.mid {
+            color: var(--yellow);
+        }
+
+        .rating .score.low {
+            color: var(--orange);
+        }
+
+        .rating .cat {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Comparison Table */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 32px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        table th,
+        table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        table th {
+            background: var(--surface2);
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+        }
+
+        table td {
+            background: var(--surface);
+        }
+
+        table tr:hover td {
+            background: var(--surface2);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.easy {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--green);
+        }
+
+        .badge.medium {
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--yellow);
+        }
+
+        .badge.hard {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--red);
+        }
+
+        .badge.best {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+        }
+
+        /* Verdict */
+        .verdict {
+            background: linear-gradient(135deg, #064e3b, #1e293b);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            border: 1px solid #047857;
+        }
+
+        .verdict h2 {
+            color: var(--green);
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+        }
+
+        .verdict-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .verdict-item h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .verdict-item p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .verdict-item .action {
+            color: var(--green);
+            font-weight: 600;
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* Sections */
+        section {
+            padding: 32px 0;
+        }
+
+        section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        section h2 span {
+            color: var(--accent);
+        }
+
+        section .section-sub {
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* Deploy Steps */
+        .steps {
+            counter-reset: step;
+        }
+
+        .step {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px 20px 20px 64px;
+            margin-bottom: 12px;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .step h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .step code {
+            background: var(--bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--green);
+        }
+
+        /* Notes */
+        .note {
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .note strong {
+            color: var(--yellow);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .plans {
+                grid-template-columns: 1fr;
+            }
+
+            .stack-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>DelegateCart Cloud Deployment Comparison</h1>
+            <p class="sub">Portfolio deployment analysis — 10 Docker containers, full AI commerce stack. Last updated:
+                April 17, 2026.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ============ STACK OVERVIEW ============ -->
+        <section>
+            <h2>Your <span>Infrastructure</span> Requirements</h2>
+            <p class="section-sub">10 containerized services analyzed from docker-compose.latest.yml</p>
+
+            <div class="stack-box">
+                <h2>Service Inventory</h2>
+                <div class="stack-grid">
+                    <div class="stack-item">
+                        <div class="label">Web Frontend</div>
+                        <div class="value">Next.js 16.2 + React 19</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">API Backend</div>
+                        <div class="value">NestJS 11 + Fastify 5</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">AI Service</div>
+                        <div class="value">Python FastAPI</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Intent Parser</div>
+                        <div class="value">Python FastAPI + LLM</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Product Aggregator</div>
+                        <div class="value">Python FastAPI</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Ranking Engine</div>
+                        <div class="value">Python FastAPI</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Database</div>
+                        <div class="value">PostgreSQL 17</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Cache</div>
+                        <div class="value">Redis 7.4</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Message Queue</div>
+                        <div class="value">Kafka + ZooKeeper</div>
+                    </div>
+                    <div class="stack-item">
+                        <div class="label">Data Size</div>
+                        <div class="value">100K products, ~140MB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="req-banner">
+                <div class="req-card">
+                    <div class="num">4–8</div>
+                    <div class="unit">GB RAM (runtime)</div>
+                </div>
+                <div class="req-card">
+                    <div class="num">6–8</div>
+                    <div class="unit">GB RAM (build peak)</div>
+                </div>
+                <div class="req-card">
+                    <div class="num">4+</div>
+                    <div class="unit">vCPU cores</div>
+                </div>
+                <div class="req-card">
+                    <div class="num">20–40</div>
+                    <div class="unit">GB disk</div>
+                </div>
+                <div class="req-card">
+                    <div class="num">10</div>
+                    <div class="unit">containers</div>
+                </div>
+                <div class="req-card">
+                    <div class="num">11</div>
+                    <div class="unit">exposed ports</div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>⚠ Key constraint:</strong> Next.js build needs 2–4 GB RAM peak. Kafka + ZooKeeper consume ~1–1.5
+                GB at idle.
+                A <strong>minimum 8 GB RAM VPS</strong> is required for stable operation. 4 GB will work only with
+                aggressive swap.
+            </div>
+        </section>
+
+        <!-- ============ PLAN CARDS ============ -->
+        <section>
+            <h2>Deployment <span>Plans</span> Compared</h2>
+            <p class="section-sub">6 providers analyzed for the same workload — 10 Docker containers, full stack</p>
+
+            <div class="plans">
+
+                <!-- Plan A: Hetzner -->
+                <div class="plan recommended">
+                    <div class="provider">Hetzner Cloud</div>
+                    <div class="plan-name">CX32 — Shared vCPU</div>
+                    <div class="price">€7.59 <span>/mo</span></div>
+                    <div class="price-note">≈ $8.30/mo · Nuremberg, Germany · 20TB traffic included</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">vCPU</span><span class="spec-value">4 cores (shared)</span></li>
+                        <li><span class="spec-label">RAM</span><span class="spec-value">8 GB</span></li>
+                        <li><span class="spec-label">Disk</span><span class="spec-value">80 GB NVMe SSD</span></li>
+                        <li><span class="spec-label">Traffic</span><span class="spec-value">20 TB included</span></li>
+                        <li><span class="spec-label">Backups</span><span class="spec-value">+20% = €1.52/mo</span></li>
+                        <li><span class="spec-label">IPv4</span><span class="spec-value">€4.51/mo extra (or IPv6
+                                free)</span></li>
+                        <li><span class="spec-label">Docker support</span><span class="spec-value">1-click app</span>
+                        </li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">SSH + Docker
+                                Compose</span></li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score high">10</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">9</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">6</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">9</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan B: Hostinger -->
+                <div class="plan">
+                    <div class="provider">Hostinger</div>
+                    <div class="plan-name">KVM 2 — AI-Managed VPS</div>
+                    <div class="price">$8.99 <span>/mo</span></div>
+                    <div class="price-note">Promo price (renews $14.99) · India datacenter 36ms · 2yr commitment</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">vCPU</span><span class="spec-value">2 cores</span></li>
+                        <li><span class="spec-label">RAM</span><span class="spec-value">8 GB</span></li>
+                        <li><span class="spec-label">Disk</span><span class="spec-value">100 GB NVMe</span></li>
+                        <li><span class="spec-label">Traffic</span><span class="spec-value">8 TB bandwidth</span></li>
+                        <li><span class="spec-label">Backups</span><span class="spec-value">Free weekly</span></li>
+                        <li><span class="spec-label">Extras</span><span class="spec-value">AI assistant (Kodee), Docker
+                                Compose manager</span></li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">GUI panel + SSH</span>
+                        </li>
+                        <li><span class="spec-label">Contract</span><span class="spec-value">2-year prepaid
+                                required</span></li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score high">8</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">6</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">9</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan C: DigitalOcean -->
+                <div class="plan">
+                    <div class="provider">DigitalOcean</div>
+                    <div class="plan-name">Basic Droplet — 8 GB</div>
+                    <div class="price">$48 <span>/mo</span></div>
+                    <div class="price-note">Pay-as-you-go · Bangalore datacenter · Your existing subscription</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">vCPU</span><span class="spec-value">4 cores
+                                (shared/burstable)</span></li>
+                        <li><span class="spec-label">RAM</span><span class="spec-value">8 GB</span></li>
+                        <li><span class="spec-label">Disk</span><span class="spec-value">160 GB SSD</span></li>
+                        <li><span class="spec-label">Traffic</span><span class="spec-value">5 TB transfer</span></li>
+                        <li><span class="spec-label">Backups</span><span class="spec-value">+20% = $9.60/mo</span></li>
+                        <li><span class="spec-label">Marketplace</span><span class="spec-value">Docker 1-click</span>
+                        </li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">SSH + Docker
+                                Compose</span></li>
+                        <li><span class="spec-label">Billing</span><span class="spec-value">Per-second, no
+                                contract</span></li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score low">4</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score low">5</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan D: Vultr -->
+                <div class="plan">
+                    <div class="provider">Vultr</div>
+                    <div class="plan-name">Cloud Compute High Perf — 8 GB</div>
+                    <div class="price">$48 <span>/mo</span></div>
+                    <div class="price-note">Pay-as-you-go · Mumbai/Delhi datacenter · NVMe SSD</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">vCPU</span><span class="spec-value">4 cores (AMD EPYC)</span></li>
+                        <li><span class="spec-label">RAM</span><span class="spec-value">8 GB</span></li>
+                        <li><span class="spec-label">Disk</span><span class="spec-value">100 GB NVMe</span></li>
+                        <li><span class="spec-label">Traffic</span><span class="spec-value">5 TB transfer</span></li>
+                        <li><span class="spec-label">Backups</span><span class="spec-value">$4.80/mo extra</span></li>
+                        <li><span class="spec-label">Marketplace</span><span class="spec-value">Docker 1-click</span>
+                        </li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">SSH + Docker
+                                Compose</span></li>
+                        <li><span class="spec-label">Billing</span><span class="spec-value">Hourly, no contract</span>
+                        </li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score low">4</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">8</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">6</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan E: Railway -->
+                <div class="plan">
+                    <div class="provider">Railway</div>
+                    <div class="plan-name">Pro — Usage-Based PaaS</div>
+                    <div class="price">~$40–80 <span>/mo</span></div>
+                    <div class="price-note">$20 base + usage · Auto-sleep saves idle cost · Git-push deploy</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">vCPU</span><span class="spec-value">Up to 1,000 per service</span>
+                        </li>
+                        <li><span class="spec-label">RAM</span><span class="spec-value">Up to 1 TB per service</span>
+                        </li>
+                        <li><span class="spec-label">Disk</span><span class="spec-value">Up to 1 TB volume</span></li>
+                        <li><span class="spec-label">Traffic</span><span class="spec-value">$0.05/GB egress</span></li>
+                        <li><span class="spec-label">Billing</span><span class="spec-value">Per-second, pay what you
+                                use</span></li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">Git push →
+                                auto-deploy</span></li>
+                        <li><span class="spec-label">Caveat</span><span class="spec-value">10 services = higher
+                                usage</span></li>
+                        <li><span class="spec-label">Kafka</span><span class="spec-value">Must self-manage or
+                                Redpanda</span></li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score mid">5</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">10</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan F: Render -->
+                <div class="plan">
+                    <div class="provider">Render</div>
+                    <div class="plan-name">Pro Tier — Per-Service PaaS</div>
+                    <div class="price">~$150+ <span>/mo</span></div>
+                    <div class="price-note">Each service priced separately · No Kafka/ZooKeeper support</div>
+                    <ul class="specs">
+                        <li><span class="spec-label">Web Service</span><span class="spec-value">$25/mo (Standard
+                                2GB)</span></li>
+                        <li><span class="spec-label">API Service</span><span class="spec-value">$25/mo (Standard
+                                2GB)</span></li>
+                        <li><span class="spec-label">4x Python</span><span class="spec-value">4 × $7/mo = $28</span>
+                        </li>
+                        <li><span class="spec-label">PostgreSQL</span><span class="spec-value">$19/mo (Basic 1GB)</span>
+                        </li>
+                        <li><span class="spec-label">Redis</span><span class="spec-value">$10/mo (Starter 256MB)</span>
+                        </li>
+                        <li><span class="spec-label">Kafka</span><span class="spec-value">❌ Not supported</span></li>
+                        <li><span class="spec-label">Deployment</span><span class="spec-value">Git push →
+                                auto-deploy</span></li>
+                        <li><span class="spec-label">Drawback</span><span class="spec-value">Must refactor Kafka
+                                out</span></li>
+                    </ul>
+                    <div class="ratings">
+                        <div class="rating">
+                            <div class="score low">2</div>
+                            <div class="cat">Price</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score mid">7</div>
+                            <div class="cat">Perf</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score high">9</div>
+                            <div class="cat">Ease</div>
+                        </div>
+                        <div class="rating">
+                            <div class="score low">3</div>
+                            <div class="cat">Value</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============ COMPARISON TABLE ============ -->
+        <section>
+            <h2>Side-by-Side <span>Feature</span> Matrix</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Hetzner</th>
+                            <th>Hostinger</th>
+                            <th>DigitalOcean</th>
+                            <th>Vultr</th>
+                            <th>Railway</th>
+                            <th>Render</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monthly Cost (8GB)</strong></td>
+                            <td><strong style="color:var(--green)">~$8–14</strong></td>
+                            <td><strong style="color:var(--green)">$9–15</strong></td>
+                            <td><strong style="color:var(--yellow)">$48</strong></td>
+                            <td><strong style="color:var(--yellow)">$48</strong></td>
+                            <td><strong style="color:var(--yellow)">$40–80</strong></td>
+                            <td><strong style="color:var(--red)">$150+</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Server Type</td>
+                            <td>VPS (shared)</td>
+                            <td>VPS (KVM)</td>
+                            <td>Droplet (shared)</td>
+                            <td>Cloud Compute</td>
+                            <td>Container PaaS</td>
+                            <td>Container PaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Docker Compose</td>
+                            <td><span class="badge easy">Native</span></td>
+                            <td><span class="badge easy">GUI Manager</span></td>
+                            <td><span class="badge easy">Native</span></td>
+                            <td><span class="badge easy">Native</span></td>
+                            <td><span class="badge medium">Per-service</span></td>
+                            <td><span class="badge medium">Dockerfile only</span></td>
+                        </tr>
+                        <tr>
+                            <td>Kafka Support</td>
+                            <td><span class="badge easy">✓ Self-hosted</span></td>
+                            <td><span class="badge easy">✓ Self-hosted</span></td>
+                            <td><span class="badge easy">✓ Self-hosted</span></td>
+                            <td><span class="badge easy">✓ Managed option</span></td>
+                            <td><span class="badge medium">Self-host</span></td>
+                            <td><span class="badge hard">✗ Not supported</span></td>
+                        </tr>
+                        <tr>
+                            <td>India Datacenter</td>
+                            <td><span class="badge hard">✗ EU/US/SG</span></td>
+                            <td><span class="badge easy">✓ India</span></td>
+                            <td><span class="badge easy">✓ Bangalore</span></td>
+                            <td><span class="badge easy">✓ Mumbai/Delhi</span></td>
+                            <td><span class="badge medium">US-West/EU</span></td>
+                            <td><span class="badge medium">Oregon/Frankfurt</span></td>
+                        </tr>
+                        <tr>
+                            <td>Deployment Ease</td>
+                            <td><span class="badge medium">SSH + CLI</span></td>
+                            <td><span class="badge easy">GUI + AI assist</span></td>
+                            <td><span class="badge medium">SSH + CLI</span></td>
+                            <td><span class="badge medium">SSH + CLI</span></td>
+                            <td><span class="badge best">Git push</span></td>
+                            <td><span class="badge best">Git push</span></td>
+                        </tr>
+                        <tr>
+                            <td>Billing Model</td>
+                            <td>Hourly (no min)</td>
+                            <td>Prepaid (2yr best)</td>
+                            <td>Per-second</td>
+                            <td>Hourly</td>
+                            <td>Per-second usage</td>
+                            <td>Per-second usage</td>
+                        </tr>
+                        <tr>
+                            <td>Contract</td>
+                            <td><span class="badge easy">None</span></td>
+                            <td><span class="badge hard">2yr for best price</span></td>
+                            <td><span class="badge easy">None</span></td>
+                            <td><span class="badge easy">None</span></td>
+                            <td><span class="badge easy">None</span></td>
+                            <td><span class="badge easy">None</span></td>
+                        </tr>
+                        <tr>
+                            <td>Free Backups</td>
+                            <td>✗ (20% extra)</td>
+                            <td><span class="badge easy">✓ Weekly free</span></td>
+                            <td>✗ (20% extra)</td>
+                            <td>✗ ($4.80/mo)</td>
+                            <td>✓ (volumes)</td>
+                            <td>✓ (7-day)</td>
+                        </tr>
+                        <tr>
+                            <td>SSL/HTTPS</td>
+                            <td>Manual (Let's Encrypt)</td>
+                            <td>Manual (Let's Encrypt)</td>
+                            <td>Manual (Let's Encrypt)</td>
+                            <td>Manual (Let's Encrypt)</td>
+                            <td><span class="badge easy">Auto</span></td>
+                            <td><span class="badge easy">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td>Traffic Included</td>
+                            <td><strong style="color:var(--green)">20 TB</strong></td>
+                            <td>8 TB</td>
+                            <td>5 TB</td>
+                            <td>5 TB</td>
+                            <td>$0.05/GB</td>
+                            <td>100 GB free</td>
+                        </tr>
+                        <tr>
+                            <td>Root Access</td>
+                            <td>✓ Full</td>
+                            <td>✓ Full</td>
+                            <td>✓ Full</td>
+                            <td>✓ Full</td>
+                            <td>✗ Container only</td>
+                            <td>✗ Container only</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============ DEPLOYMENT STRATEGY ============ -->
+        <section>
+            <h2>Deployment <span>Strategies</span></h2>
+            <p class="section-sub">Three approaches ranked by ease and cost</p>
+
+            <h3 style="color:var(--green); margin: 24px 0 12px;">Strategy A: Single VPS + Docker Compose (Recommended)
+            </h3>
+            <p style="color:var(--muted); margin-bottom:16px;">Best for: Hetzner, Hostinger, DigitalOcean, Vultr</p>
+            <div class="steps">
+                <div class="step">
+                    <h4>Provision an 8GB VPS with Docker pre-installed</h4>
+                    <p>Select Ubuntu 22.04/24.04 with Docker 1-click app. SSH in and verify
+                        <code>docker compose version</code>.</p>
+                </div>
+                <div class="step">
+                    <h4>Clone repo & configure environment</h4>
+                    <p><code>git clone &lt;repo&gt;</code> → copy <code>.env</code> with DB credentials, JWT secrets. No
+                        API keys needed for portfolio demo.</p>
+                </div>
+                <div class="step">
+                    <h4>Build and deploy with single command</h4>
+                    <p><code>docker compose -f docker-compose.latest.yml up -d --build</code> — identical to your local
+                        setup. Takes ~10–15 min first time.</p>
+                </div>
+                <div class="step">
+                    <h4>Configure reverse proxy + SSL</h4>
+                    <p>Add Nginx or Caddy as reverse proxy → point domain → auto-SSL via Let's Encrypt. Map
+                        <code>yourdomain.com → :3010</code> (web), <code>api.yourdomain.com → :3002</code>.</p>
+                </div>
+                <div class="step">
+                    <h4>Set up 2GB swap (safety net for builds)</h4>
+                    <p><code>fallocate -l 2G /swapfile && mkswap /swapfile && swapon /swapfile</code> — prevents OOM
+                        during Next.js builds.</p>
+                </div>
+            </div>
+
+            <h3 style="color:var(--accent); margin: 32px 0 12px;">Strategy B: PaaS with Git-Push Deploy (Railway)</h3>
+            <p style="color:var(--muted); margin-bottom:16px;">Easiest deployment, but highest cost for 10 services</p>
+            <div class="steps">
+                <div class="step">
+                    <h4>Connect GitHub repo to Railway</h4>
+                    <p>Each service becomes a Railway service. Configure Dockerfiles per app. Postgres + Redis from
+                        Railway templates.</p>
+                </div>
+                <div class="step">
+                    <h4>Replace Kafka with HTTP or Redis pub/sub</h4>
+                    <p>Railway doesn't have managed Kafka. Either self-host Kafka as a service (costly) or refactor to
+                        use Redis Streams/HTTP.</p>
+                </div>
+                <div class="step">
+                    <h4>Push to deploy</h4>
+                    <p><code>git push origin main</code> → auto-build, auto-deploy, auto-SSL. Zero server management.
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="color:var(--purple); margin: 32px 0 12px;">Strategy C: Hybrid — Hostinger VPS with AI Management
+            </h3>
+            <p style="color:var(--muted); margin-bottom:16px;">Best middle ground: low cost + managed feel + India
+                datacenter</p>
+            <div class="steps">
+                <div class="step">
+                    <h4>Get Hostinger KVM 2 (8GB) with Docker template</h4>
+                    <p>1-click Docker setup from Hostinger panel. India datacenter for lowest latency. Docker Compose
+                        manager in GUI.</p>
+                </div>
+                <div class="step">
+                    <h4>Use Kodee AI assistant for server management</h4>
+                    <p>Hostinger's MCP-powered AI helps with firewall rules, monitoring, SSL, and troubleshooting
+                        directly from the panel.</p>
+                </div>
+                <div class="step">
+                    <h4>Upload docker-compose.latest.yml via GUI</h4>
+                    <p>Hostinger's Docker Compose Manager provides a visual interface to manage your stack without SSH.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ VERDICT ============ -->
+        <section>
+            <div class="verdict">
+                <h2>🏆 Final Verdict & Recommendations</h2>
+                <div class="verdict-grid">
+                    <div class="verdict-item">
+                        <h3>🥇 Best Overall Value</h3>
+                        <p><strong>Hetzner CX32</strong> — 4 vCPU / 8 GB / 80 GB NVMe for just ~$8–14/mo. Unbeatable
+                            price-to-performance. 20 TB included traffic. No contract lock-in. Industry-standard Docker
+                            support.</p>
+                        <span class="action">Best if: You're comfortable with SSH + Docker CLI</span>
+                    </div>
+                    <div class="verdict-item">
+                        <h3>🥈 Easiest Deployment</h3>
+                        <p><strong>Hostinger KVM 2</strong> — $9/mo promo with Docker Compose GUI manager, AI assistant,
+                            India datacenter. Free weekly backups. The managed VPS experience closest to PaaS.</p>
+                        <span class="action">Best if: You want GUI management + low latency from India</span>
+                    </div>
+                    <div class="verdict-item">
+                        <h3>🥉 Use What You Have</h3>
+                        <p><strong>DigitalOcean</strong> — You already have an active subscription. The 8GB Droplet at
+                            $48/mo works but is 5× more expensive than Hetzner for identical specs. Worth it only if you
+                            value the existing familiarity.</p>
+                        <span class="action">Best if: You want to avoid setting up a new provider</span>
+                    </div>
+                    <div class="verdict-item">
+                        <h3>💡 Portfolio-Specific Tip</h3>
+                        <p>For a <strong>portfolio site</strong> (low traffic, occasional demo), consider: spin up
+                            Hetzner hourly when needed (~€0.012/hr = $0.30/day). Run it during interviews/demos only.
+                            Monthly cost: <strong>$5–10 actual usage</strong>.</p>
+                        <span class="action">Hetzner's hourly billing = ultimate flexibility</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ COST COMPARISON CHART ============ -->
+        <section>
+            <h2>Annual <span>Cost</span> Projection</h2>
+            <p class="section-sub">What you'd pay over 12 months for the same 8GB/4vCPU workload</p>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:2px solid var(--green);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Hetzner</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--green); margin:8px 0;">$100</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">~$8.30/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--green); margin-top:4px;">SAVES $476 vs DO</div>
+                </div>
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Hostinger</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--accent); margin:8px 0;">$108</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">$8.99/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--yellow); margin-top:4px;">2yr commit required</div>
+                </div>
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">DigitalOcean</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--yellow); margin:8px 0;">$576</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">$48/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--red); margin-top:4px;">5.7× more than Hetzner</div>
+                </div>
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Vultr</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--yellow); margin:8px 0;">$576</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">$48/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">Same as DO</div>
+                </div>
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Railway</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--orange); margin:8px 0;">$480–960</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">~$40–80/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">Usage dependent</div>
+                </div>
+                <div
+                    style="background:var(--surface); border-radius:12px; padding:20px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Render</div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--red); margin:8px 0;">$1,800+</div>
+                    <div style="font-size:0.8rem; color:var(--muted);">$150+/mo × 12</div>
+                    <div style="font-size:0.7rem; color:var(--red); margin-top:4px;">18× more than Hetzner</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DO vs Hostinger Deep Dive ============ -->
+        <section>
+            <h2>DigitalOcean vs Hostinger: <span>Deep Dive</span></h2>
+            <p class="section-sub">Since you already have a DigitalOcean subscription, here's the honest comparison</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>DigitalOcean (Your Current)</th>
+                            <th>Hostinger KVM 2</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Price (8GB)</td>
+                            <td>$48/mo</td>
+                            <td>$8.99/mo (promo)</td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>Renewal Price</td>
+                            <td>$48/mo (same)</td>
+                            <td>$14.99/mo</td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>CPU Cores</td>
+                            <td>4 vCPU</td>
+                            <td>2 vCPU</td>
+                            <td><span class="badge best">DigitalOcean</span></td>
+                        </tr>
+                        <tr>
+                            <td>Disk</td>
+                            <td>160 GB SSD</td>
+                            <td>100 GB NVMe</td>
+                            <td>Tie (NVMe faster)</td>
+                        </tr>
+                        <tr>
+                            <td>India Datacenter</td>
+                            <td>✓ Bangalore</td>
+                            <td>✓ India</td>
+                            <td>Tie</td>
+                        </tr>
+                        <tr>
+                            <td>Docker Compose</td>
+                            <td>SSH only</td>
+                            <td>GUI + SSH</td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>AI Management</td>
+                            <td>✗</td>
+                            <td>✓ Kodee AI + MCP</td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>Free Backups</td>
+                            <td>✗ (+$9.60/mo)</td>
+                            <td>✓ Weekly free</td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>Deployment Difficulty</td>
+                            <td><span class="badge hard">Manual SSH</span></td>
+                            <td><span class="badge easy">GUI + AI</span></td>
+                            <td><span class="badge easy">Hostinger</span></td>
+                        </tr>
+                        <tr>
+                            <td>Contract Lock-in</td>
+                            <td>None</td>
+                            <td>2-year prepaid</td>
+                            <td><span class="badge best">DigitalOcean</span></td>
+                        </tr>
+                        <tr>
+                            <td>Community/Docs</td>
+                            <td>Excellent tutorials</td>
+                            <td>Good, AI-assisted</td>
+                            <td><span class="badge best">DigitalOcean</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ecosystem</td>
+                            <td>Managed DB, K8s, LB, Spaces</td>
+                            <td>VPS only</td>
+                            <td><span class="badge best">DigitalOcean</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note">
+                <strong>💡 Honest take:</strong> Hostinger is 5× cheaper but only 2 vCPU — may struggle with Kafka +
+                Next.js builds simultaneously.
+                For a portfolio that's always-on, Hostinger's KVM 4 (4 vCPU / 16 GB at $12.99/mo promo) is the
+                <strong>sweet spot</strong> — more RAM than DigitalOcean's $48 plan, at 73% less cost.
+                DigitalOcean is worth it only if you need <strong>zero contract</strong> and existing ecosystem
+                integration.
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            DelegateCart Cloud Deployment Analysis · Generated April 17, 2026 · All prices current as of research date,
+            excl. taxes
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+ssh root@82.29.164.237
+
+ssh deploy@82.29.164.237
+
+sudo apt install git -y
+cd /home/deploy
+git clone https://github.com/jagadishsahuai2022/delegatecart
+cd delegatecart
+
+https://github.com/jagadishsahuai2022/delegatecart
+
+git token: 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
+
+DOMAIN=delegatecart.com
+DB_PASSWORD=DB_Delegatecart@May2026
+JWT_SECRET=JSDelegatecartSecret!@#$%^&*JWT_SECRET
+NEXTAUTH_SECRET=JSDelegatecartSecret!@#$%^&*NEXTAUTH_SECRET
+
+
+DB Dump & Restore
+
+in local CMD 
+
+docker cp dc-latest-postgres:/tmp/backup.sql backup.sql
+
+dir backup.sql
+
+scp backup.sql deploy@82.29.164.237:/home/deploy/
+
+docker cp backup.sql dc-latest-postgres:/backup.sql
+docker exec -i dc-latest-postgres psql -U admin -d delegatecart < backup.sql
+
+IN VPS 
+
+cat /home/deploy/backup.sql | docker exec -i dc-latest-postgres psql -U admin -d delegatecart
+
+
+http://82.29.164.237:3001
+
+docker logs dc-latest-ai-service
+docker logs dc-latest-intent-parser
+docker logs dc-latest-product-ranking
+docker logs dc-latest-product-aggregator
+
+SSH KEY
+
++--[ED25519 256]--+
+|      ..oo.**o+oo|
+|       o...o==.=.|
+|       .E.o+.=* .|
+|      ....oo+o+  |
+|      ..S.+o o.o |
+|     . ..oo.  ...|
+|      . ..+    ..|
+|       + =      .|
+|        o o      |
++----[SHA256]-----+
+
+docker compose \-f docker-compose.latest.yml \-f docker-compose.prod.yml\ -f docker-compose.observability.yml \up -d
+
+
+
+***********************************
+
+NEXT CRITICAL STEP (DON’T SKIP)
+
+This file alone is NOT enough.
+
+🔧 Apply system-wide limit
+
+Open:
+
+sudo nano /etc/systemd/system.conf
+
+Add at bottom:
+
+DefaultLimitNOFILE=65535
+🔧 Apply for Docker (VERY IMPORTANT)
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo nano /etc/systemd/system/docker.service.d/limits.conf
+
+Add:
+
+[Service]
+LimitNOFILE=65535
+
+
+ssh -i ~/.ssh/deploy_key YOUR_USER@YOUR_VPS_IP "echo connected"
+
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f "$env:USERPROFILE\.ssh\deploy_key" -N '""'
+
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxZUVNOXRzo3txbRIEaTuN7GJK67X2Y3flD5RSKFQ36 j4jagadish.sahu@gmail.com" >> ~/.ssh/authorized_keys
+
+ssh -i "$env:USERPROFILE\.ssh\deploy_key" root@YOUR_VPS_IP "echo connected"
+
+ssh -i "$env:USERPROFILE\.ssh\deploy_key" deploy@82.29.164.237 "echo connected"
